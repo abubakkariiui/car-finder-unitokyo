@@ -1,0 +1,719 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container mt-5 mb-md-4 py-5">
+  <!-- Breadcrumb-->
+  <app-breadcrumbs *ngIf="isDataAvailable" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+  <!-- Title + Sharing-->
+
+  <!-- loading bar  -->
+  <div *ngIf="loading">
+    <div class="card card-dark card-horizontal mb-4">
+      <div class="card-body">
+        <div class="panel panel-default" bis_skin_checked="1">
+          <div class="panel-body" bis_skin_checked="1">
+            <div class="row">
+              <p class="animate-bg col-2"></p>
+            </div>
+            <div class="row clearfix" bis_skin_checked="1">
+              <div class="col-3 h-100" bis_skin_checked="1">
+                <div class="animate-bg h-100">
+                  <br /><br /><br /><br /><br /><br />
+                </div>
+              </div>
+              <div class="col-9" bis_skin_checked="1">
+                <div class="row">
+                  <p class="animate-bg col-2"></p>
+                </div>
+                <div class="row">
+                  <p class="animate-bg col-3"></p>
+                </div>
+                <div class="row">
+                  <p class="animate-bg col-3"></p>
+                </div>
+                <div class="row">
+                  <p class="animate-bg col-2"></p>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <p class="animate-bg small-bg"></p>
+                  </div>
+                  <div class="col-4">
+                    <p class="animate-bg small-bg"></p>
+                  </div>
+                  <div class="col-4">
+                    <p class="animate-bg small-bg"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 mb-4" *ngFor="let item of [1, 2, 3]">
+        <div class="card card-dark card-horizontal mb-4">
+          <div class="card-body">
+            <div class="panel panel-default" bis_skin_checked="1">
+              <div class="panel-body" bis_skin_checked="1">
+                <div class="row clearfix" bis_skin_checked="1">
+                  <div class="col-12 h-100" bis_skin_checked="1">
+                    <div class="animate-bg h-100 pb-2">
+                      <br /><br /><br /><br /><br /><br />
+                    </div>
+                  </div>
+                  <div class="col-12 pt-3" bis_skin_checked="1">
+                    <div class="row">
+                      <p class="animate-bg col-3"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-5"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-3"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-2"></p>
+                    </div>
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading">
+    <div class="d-sm-flex align-items-end align-items-md-center justify-content-between position-relative mb-4"
+      style="z-index: 1025" *ngIf="isDataAvailable">
+      <div class="me-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <h1 class="h2 text-dark mb-md-0">{{ selectedVehicle.Title || "" }}</h1>
+        </div>
+        <div class="d-md-none">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="h3 mb-0 text-dark" *ngIf="selectedVehicle.ShowPrice">
+              {{
+              selectedVehicle.PriceType === 0
+              ? "FOB"
+              : selectedVehicle.PriceType === 1
+              ? "CIF"
+              : "DDP"
+              }}
+              :{{ selectedVehicle.Price | currency }}
+            </div>
+            <div class="d-flex">
+              <div class="text-nowrap ml-3 border-end border-dark pe-3 me-3">
+                <i class="fi-dashboard fs-lg opacity-70 me-2"></i><span class="text-dark align-middle">{{
+                  selectedVehicle.Mileage }}K miles</span>
+              </div>
+
+              <div class="text-nowrap">
+                <i class="fi-map-pin fs-lg opacity-70 me-2"></i><span class="align-middle text-dark">{{
+                  selectedVehicle.ShowRoom.Title || ""
+                  }}</span>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="d-flex flex-wrap align-items-center mb-2">
+
+            <div class="d-flex ">
+              <button class="btn btn-sm badge btn-primary mx-1 pa-0 text-light"
+                (click)="toggleModal(toggleQuoteModel , toggleLoginModel)" type="button">
+                Get Quote
+              </button>
+              <button class="btn btn-sm badge btn-primary mx-1 pa-0 text-light"
+                (click)="onCompareCheckChange(selectedVehicle)" type="button" placement="left">
+                compare
+              </button>
+              <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onBuyClicked(selectedVehicle)"
+                type="button" placement="left">
+                Buy Now
+              </button>
+              <i (click)="onCartCheckChange(selectedVehicle)" ngbTooltip="Add to Cart" [placement]="['left']"
+                class=" mx-2 hover-cursor fi-cart d-block h4 text-dark mb-0 mx-center"></i>
+
+              <img (click)="toggleModal(toggleFirstModal , toggleLoginModel)" data-bs-target="#modalScroll"
+                ngbTooltip="Make an Offer" [placement]="['left']"
+                class="d-block  mx-2 mx-center hover-cursor d-block h4 text-dark mb-0 mx-center"
+                src="assets/img/makeoffer.png" width="30" alt="Icon" />
+              <i ngbTooltip="Request
+              Information" [placement]="['left']" (click)="onRequestInformationClicked(selectedVehicle)"
+                class=" mx-2 hover-cursor fi-info-square d-block h4 text-dark mb-0 mx-center"></i>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="text-nowrap pt-3 pt-sm-0">
+        <button class="btn btn-icon btn-translucent-light btn-xs rounded-circle mb-sm-2" type="button" placement="top"
+          ngbTooltip="Add to Wishlist">
+          <i class="fi-heart"></i>
+        </button>
+        <!-- <div class="dropdown d-inline-block" placement="top" ngbTooltip="Share">
+          <button class="btn btn-icon btn-translucent-light btn-xs rounded-circle ms-2 mb-sm-2" type="button"
+            data-bs-toggle="dropdown">
+            <i class="fi-share"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end my-1">
+            <button class="dropdown-item" type="button">
+              <i class="fi-facebook fs-base opacity-75 me-2"></i>Facebook
+            </button>
+            <button class="dropdown-item" type="button">
+              <i class="fi-twitter fs-base opacity-75 me-2"></i>Twitter
+            </button>
+            <button class="dropdown-item" type="button">
+              <i class="fi-instagram fs-base opacity-75 me-2"></i>Instagram
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isDataAvailable">
+      <div class="col-md-7">
+        <!-- Gallery-->
+        <div class="tns-carousel-wrapper">
+          <swiper [config]="config">
+            <div class="swiper-slide" *ngFor="let src of splitImages(selectedVehicle)">
+              <div>
+                <img class="rounded-3" src="{{ src }}" alt="Image" />
+              </div>
+            </div>
+          </swiper>
+        </div>
+        <!-- Features-->
+        <h2 class="h4 text-dark pt-3 mb-4">Vehicle Features</h2>
+        <div class="row px-1">
+          <div class="col-sm-4">
+            <input disabled id="air-condition" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.AirConditioning" />
+            <label class="px-2 form-check-label" for="air-condition">Air Conditioning</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="PowerSteering" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.PowerSteering" /><label class="px-2 form-check-label" for="PowerSteering">
+              PowerSteering</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="PowerWindows" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.PowerWindows" /><label class="px-2 form-check-label" for="PowerWindows">
+              PowerWindows</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="PowerMirror" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.PowerMirror" /><label class="px-2 form-check-label" for="PowerMirror">
+              PowerMirror</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="CentralLocking" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.CentralLocking" /><label class="px-2 form-check-label" for="CentralLocking">
+              CentralLocking</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="Stereo" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.Stereo" /><label class="px-2 form-check-label" for="Stereo"> Stereo</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="AlloyWheel" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.AlloyWheel" /><label class="px-2 form-check-label" for="AlloyWheel">
+              AlloyWheel</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="RearSpoiler" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.RearSpoiler" /><label class="px-2 form-check-label" for="RearSpoiler">
+              RearSpoiler</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="Airbag" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.Airbag" /><label class="px-2 form-check-label" for="Airbag"> Airbag</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="DualAirbags" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.DualAirbags" /><label class="px-2 form-check-label" for="DualAirbags">
+              DualAirbags</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="SunRoof" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.SunRoof" /><label class="px-2 form-check-label" for="SunRoof">
+              SunRoof</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="BodyKit" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.BodyKit" /><label class="px-2 form-check-label" for="BodyKit">
+              BodyKit</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="LeatherSeats" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.LeatherSeats" /><label class="px-2 form-check-label" for="LeatherSeats">
+              LeatherSeats</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="KeylessEntry" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.KeylessEntry" /><label class="px-2 form-check-label" for="KeylessEntry">
+              KeylessEntry</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="HeightControl" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.HeightControl" /><label class="px-2 form-check-label" for="HeightControl">
+              HeightControl</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="HIDLights" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.HIDLights" /><label class="px-2 form-check-label" for="HIDLights">
+              HIDLights</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="AntilockBreakingSystem" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.AntilockBreakingSystem" /><label class="px-2 form-check-label"
+              for="AntilockBreakingSystem">
+              AntilockBreakingSystem</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="AntiTheftSystem" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.AntiTheftSystem" /><label class="px-2 form-check-label"
+              for="AntiTheftSystem">
+              AntiTheftSystem</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="Long" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.Long" /><label class="px-2 form-check-label" for="Long"> Long</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="HighRoof" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.HighRoof" /><label class="px-2 form-check-label" for="HighRoof">
+              HighRoof</label>
+          </div>
+          <div class="col-sm-4">
+            <input disabled id="HighDeck" class="form-check-input disabled" type="checkbox" checked
+              [(ngModel)]="selectedVehicle.HighDeck" /><label class="px-2 form-check-label" for="HighDeck">
+              HighDeck</label>
+          </div>
+        </div>
+
+        <!-- Card with icon boxes-->
+        <!-- <div class="card card-body p-4 card-light mb-4">
+          <div class="row row-cols-2 row-cols-sm-4 gx-3 gx-xl-4 gy-4">
+            <div class="col text-dark text-center">
+              <div class="d-table bg-light rounded-3 mx-auto p-3">
+                <img src="assets/img/car-finder/icons/check.svg" width="48" alt="Icon" />
+              </div>
+              <div class="fs-sm pt-2 mt-1">Checked and Certified by Finder</div>
+            </div>
+            <div class="col text-dark text-center">
+              <div class="d-table bg-light rounded-3 mx-auto p-3">
+                <img src="assets/img/car-finder/icons/steering-wheel.svg" width="48" alt="Icon" />
+              </div>
+              <div class="fs-sm pt-2 mt-1">Single Owner</div>
+            </div>
+            <div class="col text-dark text-center">
+              <div class="d-table bg-light rounded-3 mx-auto p-3">
+                <img src="assets/img/car-finder/icons/driving-test.svg" width="48" alt="Icon" />
+              </div>
+              <div class="fs-sm pt-2 mt-1">Well-Equipped</div>
+            </div>
+            <div class="col text-dark text-center">
+              <div class="d-table bg-light rounded-3 mx-auto p-3">
+                <img src="assets/img/car-finder/icons/accident.svg" width="48" alt="Icon" />
+              </div>
+              <div class="fs-sm pt-2 mt-1">No Accident / Damage Reported</div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Post meta-->
+        <div
+          class="d-flex align-items-center justify-content-between  wrap border-top fs-sm text-dark pt-4 mt-4 pb-5 pb-md-2">
+          <div class="  pe-3 me-3">
+            <span class="opacity-70">Published:
+              <strong>{{ selectedVehicle.CreatedOn | date }}</strong></span>
+          </div>
+          <div>
+            <share-buttons theme="modern-dark" [include]="['facebook', 'messenger', 'linkedin', 'twitter', 'whatsapp']"
+              [showIcon]="true" [showText]="false" [url]="rootURL+'/Yuasa_FrontEnd/catalog/search/single?sku='+paramSku"
+              description="YUASA TRADING - The Best Dealers for Used Japanese Cars">
+            </share-buttons>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar-->
+      <div class="col-md-5 pt-5 pt-md-0" style="margin-top: -6rem">
+        <div class="sticky-top pt-5">
+          <div class="d-none d-md-block pt-5">
+            <!-- <div class="d-flex mb-4"><span class="badge bg-info fs-base me-2">Used</span><span
+              class="badge bg-success fs-base me-2" placement="top"
+              ngbPopover="This car is checked and certified by Finder." data-bs-toggle="popover">Certified</span></div> -->
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="h3 mb-0 text-dark" *ngIf="selectedVehicle.ShowPrice">
+                {{
+                selectedVehicle.PriceType === 0
+                ? "FOB"
+                : selectedVehicle.PriceType === 1
+                ? "CIF"
+                : "DDP"
+                }}
+                : {{ selectedVehicle.Price | currency }}
+              </div>
+              <div class="d-flex">
+                <button class="btn   btn-sm  btn-primary ms-2 mb-sm-2" (click)="onBuyClicked(selectedVehicle)"
+                  type="button" placement="left">
+                  Buy Now
+                </button>
+                <button class="btn   btn-sm  btn-primary ms-2 mb-sm-2"
+                  (click)="toggleModal(toggleQuoteModel , toggleLoginModel)" type="button">
+                  Get Quote
+                </button>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between text-dark pb-2 mb-2">
+              <div class="d-flex">
+                <div class="text-nowrap border-end border-dark pe-3 me-3">
+                  <i class="fi-dashboard fs-lg opacity-70 me-2"></i><span class="align-middle">{{
+                    selectedVehicle.Mileage
+                    }}K miles</span>
+                </div>
+                <div class="text-nowrap">
+                  <i class="fi-map-pin fs-lg opacity-70 me-2"></i><span class="align-middle">{{
+                    selectedVehicle.ShowRoom?.Title || "Global"
+                    }}</span>
+                </div>
+              </div>
+              <div class="d-flex ">
+
+                <i (click)="onCartCheckChange(selectedVehicle)" ngbTooltip="Add to Cart" [placement]="['left']"
+                  class="hover-cursor fi-cart d-block h4 text-dark mb-0 mx-center  px-3"></i>
+
+
+                <img (click)="toggleModal(toggleFirstModal , toggleLoginModel)" data-bs-target="#modalScroll"
+                  ngbTooltip="Make an Offer" [placement]="['left']" class="" src="assets/img/makeoffer.png" width="30"
+                  alt="Icon" />
+
+                <i ngbTooltip="Request
+              Information" [placement]="['left']" (click)="onRequestInformationClicked(selectedVehicle)"
+                  class="hover-cursor fi-info-square d-block h4 text-dark mb-0 mx-center  px-3"></i>
+              </div>
+
+
+            </div>
+            <!-- <div class="d-flex align-items-center text-dark pb-4 mb-2">
+              <div class="text-nowrap border-dark pe-3 me-3">
+                <i class="fi-share fs-lg opacity-70 me-2" style="cursor: pointer;"
+                  (click)="toggleModal(shareModal , toggleLoginModel)"></i>
+              </div>
+            </div> -->
+          </div>
+          <!-- Specs-->
+          <div class="py-3 mb-3">
+            <h2 class="h4 text-dark mb-4">Specifications</h2>
+            <div class="row text-dark">
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <strong>SKU #:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.VehicleSku
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Type:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Type
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Make / Model:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Model?.Title || ""
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Grade:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.VehicleGrade
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Chassis:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Chesis
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Year:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Year
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Seats:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Seats
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Location:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.ShowRoom?.Title
+                      }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <strong>Color:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Color
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Fuel / Engine:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.FuelType === 0
+                      ? "Petrol"
+                      : selectedVehicle.FuelType === 1
+                      ? "Petrol"
+                      : "CNG"
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Mileage:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Mileage
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Transmission:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Transmission
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Steering:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Steering
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Doors:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.Doors
+                      }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <strong>Grading:</strong><span class="opacity-70 ms-1">{{
+                      selectedVehicle.ConditionGrade
+                      }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card bg-transparent border-dark" *ngIf="selectedVehicle.PriceType === 0">
+              <div class="card-header text-dark">Freight Calculator</div>
+              <div class="card-body">
+                <label class="form-check-label" for="s-port">Source Port</label>
+
+                <select [(ngModel)]="frieghtParams.SourcePortId" id="s-port" class="form-select form-select-dark mb-2">
+                  <option value="" selected>Source Port</option>
+                  <option *ngFor="let item of selectedVehicle.ShowRoom?.Country.Ports" [value]="item.Id">
+                    <span class="dropdown-item-label">{{ item.Name }}</span>
+                  </option>
+                </select>
+
+                <label class="form-check-label" for="d-port">Distination Port</label>
+
+                <select [(ngModel)]="frieghtParams.DestinationPortId" id="d-port"
+                  class="form-select form-select-dark mb-2">
+                  <option value="" selected>Distination Port</option>
+                  <option *ngFor="let item of portsList" [value]="item.Id">
+                    <span class="dropdown-item-label">{{ item.Name }}</span>
+                  </option>
+                </select>
+
+                <input [disabled]="
+                  frieghtParams.DestinationPortId == 0 &&
+                  frieghtParams.SourcePortId == 0
+                " id="Insurance" class="form-check-input" type="checkbox" [(ngModel)]="frieghtParams.Insurance" />
+                <label class="px-2 form-check-label" for="Insurance">Insurance</label>
+
+                <input [disabled]="
+                  frieghtParams.DestinationPortId == 0 &&
+                  frieghtParams.SourcePortId == 0
+                " id="Inspection" class="form-check-input" type="checkbox" [(ngModel)]="frieghtParams.Inspection" />
+                <label class="px-2 form-check-label" for="Inspection">Inspection</label>
+                <div class="pt-3">
+                  <button [disabled]="
+                    frieghtParams.DestinationPortId == 0 &&
+                    frieghtParams.SourcePortId == 0
+                  " class="btn btn-primary btn-sm" type="button" (click)="calculateFrieght()">
+                    <span>Calculate</span>
+                  </button>
+                </div>
+
+                <div *ngIf="calculatedFrieght" class="bg-red-light rounded-3 px-3 py-3 mt-3">
+                  <div *ngIf="calculatedFrieght != 0">
+                    <div class="pa-3 pb-3">
+                      <div>
+                        <span style="font-weight: bold;">Freight Amount:</span> {{calculatedFrieght.FreightAmount}}
+                      </div>
+                      <div><span style="font-weight: bold;">Inspection CompanyRate:</span>
+                        {{calculatedFrieght.InspectionCompanyRate}}</div>
+                      <div><span style="font-weight: bold;">Insurace Cost:</span> {{calculatedFrieght.InsuraceCost}}
+                      </div>
+                      <div><span style="font-weight: bold;">M3:</span> {{calculatedFrieght.M3}}</div>
+                      <div><span style="font-weight: bold;">Total Cost:</span> {{calculatedFrieght.TotalCost | currency:
+                        '$'}}</div>
+                      <!-- <b>Estimated Freight:
+                        {{
+                        calculatedFrieght == 0
+                        ? " ASK "
+                        : (calculatedFrieght | currency: '$')
+                        }}</b> -->
+                    </div>
+                  </div>
+                  <div *ngIf="calculatedFrieght == 0">
+                    no Response
+                  </div>
+
+                  <div class="pa-3">
+                    <span>Charges are calculated as per RORO method. If you want
+                      container charges,
+                      <a class="w-sm-auto w-100 text-decoration-none" routerLink="/contact-us">
+                        contact us</a></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card card-body bg-transparent border-dark">
+            <h5 class="text-dark">
+              Email me price drops and new listings for these search results:
+            </h5>
+            <app-subscribe></app-subscribe>
+            <div class="form-check form-check-dark">
+              <input class="form-check-input" type="checkbox" id="subscription-agree" />
+              <label class="form-check-label fs-sm opacity-70" for="subscription-agree">I agree to receive price drop
+                alerts on this vehicle and helpful
+                shopping information.</label>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- Related posts (Carousel)-->
+    <h2 class="h3 text-dark pt-5 pb-3 mt-md-4">You may be interested in</h2>
+
+    <swiper [config]="LatestCar" class="custom-swiper" *ngIf="latestCarData?.Items">
+      <div class="swiper-slide" *ngFor="let item of latestCarData?.Items; index as i">
+        <VehicleDetails [VehicleObject]="item" [showSlider]="false" [id]="i" Type="grid">
+        </VehicleDetails>
+      </div>
+    </swiper>
+  </div>
+
+
+  <ng-template #toggleQuoteModel let-modal>
+    <div class="modal-body ">
+      <h2 class="h3 text-dark mb-md-0">Get Quote for : {{ selectedVehicle.Title || "" }}</h2>
+      <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+        data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+
+      <div class="py-1">
+        <form class="needs-validation pt-1 mt-1" novalidate (ngSubmit)="submitQuote()" [formGroup]="makeOfferForm">
+          <div class="mb-2 fields-elements">
+            <label class="form-label text-dark" for="CountryId">Country</label>
+            <select class="form-select form-select-sm form-select-dark" id="c-subject" required
+              formControlName="CountryId">
+              <option value="" selected disabled>Choose Country</option>
+              <option *ngFor="let c of countriesList" [value]="c.Id">{{c.Name}}</option>
+            </select>
+          </div>
+          <button class="btn btn-primary mt-3" type="submit">Submit
+            <span *ngIf="quoteSubmitLoading" class="spinner-border spinner-border-sm me-2" role="status"
+              aria-hidden="true"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+
+  <ng-template #toggleFirstModal role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Make an offer</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"
+        aria-label="Close"></button>
+    </div>
+    <form (ngSubmit)="submitQuote()" [formGroup]="makeOfferForm">
+      <div class="modal-body">
+        <div class="mb-4">
+          <label class="form-label text-dark mb-2" for="signin-email">Offer Price</label>
+          <input class="form-control form-control-dark" placeholder="1500" type="text" required
+            formControlName="OfferPrice">
+        </div>
+        <div class="mb-4">
+          <label class="form-label text-dark" for="CountryId">Country</label>
+          <select class="form-select form-select-sm form-select-dark" id="c-subject" formControlName="CountryId"
+            required>
+            <option value="" selected disabled>Choose Country</option>
+            <option *ngFor="let c of countriesList" [value]="c.Id">{{c.Name}}</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-primary btn-sm">Submit
+          <span *ngIf="quoteSubmitLoading" class="spinner-border spinner-border-sm me-2" role="status"
+            aria-hidden="true"></span>
+        </button>
+      </div>
+    </form>
+
+
+  </ng-template>
+
+  <ng-template #toggleLoginModel let-modal>
+
+    <div class="modal-body ">
+      <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+        data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+      <app-signin [isDialog]="true" [route]="rout" (routeChange)="modal.close('Close click')" [showBackButton]="false">
+      </app-signin>
+    </div>
+
+  </ng-template>
+
+
+  <ng-template #shareModal let-modal>
+
+    <div class="modal-header">
+      <h5 class="modal-title">Share</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <share-buttons theme="modern-dark" [include]="['facebook', 'messenger', 'linkedin', 'twitter', 'whatsapp']"
+        [showIcon]="true" [showText]="false" [url]="rootURL+'/Yuasa_FrontEnd/catalog/search/single?sku='+paramSku"
+        description="YUASA TRADING - The Best Dealers for Used Japanese Cars">
+      </share-buttons>
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"
+        (click)="modal.dismiss('Cross click')">Close</button>
+      <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+    </div> -->
+  </ng-template>
+
+
+</div>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

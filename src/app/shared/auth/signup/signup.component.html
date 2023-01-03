@@ -1,0 +1,501 @@
+<div
+  class="min-vh-100 d-flex align-items-center justify-content-between align-items-center"
+>
+  <div class="container-fluid">
+    <div class="mx-auto" style="max-width: 940px">
+      <a
+        *ngIf="!isDialog"
+        class="position-absolute top-0 end-0 nav-link-dark fs-sm py-1 px-2 mt-3 me-3"
+        routerLink=""
+        ><i class="fi-arrow-long-left fs-base me-2"></i>Go back</a
+      >
+
+      <div class="row mx-0 align-items-center">
+        <div class="col-md-5 border-end-md border-dark p-2 p-sm-5">
+          <h2 class="h3 text-dark mb-4 mb-sm-5">
+            Join Finder.<br />Get premium benefits:
+          </h2>
+          <ul class="list-unstyled mb-4 mb-sm-5">
+            <li class="d-flex mb-2">
+              <i class="fi-check-circle text-primary mt-1 me-2"></i
+              ><span class="text-dark">Add and promote your listings</span>
+            </li>
+            <li class="d-flex mb-2">
+              <i class="fi-check-circle text-primary mt-1 me-2"></i
+              ><span class="text-dark">Easily manage your wishlist</span>
+            </li>
+            <li class="d-flex mb-0">
+              <i class="fi-check-circle text-primary mt-1 me-2"></i
+              ><span class="text-dark">Leave reviews</span>
+            </li>
+          </ul>
+          <img
+            class="d-block mx-auto"
+            src="assets/img/signin-modal/signup-dark.svg"
+            width="344"
+            alt="Illustartion"
+          />
+          <div class="text-dark mt-sm-4 pt-md-3">
+            <span class="opacity-60">Already have an account? </span
+            ><a class="text-dark" routerLink="/signin">Sign in</a>
+          </div>
+        </div>
+        <div class="col-md-7 px-2 pb-4 px-0 pb-sm-5">
+          <h2
+            class="h3 text-dark mb-4 mb-sm-5"
+            *ngIf="resultMessage == 'Registered Sussessfully.'"
+          >
+            You have registered successfully. Please Check your email to confirm
+            the account
+          </h2>
+          <form
+            *ngIf="resultMessage != 'Registered Sussessfully.'"
+            class="needs-validation pt-3 mt-3"
+            novalidate
+            #formDirective="ngForm"
+            (ngSubmit)="validSubmit(formDirective)"
+            [formGroup]="validationform"
+          >
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="signup-FirstName"
+                  >First Name <span class="text-primary">*</span></label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="signup-FirstName"
+                  placeholder="Enter First Name"
+                  required
+                  formControlName="FirstName"
+                  [ngClass]="{
+                    'is-invalid': submit && form['FirstName'].errors
+                  }"
+                />
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="signup-LastName"
+                  >Last name <span class="text-primary">*</span></label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="signup-name"
+                  placeholder="Enter Last Name"
+                  required
+                  formControlName="LastName"
+                  [ngClass]="{
+                    'is-invalid': submit && form['LastName'].errors
+                  }"
+                />
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="signup-Email"
+                  >Email <span class="text-primary">*</span>
+                </label>
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="Email"
+                  id="signup-Email"
+                  placeholder="Enter Email"
+                  required
+                  formControlName="Email"
+                  [ngClass]="{ 'is-invalid': submit && form['Email'].errors }"
+                />
+              </div>
+            </div>
+
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                Gender <span class="text-primary">*</span>
+              </div>
+              <div class="col-md-8">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    value="1"
+                    id="form-male"
+                    type="radio"
+                    formControlName="Gender"
+                    [ngClass]="{
+                      'is-invalid': submit && form['Gender'].errors
+                    }"
+                  />
+                  <label class="form-check-label" for="form-male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    value="0"
+                    id="form-female"
+                    type="radio"
+                    formControlName="Gender"
+                    [ngClass]="{
+                      'is-invalid': submit && form['Gender'].errors
+                    }"
+                  />
+                  <label class="form-check-label" for="form-female"
+                    >Female</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="DateOfBirth"
+                  >DOB <span class="text-primary">*</span></label
+                >
+              </div>
+              <div class="col-md-8">
+                <div class="input-group">
+                  <input
+                    class="form-control form-control-sm"
+                    type="date"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="DateOfBirth"
+                    [ngClass]="{
+                      'is-invalid': submit && form['DateOfBirth'].errors
+                    }"
+                  />
+                </div>
+
+                <!-- 
+                            <input class="form-control form-control-dark" type="date"
+                                    id="DateOfBirth" placeholder="Date Of Birth" required formControlName="DateOfBirth"
+                                    [ngClass]="{'is-invalid': submit && form['DateOfBirth'].errors}">-->
+              </div>
+            </div>
+
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">Account</div>
+              <div class="col-md-8">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    id="form-personal"
+                    type="radio"
+                    value="false"
+                    formControlName="IsCompanyAccount"
+                    [ngClass]="{
+                      'is-invalid': submit && form['IsCompanyAccount'].errors
+                    }"
+                  />
+                  <label class="form-check-label" for="form-personal"
+                    >Personal
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    id="form-company"
+                    type="radio"
+                    value="true"
+                    formControlName="IsCompanyAccount"
+                    checked
+                    [ngClass]="{
+                      'is-invalid': submit && form['IsCompanyAccount'].errors
+                    }"
+                  />
+                  <label class="form-check-label" for="form-company"
+                    >Company
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                Country <span class="text-primary">*</span>
+              </div>
+              <div class="col-md-8">
+                <select
+                  class="form-select form-select-sm form-select-dark"
+                  id="c-subject"
+                  required
+                  formControlName="CountryId"
+                  [ngClass]="{
+                    'is-invalid': submit && form['CountryId'].errors
+                  }"
+                >
+                  <option value="" selected disabled>Choose Country</option>
+                  <option *ngFor="let c of countriesList" [value]="c.Id">
+                    {{ c.Name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="Company"
+                  >Company <span class="text-primary">*</span></label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="Company"
+                  placeholder="Company"
+                  required
+                  formControlName="Company"
+                  [ngClass]="{ 'is-invalid': submit && form['Company'].errors }"
+                />
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="City"
+                  >City <span class="text-primary">*</span></label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="City"
+                  placeholder="City"
+                  required
+                  formControlName="City"
+                  [ngClass]="{ 'is-invalid': submit && form['City'].errors }"
+                />
+              </div>
+            </div>
+
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="Phone">Phone</label>
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="Phone"
+                  placeholder="Phone"
+                  formControlName="Phone"
+                />
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="PostalAddress"
+                  >Address</label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="PostalAddress"
+                  placeholder="Address"
+                  formControlName="PostalAddress"
+                />
+              </div>
+            </div>
+
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="PostalCode"
+                  >Post Code</label
+                >
+              </div>
+              <div class="col-md-8">
+                <input
+                  class="form-control form-control-sm form-control-dark"
+                  type="text"
+                  id="PostalCode"
+                  placeholder="PostalCode"
+                  formControlName="PostalCode"
+                />
+              </div>
+            </div>
+
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label class="form-label text-dark" for="signup-Password"
+                  >Password
+                  <span class="text-primary">*</span>
+                </label>
+              </div>
+
+              <div class="col-md-8">
+                <span
+                  *ngIf="submit && form['Password'].errors"
+                  class="block text-primary"
+                  >Password must contain minimum eight characters, atleast one
+                  capital letter, one small, one numeric, and one small
+                  letter.</span
+                >
+                <div class="password-toggle">
+                  <input
+                    class="form-control form-control-sm form-control-dark"
+                    [type]="passTextType ? 'text' : 'password'"
+                    id="signup-Password"
+                    minlength="8"
+                    required
+                    formControlName="Password"
+                    [ngClass]="{
+                      'is-invalid': submit && form['Password'].errors
+                    }"
+                  />
+                  <label
+                    class="password-toggle-btn"
+                    aria-label="Show/hide Password"
+                  >
+                    <input
+                      (click)="togglePassFieldTextType()"
+                      class="password-toggle-check"
+                      type="checkbox"
+                    /><span
+                      class="password-toggle-indicator"
+                      [ngClass]="{
+                        'mdi-eye-off-outline': !passTextType,
+                        'mdi-eye-outline': passTextType
+                      }"
+                    ></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mb-1 row px-0 justify-content-between align-items-center"
+            >
+              <div class="col-md-4">
+                <label
+                  class="form-label text-dark"
+                  for="signup-Password-confirm"
+                  >Confirm <span class="text-primary">*</span>
+                </label>
+              </div>
+              <div class="col-md-8">
+                <div class="password-toggle">
+                  <input
+                    class="form-control form-control-sm form-control-dark"
+                    [type]="fieldTextType ? 'text' : 'password'"
+                    id="signup-Password-confirm"
+                    minlength="8"
+                    formControlName="ConfirmPassword"
+                    required
+                    [ngClass]="{
+                      'is-invalid': submit && form['ConfirmPassword'].errors
+                    }"
+                  />
+                  <label
+                    class="password-toggle-btn"
+                    aria-label="Show/hide Password"
+                  >
+                    <input
+                      (click)="toggleFieldTextType()"
+                      class="password-toggle-check"
+                      type="checkbox"
+                    /><span
+                      class="password-toggle-indicator"
+                      [ngClass]="{
+                        'mdi-eye-off-outline': !fieldTextType,
+                        'mdi-eye-outline': fieldTextType
+                      }"
+                    ></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <ngx-recaptcha2
+                #captchaElem
+                required
+                [ngClass]="{
+                  'is-invalid': submit && form['captcha'].errors
+                }"
+                siteKey="6LfRqmQjAAAAAEi7VxuzQzomnOKSSqySjTPU2tHY"
+                formControlName="captcha"
+                (success)="handleSuccess($event)"
+              >
+              </ngx-recaptcha2>
+            </div>
+            <div class="form-check form-check-dark mb-1 mt-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="agree-to-terms"
+                required
+                formControlName="AgreeTerms"
+                [ngClass]="{
+                  'is-invalid': submit && form['AgreeTerms'].errors
+                }"
+              />
+
+              <label class="form-check-label" for="agree-to-terms"
+                ><span class="opacity-70">By joining, I agree to the</span>
+                <a href="/terms-conditions" class="text-dark">Terms of use</a>
+                <span class="opacity-70">and</span>
+                <a href="/privacy-policy" class="text-dark"
+                  >Privacy policy</a
+                ></label
+              >
+            </div>
+            <div class="form-check form-check-dark mb-4">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="sub-for-news"
+                checked
+                formControlName="SubscribeNewsletters"
+              />
+
+              <label class="form-check-label" for="sub-for-news"
+                ><span class="opacity-70"> Subscribe for newsletters</span>
+              </label>
+            </div>
+            <button
+              [disabled]="isLoading"
+              class="btn btn-primary btn-lg w-100"
+              type="submit"
+            >
+              Sign up
+              <span
+                *ngIf="isLoading"
+                class="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+<app-preloader *ngIf="loading"></app-preloader>
+
+
+<main class="page-wrapper">
+    <!-- Header-->
+    <app-header id="top"></app-header>
+
+
+    <section class="container my-5 pt-5 pb-lg-5">
+        <div class="row mx-0 ">
+            <div class="col-md-4 border-end-md mt-0 pt-0 border-dark p-2 p-sm-5">
+
+                <app-searchform [small]="true"></app-searchform>
+
+                <div class="card">
+                    <div class="card-header bg-shadid-light">
+                        <span class="">Like us on facebook</span>
+                    </div>
+                    <div class="card-body ">
+                        <div class="fb-like fb_iframe_widget" data-href="https://www.facebook.com/yuasatrading"
+                            data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"
+                            fb-xfbml-state="rendered"
+                            fb-iframe-plugin-query="action=like&amp;app_id=1586531728290446&amp;container_width=227&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+                            bis_skin_checked="1"><span
+                                style="vertical-align: bottom; width: 90px; height: 28px;"><iframe name="f22c66e814a0ac"
+                                    width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin"
+                                    title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true"
+                                    allowfullscreen="true" scrolling="no" allow="encrypted-media"
+                                    src="https://www.facebook.com/v2.3/plugins/like.php?action=like&amp;app_id=1586531728290446&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df1faf9f0bd407d8%26domain%3Dyuasatrading.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fyuasatrading.com%252Ff11773ee9e50fc%26relation%3Dparent.parent&amp;container_width=227&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+                                    style="border: none; visibility: visible; width: 90px; height: 28px;" class=""
+                                    bis_size="{&quot;x&quot;:227,&quot;y&quot;:527,&quot;w&quot;:90,&quot;h&quot;:28,&quot;abs_x&quot;:227,&quot;abs_y&quot;:527}"></iframe></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8  p-2 p-sm-5">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Job Id</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Closing Date</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let job of jobsList.Items">
+                                <th scope="row">{{job.Id}}</th>
+                                <td>{{job.Title}}</td>
+                                <td>{{job.CreatedOn | date}}</td>
+                                <td>{{job.ClosingDate | date}}</td>
+                                <td>{{job.Location}}</td>
+                                <td>{{job.Type}}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-xs mb-1 mr-1" style="margin-right: 0.2rem"
+                                        (click)="getJobDetails(job.Slug,toggleDetailsModel)">Detail</button>
+                                    <button class="btn btn-success btn-xs mb-1"
+                                        (click)="getJobDetails(job.Id,applyJob)">Apply</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- job details modal  -->
+    <ng-template #toggleDetailsModel role="document" let-modal>
+
+        <div class="modal-header">
+            <h6 class=" ">{{selectedJob.Title}}</h6>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="job-details" style="height:75vh !important" *ngIf="!loading">
+                <div class=" d-flex   align-items-center justify-content-between">
+
+                    <div class="d-flex px-3 ">
+                        <div class="m-0 p px-1">Opening Date:</div>
+                        <div class="m-0 ">{{selectedJob.CreatedOn | date}}</div>
+                    </div>
+                    <div class=" d-flex   px-3">
+                        <div class="m-0 p px-1">Closing Date:</div>
+                        <div class="m-0"> {{selectedJob.ClosingDate | date}} </div>
+                    </div>
+                </div>
+                <div class=" d-flex   align-items-center justify-content-between border-bottom pb-5">
+                    <div class="d-flex  align-items-center justify-content-between px-3 ">
+                        <div class="m-0 p px-1">Location:</div>
+                        <div class="m-0"> {{selectedJob.Location}} </div>
+                    </div>
+                    <div class="d-flex px-3 ">
+                        <div class="m-0 p px-1">Type:</div>
+                        <div class="m-0"> {{selectedJob.Type}} </div>
+                    </div>
+
+                </div>
+                <div class="description">
+                    <h5>Description</h5>
+                    <p style="height:50vh !important" [innerHTML]="selectedJob.Detail"></p>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </ng-template>
+
+    <!-- job Apply modal  -->
+    <ng-template #applyJob role="document" let-modal>
+
+        <div class="modal-header">
+            <h5 class="modal-title">Apply For Job</h5>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="loading">
+                <div class="panel panel-default" bis_skin_checked="1">
+                    <div class="panel-body" bis_skin_checked="1">
+                        <div class="row" *ngFor="let i of [1,2,3,4,5]">
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="job-details" *ngIf="!loading">
+                <form novalidate (ngSubmit)="onSubmit()" [formGroup]="validationform">
+                    <!-- Text input -->
+                    <div class="mb-3">
+                        <label for="text-input" class="form-label">Name</label>
+                        <input class="form-control" formControlName="Name" type="text" id="text-input" value="">
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="mb-3">
+                        <label for="email-input" class="form-label">Email</label>
+                        <input class="form-control" formControlName="Email" type="email" id="email-input" value="">
+                    </div>
+
+
+                    <!-- Phone Input -->
+                    <div class="mb-3">
+                        <label for="tel-input" class="form-label">Phone</label>
+                        <input class="form-control" formControlName="Phone" type="tel" id="tel-input" value="">
+                    </div>
+
+                    <!-- citizen  -->
+                    <div class="mb-3">
+                        <label for="text-input" class="form-label">Citizen</label>
+                        <input class="form-control" formControlName="Citizen" type="text" id="text-input" value="">
+                    </div>
+
+                    <!-- Select -->
+                    <div class="mb-3">
+                        <label for="select-input" class="form-label">Country</label>
+                        <!-- <select formControlName="CountryId" class="form-select" id="select-input">
+                            <option *ngFor="let country of countryList" [value]="country.Id">
+                                {{country.Name}}
+                            </option>
+                        </select> -->
+                        <select formControlName="CountryId" class="form-select" id="select-input">
+                            <option value="" selected disabled>Choose Country</option>
+                            <option *ngFor="let country of countryList" [value]="country.Id">
+                                {{country.Name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Cover Letter -->
+                    <div class="mb-3">
+                        <label for="textarea-input" class="form-label">Cover Letter</label>
+                        <textarea class="form-control" formControlName="CoverLetter" id="textarea-input"
+                            rows="5"></textarea>
+                    </div>
+
+                    <!-- File input -->
+                    <div class="mb-3">
+                        <label for="file-input" class="form-label">File</label>
+                        <input class="form-control" type="file" id="file-input" (change)="onFileChange($event)">
+                    </div>
+
+                    <!-- submit form  -->
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit">Apply</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+
+    </ng-template>
+
+
+</main>
+
+<!-- Footer-->
+<div class="bg-dark">
+    <app-footer></app-footer>
+</div>

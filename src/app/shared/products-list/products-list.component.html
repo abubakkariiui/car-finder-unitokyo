@@ -1,0 +1,208 @@
+<div class="row py-md-1">
+  <!-- Filers sidebar (Offcanvas on mobile)-->
+  <div class="col-lg-3 pe-xl-4">
+    <app-searchform *ngIf="showMiniSearch" [small]="true"></app-searchform>
+    <!-- Breadcrumb-->
+    <app-breadcrumbs *ngIf="showBreadcrumb" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <app-filter-searchbar (newItemEvent)="_fetchData($event)" id="filterSearch" *ngIf="!showMiniSearch"
+      [filtersProp]="queryParams"></app-filter-searchbar>
+  </div>
+  <!-- Catalog list view-->
+  <div class="col-lg-9  pt-3">
+
+    <!-- Page title-->
+    <div *ngIf="showTitle" class="d-flex align-items-center justify-content-between pb-4 mb-2">
+
+      <h1 class="text-dark me-3 mb-0">
+        Catalog {{ type == "list" ? "List" : "Grid" }}
+      </h1>
+
+    </div>
+
+
+    <div *ngIf="type == 'list'">
+      <!-- Sorting + View-->
+      <div class="d-sm-flex align-items-center justify-content-between pb-4 mb-2">
+        <div class="d-flex align-items-center me-sm-4">
+          <label class="fs-sm text-dark me-2 pe-1 text-nowrap" for="sorting1"><i
+              class="fi-arrows-sort mt-n1 me-2"></i>Sort by:</label>
+          <select [(ngModel)]="orderBy" (ngModelChange)="changeOrder()"
+            class="form-select form-select-dark form-select-sm me-sm-4" id="sorting1">
+            <option value="desc">Newest</option>
+            <option value="asc">Oldest</option>
+          </select>
+        </div>
+
+        <div class="d-none d-sm-flex">
+          <div class="text-dark px-2 mx-2 align-items-center justify-content-between d-flex">
+            <i class="fi-car fs-lg me-2"></i><span class="align-middle">{{ catalogList?.TotalItems }} items</span>
+          </div>
+          <a class="nav-link nav-link-dark px-2" [ngClass]="type !== 'grid' ? 'active' : ''"
+            (click)="navigateRoute('/catalog/search/list')" placement="top" ngbTooltip="List view"><i
+              class="fi-list"></i></a>
+          <a [ngClass]="type == 'grid' ? 'active' : ''" class="nav-link nav-link-dark px-2"
+            (click)="navigateRoute('/catalog/search/grid')" placement="top" ngbTooltip="Grid view"><i
+              class="fi-grid"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- preloader-->
+
+      <div *ngIf="!isListDataAvailable">
+        <div *ngFor="let item of [1, 2, 3, 4, 5]" class="card card-dark card-hover card-horizontal mb-4">
+          <div class="card-body">
+            <div class="panel panel-default" bis_skin_checked="1">
+              <div class="panel-body" bis_skin_checked="1">
+                <div class="row clearfix" bis_skin_checked="1">
+                  <div class="col-3 h-100" bis_skin_checked="1">
+                    <div class="animate-bg h-100">
+                      <br /><br /><br /><br /><br /><br />
+                    </div>
+                  </div>
+                  <div class="col-9" bis_skin_checked="1">
+                    <div class="row">
+                      <p class="animate-bg col-2"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-3"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-3"></p>
+                    </div>
+                    <div class="row">
+                      <p class="animate-bg col-2"></p>
+                    </div>
+                    <div class="row">
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                      <div class="col-4">
+                        <p class="animate-bg small-bg"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="catalogList?.Items.length>0">
+        <VehicleDetails (whishListChange)="onWhishListChange()" *ngFor="let item of catalogList?.Items; index as i"
+          [VehicleObject]="item" [id]="i" [Type]="type">
+        </VehicleDetails>
+      </div>
+    </div>
+
+    <div *ngIf="type == 'grid'">
+      <!-- Sorting + View-->
+      <div class="d-sm-flex align-items-center justify-content-between pb-4 mb-2">
+        <div class="d-flex align-items-center me-sm-4">
+          <label class="fs-sm text-dark me-2 pe-1 text-nowrap" for="sorting1"><i
+              class="fi-arrows-sort mt-n1 me-2"></i>Sort by:</label>
+
+          <select [(ngModel)]="orderBy" (ngModelChange)="changeOrder()"
+            class="form-select form-select-dark form-select-sm me-sm-4" id="sorting1">
+            <option value="desc">Newest</option>
+            <option value="asc">Oldest</option>
+          </select>
+        </div>
+        <div class="d-none d-sm-flex">
+          <div class="text-dark px-2 mx-2 align-items-center justify-content-between d-flex">
+            <i class="fi-car fs-lg me-2"></i><span class="align-middle">{{ catalogList?.TotalItems }} items</span>
+          </div>
+          <a class="nav-link nav-link-dark px-2" [ngClass]="type !== 'grid' ? 'active' : ''"
+            (click)="navigateRoute('/catalog/search/list')" placement="top" ngbTooltip="List view"><i
+              class="fi-list"></i></a>
+          <a [ngClass]="type == 'grid' ? 'active' : ''" class="nav-link nav-link-dark px-2"
+            (click)="navigateRoute('/catalog/search/grid')" placement="top" ngbTooltip="Grid view"><i
+              class="fi-grid"></i>
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="!isListDataAvailable">
+        <div class="row">
+          <div class="col-sm-4 mb-4" *ngFor="let item of [1, 2, 3, 4, 5]">
+            <div class="card card-dark card-hover card-horizontal mb-4">
+              <div class="card-body">
+                <div class="panel panel-default" bis_skin_checked="1">
+                  <div class="panel-body" bis_skin_checked="1">
+                    <div class="row clearfix" bis_skin_checked="1">
+                      <div class="col-12 h-100" bis_skin_checked="1">
+                        <div class="animate-bg h-100 pb-2">
+                          <br /><br /><br /><br /><br /><br />
+                        </div>
+                      </div>
+                      <div class="col-12" bis_skin_checked="1">
+                        <div class="row">
+                          <p class="animate-bg col-3"></p>
+                        </div>
+                        <div class="row">
+                          <p class="animate-bg col-5"></p>
+                        </div>
+                        <div class="row">
+                          <p class="animate-bg col-3"></p>
+                        </div>
+                        <div class="row">
+                          <p class="animate-bg col-2"></p>
+                        </div>
+                        <div class="row">
+                          <div class="col-4">
+                            <p class="animate-bg small-bg"></p>
+                          </div>
+                          <div class="col-4">
+                            <p class="animate-bg small-bg"></p>
+                          </div>
+                          <div class="col-4">
+                            <p class="animate-bg small-bg"></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="catalogList?.Items.length>0">
+        <div class="row">
+          <!-- Item-->
+          <div class="col-sm-6 col-md-3 col-lg-4 mb-4" *ngFor="let item of catalogList?.Items; index as i">
+            <VehicleDetails (whishListChange)="onWhishListChange()" [VehicleObject]="item" [id]="i" Type="grid">
+            </VehicleDetails>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="catalogList?.Items.length == 0">
+      <h1>No Result Found ...</h1>
+    </div>
+
+    <!-- Sorting + Pagination-->
+    <div class="d-flex align-items-center justify-content-between py-2" *ngIf="catalogList?.Items.length > 0">
+      <div class="d-flex align-items-center me-sm-4"></div>
+      <nav aria-label="Pagination">
+        <ngb-pagination [rotate]="true" [(page)]="pagination.page" (pageChange)="_fetchData($event)"
+          [pageSize]="pagination.pageSize" [maxSize]="2" [collectionSize]="pagination.collectionSize"
+          [boundaryLinks]="true" [directionLinks]="true">
+        </ngb-pagination>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<!-- Filters sidebar toggle button (mobile)-->
+<button class="btn btn-primary btn-sm w-100 rounded-0 fixed-bottom d-lg-none" type="button" data-bs-toggle="offcanvas"
+  data-bs-target="#blog-sidebar" (click)="FilterSidebar()"><i class="fi-sidebar-left me-2"></i>Filter</button>
+<div class="vertical-overlay" (click)="SidebarHide()"></div>

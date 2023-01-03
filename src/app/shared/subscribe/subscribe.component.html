@@ -1,0 +1,40 @@
+<small class="text-danger" *ngIf="validationform.get('email').errors?.['email']">Email address is
+    invalid</small>
+
+<form class="form-group form-group-{{theme}} mb-3 needs-validation" novalidate
+    (ngSubmit)="validSubmit(toggleResultModal)" [formGroup]="validationform">
+
+    <div class="input-group">
+
+        <span class="input-group-text"> <i class="fi-mail"></i></span>
+
+        <input class="form-control " type="email" id="signup-email" placeholder="Enter your email" required
+            formControlName="email" [ngClass]="{'is-invalid': submit && form['email'].errors}">
+
+    </div>
+    <button class="btn btn-primary" type="submit"> {{ type == 'sub' ? 'Subscribe':'Unsubscribe' }}
+    </button>
+</form>
+
+<!-- Sign In Modal-->
+<ng-template #toggleResultModal let-modal>
+    <div class="bg-light border-dark  rounded-3">
+        <div class="modal-body   pa-5">
+            <button class="btn-close btn-close-dark position-absolute top-0 end-0 mt-3 me-3" type="button"
+                data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+
+            <h2 class="h3 text-dark " *ngIf="resultMessage.status ==  200">
+                {{resultMessage.body }}
+            </h2>
+
+            <h2 class="h3 text-dark " *ngIf="resultMessage.status !=  200">
+                {{resultMessage.body }}
+            </h2>
+
+            <h2 class="h3 text-dark " *ngIf="resultMessage.status ==  400">
+                {{resultMessage.error.Message }}
+            </h2>
+
+        </div>
+    </div>
+</ng-template>

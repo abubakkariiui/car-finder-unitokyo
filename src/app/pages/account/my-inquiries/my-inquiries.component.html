@@ -1,0 +1,196 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <!-- <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <app-account-asidebar componentType="inquiries"></app-account-asidebar>
+
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-9 col-md-7 mb-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-2">
+                <h1 class="h2 text-dark mb-0">My Inquiries<span
+                        class="badge bg-faded-dark fs-base align-middle ms-3">{{inquiriesList.Items?.length}}</span>
+                </h1>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Make / Model</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Transmission</th>
+                            <th scope="col">Steering</th>
+                            <th scope="col">Price Type</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of inquiriesList.Items">
+                            <th scope="row">{{ i.Manufacturer.Title }} {{i.Model.Title}}</th>
+                            <td>{{ i.YearFrom }}-{{i.YearTo}}</td>
+                            <td>{{
+                                i.Transmission == 1
+                                ? "AT"
+                                : i.Transmission == 2
+                                ? "CAT"
+                                : i.Transmission == 3
+                                ? "IAT"
+                                : i.Transmission == 4
+                                ? "MT"
+                                : i.Transmission == 5
+                                ? "NA"
+                                : "-"
+                                }}</td>
+                            <td>{{ i.Steering===0?'LHD':'RHD' }}</td>
+                            <td>{{ i.PriceType === 0
+                                ? "FOB"
+                                : i.PriceType === 1
+                                ? "CIF"
+                                : "DDP" }}</td>
+                            <td>{{ i.CreatedOn |date}}</td>
+                            <td>{{ i.Status === 0 ?'pending' : 'completed' }}</td>
+
+                            <td> <button (click)="getInquiryDetails(i,toggleDetailsModel) "
+                                    class="btn btn-success btn-xs mb-1">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Sorting + Pagination-->
+                <div class="d-flex align-items-center justify-content-between py-2" *ngIf="showPagination">
+                    <div class="d-flex align-items-center me-sm-4"></div>
+                    <nav aria-label="Pagination">
+                        <ngb-pagination [rotate]="true" [(page)]="filters.page" (pageChange)="_fetchData()"
+                            [pageSize]="filters.pageSize" [maxSize]="2" [collectionSize]="collectionSize"
+                            [boundaryLinks]="true" [directionLinks]="true">
+                        </ngb-pagination>
+                    </nav>
+                </div>
+
+            </div>
+
+            <div class="row" *ngIf="inquiriesList.Items?.length == 0 ">
+                <div class="col-4 offset-4">
+                    <span class="text-dark">
+                        <h3> No data found</h3>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h3 class="text-primary" *ngIf="errorResult.status == 401"> Please login </h3>
+                    <h3 class="text-primary" *ngIf="errorResult.status != 401 || errorResult.status != 200">
+                        {{errorResult.Message}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #toggleDetailsModel let-modal>
+
+
+    <div class="modal-body ">
+        <div class="col d-flex align-items-center justify-content-between">
+            <h3 class="align-items-center justify-content-between">Inquiry Details</h3>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+
+        <div class=" ">
+            <div *ngIf="loading">
+                <div class="panel panel-default" bis_skin_checked="1">
+                    <div class="panel-body" bis_skin_checked="1">
+                        <div class="row" *ngFor="let i of [1,2,3,4,5]">
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" *ngIf="!loading">
+                    <tbody>
+                        <tr>
+                            <td>Title</td>
+                            <th scope="row">{{ selectedInquiry.Manufacturer.Title }} {{selectedInquiry.Model.Title}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Created On</td>
+                            <th scope="row">{{ selectedInquiry.CreatedOn |date}} </th>
+                        </tr>
+                        <tr>
+                            <td>Transmission</td>
+                            <th scope="row">{{ selectedInquiry.Transmission }} </th>
+                        </tr>
+                        <tr>
+                            <td>YearFrom</td>
+                            <th scope="row">{{ selectedInquiry.YearFrom }} </th>
+                        </tr>
+                        <tr>
+                            <td>YearTo</td>
+                            <th scope="row">{{ selectedInquiry.YearTo }} </th>
+                        </tr>
+                        <tr>
+                            <td>Steering</td>
+                            <th scope="row">{{ selectedInquiry.Steering===0?'LHD':'RHD' }} </th>
+                        </tr>
+                        <tr>
+                            <td>Price Type </td>
+                            <th scope="row">{{ selectedInquiry.PriceType === 0
+                                ? "FOB"
+                                : selectedInquiry.PriceType === 1
+                                ? "CIF"
+                                : "DDP" }} </th>
+                        </tr>
+                        <tr>
+                          <td>Inquiry</td>
+                          <th scope="row">{{ selectedInquiry.Message==="" ?'Please Specify Your inquiry': selectedInquiry.Message }} </th>
+                      </tr>
+                      <tr>
+                        <td>Yuasa Response</td>
+                        <th scope="row">{{ selectedInquiry.AdminResponse==="" ?'Wait for Admin to respond': selectedInquiry.AdminResponse }} </th>
+                    </tr>
+                        <tr>
+                            <td>Status</td>
+                            <th scope="row">{{ selectedInquiry.Status === 0 ?'pending' : 'completed'}} </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</ng-template>
+
+
+<!-- Footer-->
+<div class="bg-dark">
+    <app-footer></app-footer>
+</div>

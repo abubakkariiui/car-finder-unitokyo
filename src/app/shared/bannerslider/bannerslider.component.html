@@ -1,0 +1,28 @@
+<swiper [config]="config" class="mb-5" class="dark top-banner-slider tns-controls-static tns-nav-outside">
+  <div class="swsiper-slide h-100" *ngFor="let s of slidersData">
+    <div class="row pt-lg-4 pt-xl-5 px-0 mx-0">
+      <div class="col-lg-4 col-md-5 pt-3 pt-md-4 mt-5">
+        <h1 class="display-4 text-dark pb-2 mb-4 me-md-n5 mt-5" [innerHTML]="s.Caption"></h1>
+        <p class="fs-lg text-dark opacity-70">
+          {{ s.LinkText }}
+        </p>
+        <button routerLink="{{ s.Link }}" class="d-none d-md-block d-lg-block d-xl-block btn btn-primary" type="button">
+          View Details
+        </button>
+      </div>
+      <div class="col-lg-8 col-md-7 mt-md-5">
+        <img src="{{admin_base_ur+'/pictures/Slides/'+
+            s.SlideComposer
+          }}" alt="Image" width="800" />
+      </div>
+
+    </div>
+
+    <div class="d-flex mb-5 justify-content-center d-md-none d-lg-none d-xl-none">
+      <button routerLink="/promotions" class=" btn btn-primary" type="button">
+        View Details
+      </button>
+
+    </div>
+  </div>
+</swiper>

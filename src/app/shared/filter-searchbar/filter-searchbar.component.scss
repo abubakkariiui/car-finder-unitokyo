@@ -1,0 +1,24 @@
+.form-label {
+    width: 400px;
+    padding: 0rem 2.53125rem 0rem 1.125rem;
+}
+.form-control {
+    height: 30px;
+    padding: 0rem 2.53125rem 0rem 1.125rem;
+}
+.form-select {
+    height: 30px;
+    padding: 0rem 2.53125rem 0rem 1.125rem;
+}
+
+.range-accordion .btn-link {
+    width: 100%;
+    text-decoration-line: none;
+}
+
+.panel-x {
+    .accordion .btn::before {
+        border: 1px solid red !important;
+        border-radius: 20px !important;
+    }
+}

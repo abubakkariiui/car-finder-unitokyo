@@ -1,0 +1,142 @@
+<!-- <div class="loading-window" style="z-index: 9999" *ngIf="!isSliderAvailable">
+  <div class="car">
+    <div class="strike"></div>
+    <div class="strike strike2"></div>
+    <div class="strike strike3"></div>
+    <div class="strike strike4"></div>
+    <div class="strike strike5"></div>
+    <div class="car-detail spoiler"></div>
+    <div class="car-detail back"></div>
+    <div class="car-detail center"></div>
+    <div class="car-detail center1"></div>
+    <div class="car-detail front"></div>
+    <div class="car-detail wheel"></div>
+    <div class="car-detail wheel wheel2"></div>
+  </div>
+
+  <div class="text"><span>Loading</span><span class="dots">...</span></div>
+</div> -->
+
+<app-preloader *ngIf="loading"></app-preloader>
+
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<section class="bg-top-center bg-repeat-0" style="
+    background-image: url(assets/img/car-finder/home/hero-bg.png);
+    background-size: 1920px 630px;
+  ">
+  <div class="container bann">
+    <app-bannerslider [slidersData]="slidersData"></app-bannerslider>
+  </div>
+  <!-- {{topOffersData.Items}}--->
+  <app-searchform [brandsData]="brandsData" [manuFacturers]="manuFacturers" [yearsList]="yearsList"></app-searchform>
+</section>
+
+<app-types></app-types>
+
+<!-- Top offers-->
+<app-topoffers></app-topoffers>
+
+<!-- Brands-->
+<app-brands [brandsData]="brandsData"></app-brands>
+
+<!-- Features-->
+<app-features></app-features>
+
+<!-- Latest (carousel)-->
+<app-latest-vehicles></app-latest-vehicles>
+
+<!-- showrooms   -->
+<section class="container pt-4 pb-5 py-sm-5">
+  <div class="row align-items-center py-3 py-sm-0">
+    <div class="col-md-3 col-xl-3 mb-4 pb-3 mb-md-0 pb-md-0 text-center text-md-start">
+      <h2 class="text-dark">REGIONAL SHOWROOMS</h2>
+      <p class="fs-lg text-dark opacity-70 pb-md-4">
+        Choose the flag to see region wise!
+      </p>
+    </div>
+
+    <div class="col-md-9 col-xl-9">
+      <div class="d-flex overflow-auto justify-content-between">
+        <div class="flag-item " *ngFor="let showroom of showRoomsList |async">
+          <a class=" mb-4 text-dark text-decoration-none" href="javascript:void(0);" routerLink="/catalog/search/list"
+            [queryParams]="{
+            countryCode: showroom.Country.CountryCode.toLowerCase()
+          }">
+            <img class="d-block mb-2 mx-auto fg-flag" src="assets/img/flags/{{
+              showroom.Country ? showroom.Country.Name : ''
+            }}.svg" width="120" height="60" alt="{{ showroom.Country ? showroom.Country.Name : '' }}" />
+
+
+            <div class="fw-bold text-center pt-1">
+              {{ showroom.Country ? showroom.Country.Name : "" }}
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Latest news (Blog)-->
+
+<section class="container pb-4 pb-sm-5 mb-2 mb-md-4">
+  <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-sm-2">
+    <h2 class="h3 text-dark mb-2 mb-sm-0">Latest Blogs</h2>
+    <!-- <a class="btn btn-link btn-dark  text-dark fw-normal px-1" routerLink="/blog-grid">Go to blog </a> -->
+  </div>
+
+  <div *ngFor="let blogs of latestBlogs | async">
+    <swiper [config]="news" class="mb-5 custom-swiper" class="pagination-hide">
+      <div class="swiper-slide" *ngFor="let blogItem of blogs.Items; index as idx">
+        <article>
+          <a class="d-block rounded-3 overflow-hidden" routerLink="/single-blog"
+            [queryParams]="{ blog_id: blogItem.Id, title: blogItem.Title }">
+            <!-- <img class="d-block" src="{{
+                admin_base_url + '/Content/Images/Blogs/' + blogItem.Img1
+              }}" alt="Image" /> -->
+
+
+            <div class="bg-size-cover" style="height:200px !important"
+              [ngStyle]="{ 'background-image': 'url(' +  admin_base_url + '/Content/Images/Blogs/' + blogItem.Img1 + ')' }">
+            </div>
+          </a>
+
+          <div class="py-3">
+            <a class="fs-xs text-uppercase text-decoration-none" href="javascript:void(0);">{{ blogItem.sub_title }}</a>
+            <h3 class="text-dark fs-base pt-1">
+              <a class="nav-link text-dark" routerLink="/single-blog"
+                [queryParams]="{ blog_id: blogItem.Id, title: blogItem.Title }">{{ blogItem.Title }}</a>
+            </h3>
+            <a class="d-flex align-items-center text-decoration-none" routerLink="/single-blog"
+              [queryParams]="{ blog_id: blogItem.Id, title: blogItem.Title }">
+              <!-- <img
+                class="rounded-circle" src="{{data.Writer.FullName}}" width="44" alt="Avatar"> -->
+
+              <div class="ps-2">
+                <h6 class="fs-sm text-dark lh-base mb-1">
+                  {{ blogItem.Writer ? blogItem.Writer.FullName : "" }}
+                </h6>
+                <div class="d-flex align-items-center fs-xs text-dark opacity-60">
+                  <span class="me-2 pe-1"><i class="fi-calendar-alt me-1"></i>{{ blogItem.CreatedOn | date
+                    }}</span><span><i class="fi-chat-circle me-1"></i>{{
+                    blogItem.Comments ? blogItem.Comments.length : 0
+                    }}
+                    comments </span>
+                  <ngb-rating [(rate)]="blogItem.Rating" [readonly]="true" [max]="5">
+                  </ngb-rating>
+                </div>
+              </div>
+            </a>
+          </div>
+        </article>
+      </div>
+    </swiper>
+  </div>
+</section>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,187 @@
+<section class="container ">
+
+    <div class="card-header bg-shadid-light">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDefault"
+            (click)="toggleModal(ticketModel , toggleLoginModel)">Create
+            Ticket</button>
+    </div>
+
+    <div class="row">
+        <div class=" col-5">
+            <!-- Light table with striped rows -->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover-cursor" (click)="onTicketSelected( item)"
+                            *ngFor="let item of supportlist; let i = index">
+
+                            <td>
+                                {{item.Id}} - {{ item.SupportDepartment.Title }}
+                            </td>
+                            <td>
+                                {{item.Date | date: 'YYYY-MM-dd'}}
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Sorting + Pagination-->
+                <div *ngIf="showPagination" class="d-flex align-items-center justify-content-between py-2">
+                    <div class="d-flex align-items-center me-sm-4"></div>
+                    <nav aria-label="Pagination">
+                        <ngb-pagination [rotate]="true" [(page)]="filters.page" (pageChange)="getAllSupports()"
+                            [pageSize]="filters.pageSize" [maxSize]="2" [collectionSize]="collectionSize"
+                            [boundaryLinks]="true" [directionLinks]="true">
+                        </ngb-pagination>
+                    </nav>
+                </div>
+
+            </div>
+
+        </div>
+        <div class=" col-7 ticket-height-controller">
+            <div *ngIf="messagesLoading" class="panel panel-default" bis_skin_checked="1">
+                <div class="panel-body" bis_skin_checked="1">
+                    <div class="row clearfix" bis_skin_checked="1">
+                        <div class="col-12 pt-3" bis_skin_checked="1">
+                            <div class="row">
+                                <div class="col-4">
+                                    <p class="animate-bg small-bg"></p>
+                                </div>
+                                <div class="col-4">
+                                    <p class="animate-bg small-bg"></p>
+                                </div>
+                                <div class="col-4">
+                                    <p class="animate-bg small-bg"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="!messagesLoading && supportlist.length > 0">
+                <div class="card-header py-2 d-flex align-items-center justify-content-between">
+                    <span class=" text-bold ">Ticket Details
+                        <span class="badge bg-faded-success"
+                            *ngIf="selectedTicket.IsSolved && isTicketSelected">Resolved</span>
+                        <span class="badge bg-faded-warning"
+                            *ngIf="!selectedTicket.IsSolved && isTicketSelected">Pending</span>
+                    </span>
+                    <button *ngIf="isTicketSelected && !selectedTicket.IsSolved" class="btn btn-xs btn-success"
+                        (click)="writeMessage(writeMessageModel)">Write
+                        Message</button>
+                </div>
+                <div *ngIf="!isTicketSelected" class="px-2">Please select a ticket</div>
+
+                <div class="card-body mb-3" style="Background:white;border: 1px solid #c7000a; "
+                    *ngFor="let item of selectedTicket.SupportMessages; let i = index"
+                    [ngClass]="{'user-message':loggedInUser.Id === item.UserId}">
+
+                    <i class="fi-chat-right opacity-70 mt-n1 me-1 text-white" *ngIf="loggedInUser.Id != item.UserId"></i>
+                    <span class="text-dark">{{item.MessageBody
+                        }}</span>
+                    <i class="fi-chat-left opacity-70 mt-n1 me-1 px-2  " *ngIf=" loggedInUser.Id==item.UserId"></i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<ng-template #toggleLoginModel let-modal>
+
+    <div class="modal-body ">
+        <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+            data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+        <app-signin [isDialog]="true" route="/support" (routeChange)="modal.close('Close click')"
+            [showBackButton]="false">
+        </app-signin>
+    </div>
+
+</ng-template>
+
+<ng-template #writeMessageModel let-modal>
+
+    <div class="modal-body ">
+        <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+            data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+
+        <div class="card-header bg-shadid-light">
+            <span class="">Write Message</span>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="sendMessage()" [formGroup]="writeMessageForm">
+                <div class="modal-body">
+
+                    <div class="mb-4">
+                        <textarea class="form-control form-control-dark" placeholder="Message..." type="text" required
+                            formControlName="MessageBody"></textarea>
+                        <div
+                            *ngIf="writeMessageForm.get('MessageBody').invalid && (writeMessageForm.get('MessageBody').dirty || validationform.get('MessageBody').touched)">
+                            <span class=""> Please provide a valid Message.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button [disabled]="isLoading" class="btn btn-primary btn-sm" [disabled]="writeMessageForm.invalid"
+                    type="submit">
+                    Send Message
+
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+</ng-template>
+
+
+<ng-template #ticketModel role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Create Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    </div>
+    <form (ngSubmit)="validSubmit()" [formGroup]="validationform">
+        <div class="modal-body">
+            <div class="mb-4">
+                <select class="form-select  form-select-sm form-select-dark mb-1" formControlName="DepartmentId">
+                    <option id="departments" value="" disabled selected>Select Department</option>
+                    <option [ngValue]="4">Documentation</option>
+                    <option [ngValue]="5">Sales</option>
+                </select>
+                <div
+                    *ngIf="validationform.get('DepartmentId').invalid && (validationform.get('DepartmentId').dirty || validationform.get('DepartmentId').touched)">
+                    Please provide a valid Department Name.
+                </div>
+            </div>
+            <div class="mb-4">
+                <textarea class="form-control form-control-dark" placeholder="Message..." type="text" required
+                    formControlName="MessageBody"></textarea>
+                <div
+                    *ngIf="validationform.get('MessageBody').invalid && (validationform.get('MessageBody').dirty || validationform.get('MessageBody').touched)">
+                    Please provide a valid Message.
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="isLoading" class="btn btn-primary btn-sm" [disabled]="validationform.invalid"
+                type="submit">
+                Create
+
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                    aria-hidden="true"></span>
+            </button>
+        </div>
+    </form>
+</ng-template>

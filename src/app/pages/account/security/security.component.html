@@ -1,0 +1,75 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+  <!-- Breadcrumb-->
+  <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+  <!-- Page content-->
+  <div class="row">
+    <!-- Sidebar-->
+    <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+      <!-- Account nav-->
+      <app-account-asidebar componentType="security"></app-account-asidebar>
+    </aside>
+    <!-- Content-->
+    <div class="col-lg-9 col-md-7 mb-5">
+      <h1 class="h2 text-dark">Password &amp; Security</h1>
+      <p class="text-dark pt-1">Manage your password settings and secure your account.</p>
+      <h2 class="h5 text-dark">Password</h2>
+      <form class="needs-validation pb-4" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationform">
+        <div class="row align-items-end mb-2">
+          <div class="col-sm-6 mb-2">
+            <label class="form-label text-dark" for="account-password">Current password</label>
+            <div class="password-toggle">
+              <input class="form-control form-control-dark" [type]="fieldTextType ? 'text' : 'password'"
+                id="account-password" required formControlName="OldPassword"
+                [ngClass]="{'is-invalid': submit && form['OldPassword'].errors}">
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType
+              }" (click)="toggleFieldTextType()"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-2"><a class="d-inline-block text-dark mb-2" href="javascript:void(0);"
+              routerLink="/password-recovery">Forgot
+              password?</a></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-6 mb-3">
+            <label class="form-label text-dark" for="account-password-new">New password</label>
+            <div class="password-toggle">
+              <input class="form-control form-control-dark" [type]="fieldNewTextType ? 'text' : 'password'"
+                id="account-password-new" required formControlName="NewPassword"
+                [ngClass]="{'is-invalid': submit && form['NewPassword'].errors}">
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !fieldNewTextType, 'mdi-eye-outline': fieldNewTextType
+              }" (click)="toggleNewFieldTextType()"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-3">
+            <label class="form-label text-dark" for="account-password-confirm">Confirm password</label>
+            <div class="password-toggle">
+              <input class="form-control form-control-dark" [type]="confirmfieldTextType ? 'text' : 'password'"
+                id="account-password-confirm" required formControlName="ConfirmPassword"
+                [ngClass]="{'is-invalid': submit && form['ConfirmPassword'].errors}">
+              <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !confirmfieldTextType, 'mdi-eye-outline': confirmfieldTextType
+              }" (click)="toggleConfirmFieldTextType()"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-outline-primary" type="submit">Update password</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Footer-->
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

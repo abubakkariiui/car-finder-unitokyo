@@ -1,0 +1,31 @@
+<section class="container pb-5 mb-md-4">
+  <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-sm-2">
+    <h2 class="h3 text-dark mb-2 mb-sm-0">Search By Type</h2>
+
+  </div>
+  <div *ngIf="!small" class="row row-cols-2 row-cols-xs-12 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-2 g-md-4">
+    <!-- Item-->
+    <div class="col" *ngFor="let data of manuFacturers">
+      <div class="card card-body card-light card-hover bg-transparent border-0 px-0 pt-0 text-center">
+        <div class="">
+          <img class="d-block mx-auto mb-3" src="{{ data.image }}" alt="Sedan" />
+        </div>
+        <a class="text-dark stretched-link fw-bold" routerLink="/catalog/search/list"
+          [queryParams]="{ Type: data.id }">{{ data.title }}</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="small" class="row">
+    <!-- Item-->
+    <div class="col-sm-6" *ngFor="let data of manuFacturers">
+      <div class="card card-body card-light card-hover bg-transparent border-0 px-0 pt-0 text-center">
+        <div class="">
+          <img class="d-block mx-auto mb-3" src="{{ data.image }}" alt="Sedan" />
+        </div>
+
+        <a class="text-dark stretched-link fw-bold" [queryParams]="{ Type: data.id }"
+          routerLink="/catalog/search/list">{{ data.title }}</a>
+      </div>
+    </div>
+  </div>
+</section>

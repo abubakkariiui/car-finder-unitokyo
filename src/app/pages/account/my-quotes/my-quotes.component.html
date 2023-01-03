@@ -1,0 +1,231 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <!-- <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <app-account-asidebar componentType="quotes"></app-account-asidebar>
+
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-9 col-md-7 mb-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-2">
+                <h1 class="h2 text-dark mb-0">My Quotes<span
+                        class="badge bg-faded-dark fs-base align-middle ms-3">{{quotesList.Items?.length}}</span>
+                </h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Request Date</th>
+                            <th scope="col">Web Price ($)</th>
+                            <th scope="col">Quoted Price ($)</th>
+                            <th scope="col">Down Payment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of quotesList.Items">
+                            <td>{{i.VehicleSku||'-'}}</td>
+                            <td>
+                                <span *ngIf="i.ManufacturerName" (click)="showInfo(i , vInfo)"
+                                    class="text-primary hover-cursor"
+                                    [ngClass]="{'text-primary hover-cursor': i.Type === 0}">
+
+                                    {{i.ManufacturerName}}
+                                    {{i.ModelName}}
+                                </span>
+                                <span *ngIf="!i.ManufacturerName">---</span>
+                            </td>
+                            <td>{{i.RequestedOn | date}} </td>
+                            <td>{{i.VehiclePrice | currency}} </td>
+                            <td>{{getPrice(i,'quoted') |currency}} </td>
+                            <td>{{getPrice(i,'down') }} </td>
+                            <td>{{
+                                i.Status === 0 ? 'Awaiting Reponse'
+                                :i.Status === 1 ? 'Under Negotiation'
+                                :i.Status === 2 ? 'Quoted'
+                                :i.Status === 3 ? 'Cancelled'
+                                :i.Status === 4 ?'Accepted'
+                                :i.Status === 5 ?'Expired':''
+                                }}
+                            </td>
+                            <td>{{i.Type === 0? 'Standard ':'Advance'}}</td>
+                            <td>
+                                <button [disabled]="i.Status != 2 " class="mx-1 btn btn-success btn-xs mb-1"
+                                    (click)="confirmModel('order' , cModel , i)">Order
+                                </button>
+                                <button (click)="getQuoteDetails(i,toggleDetailsModel) "
+                                    class="mx-1 btn btn-success btn-xs mb-1">Details</button>
+                                <button [disabled]="i.Status === 3" class="mx-1 btn btn-primary btn-xs mb-1"
+                                    (click)="confirmModel('cancel' , cModel , i )">Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sorting + Pagination-->
+            <div *ngIf="showPagination" class="d-flex align-items-center justify-content-between py-2">
+                <div class="d-flex align-items-center me-sm-4"></div>
+                <nav aria-label="Pagination">
+                    <ngb-pagination [rotate]="true" [(page)]="filters.page" (pageChange)="_fetchData()"
+                        [pageSize]="filters.pageSize" [maxSize]="2" [collectionSize]="collectionSize"
+                        [boundaryLinks]="true" [directionLinks]="true">
+                    </ngb-pagination>
+                </nav>
+            </div>
+
+
+
+            <div class="row" *ngIf="quotesList.Items?.length == 0 ">
+                <div class="col-4 offset-4">
+                    <span class="text-dark">
+                        <h3> No data found</h3>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h3 class="text-primary" *ngIf="errorResult.status == 401"> Please login </h3>
+                    <h3 class="text-primary" *ngIf="errorResult.status != 401 || errorResult.status != 200">
+                        {{errorResult.Message}}
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #vInfo let-modal>
+
+
+    <div class="modal-body ">
+        <div class="col d-flex align-items-center justify-content-between">
+            <h3 class="align-items-center justify-content-between">Vehcile Information</h3>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+
+        <app-vehicle-information [vSKU]="selectedQuote.VehicleSku"></app-vehicle-information>
+    </div>
+</ng-template>
+
+<ng-template #cModel let-modal>
+
+
+    <div class="modal-body ">
+        <div class="col d-flex align-items-center justify-content-between">
+            <h3 class="align-items-center justify-content-between">{{selectedAction === 'order'?'Place Order':'Cancel
+                Quote'}}</h3>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class=" ">
+            {{selectedAction === 'order'?'Are you sure you want to place this order':'Are you sure you want to cancel
+            this
+            Quote'}}
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-secondary"
+            (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" ngbAutofocus class="btn btn-sm btn-danger" (click)="modal.close('Ok click')"
+            (click)="OK()">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #toggleDetailsModel let-modal>
+
+
+    <div class="modal-body ">
+        <div class="col d-flex align-items-center justify-content-between">
+            <h3 class="align-items-center justify-content-between">Quote Details</h3>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+
+        <div class=" ">
+            <div *ngIf="loading">
+                <div class="panel panel-default" bis_skin_checked="1">
+                    <div class="panel-body" bis_skin_checked="1">
+                        <div class="row" *ngFor="let i of [1,2,3,4,5]">
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" *ngIf="!loading">
+                    <tbody>
+                        <tr>
+                            <td>Title</td>
+                            <th>{{selectedQuote.ManufacturerName}}
+                                {{selectedQuote.ModelName}}</th>
+                        </tr>
+                        <tr>
+                            <td>Created On</td>
+                            <th scope="row">{{ selectedQuote.RequestedOn |date}} </th>
+                        </tr>
+                        <tr>
+                            <td>Web Price</td>
+                            <th scope="row">{{selectedQuote.VehiclePrice | currency}} </th>
+                        </tr>
+                        <tr>
+                            <td>Quoted Price</td>
+                            <th scope="row">{{getPrice(selectedQuote,'quoted') | currency}} </th>
+                        </tr>
+                        <tr>
+                            <td>Down Payment</td>
+                            <th scope="row">{{getPrice(selectedQuote,'down') }} </th>
+                        </tr>
+                        <tr>
+                            <td>Total </td>
+                            <th scope="row">{{selectedQuote.Total | currency}} </th>
+                        </tr>
+                        <tr>
+                            <td>Admin Notes </td>
+                            <td>{{selectedQuote.AdminNote }} </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</ng-template>
+
+<!-- Footer-->
+<div class="bg-dark">
+    <app-footer></app-footer>
+</div>

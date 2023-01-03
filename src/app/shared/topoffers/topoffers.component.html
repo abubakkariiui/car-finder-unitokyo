@@ -1,0 +1,23 @@
+<!-- Top offers-->
+
+<section class="container pt-sm-1 pb-5 mb-md-4" *ngIf="isTopOfferAvailable">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4 pb-sm-2">
+    <h2 class="h3 text-dark mb-2 mb-sm-0">Top Offers</h2>
+  </div>
+  <div class="row" *ngIf="isTopOfferAvailable">
+    <div class="col-lg-5">
+      <VehicleDetails [showSlider]="true" (whishListChange)="onWhishListChange()"
+        [VehicleObject]="topOffersData.Items[0]" [id]="1" Type="grid">
+      </VehicleDetails>
+    </div>
+    <div class="col-lg-7">
+      <VehicleDetails (whishListChange)="onWhishListChange()" [VehicleObject]="topOffersData.Items[2]" [id]="2"
+        Type="list">
+      </VehicleDetails>
+
+      <VehicleDetails (whishListChange)="onWhishListChange()" [VehicleObject]="topOffersData.Items[3]" [id]="3"
+        Type="list">
+      </VehicleDetails>
+    </div>
+  </div>
+</section>

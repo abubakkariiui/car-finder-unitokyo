@@ -1,0 +1,16 @@
+<!-- Brands-->
+
+<section class="container py-2 py-sm-3">
+  <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-sm-2">
+    <h2 class="h3 text-dark mb-2 mb-sm-0">Browse By Brand</h2>
+  </div>
+
+  <swiper [config]="CTA" class="mb-5" *ngFor="let items of brandsData | async">
+    <div class="swiper-slide" *ngFor="let brand of items">
+      <a class="opacity-40 opacity-transition d-table mx-auto" routerLink="/catalog/search/list"
+        [queryParams]="{ ManufacturerId: brand.Id }"><img src="/assets/img/car-finder/brands/{{ brand.Id }}.png"
+          width="90" alt="{{ brand.Title }} " />
+      </a>
+    </div>
+  </swiper>
+</section>

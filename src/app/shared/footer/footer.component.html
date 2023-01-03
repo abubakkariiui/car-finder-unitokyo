@@ -1,0 +1,331 @@
+<footer class="footer bg-faded-light">
+  <div class="border-bottom border-dark py-4">
+    <div class="container d-sm-flex align-items-center justify-content-between">
+      <a class="d-inline-block" routerLink=""><img src="assets/img/logo/logo.png" width="200" alt="logo" />
+      </a>
+      <div class="d-flex pt-3 pt-sm-0">
+        <span class="text-light px-2">Email: info@yuasatrading.com</span>
+
+        <span class="text-light px-2">Phone: (+81) 480-726955</span>
+      </div>
+      <div class="d-flex pt-3 pt-sm-0">
+        <!-- <div class="dropdown ms-n3" ngbDropdown>
+          <button class="btn btn-light btn-link btn-sm dropdown-toggle fw-normal py-2" type="button"
+            data-bs-toggle="dropdown" ngbDropdownToggle>
+            <i class="fi-globe me-2"></i>Engish
+          </button>
+          <div class="dropdown-menu dropdown-menu-dark w-100" ngbDropdownMenu>
+            <a class="dropdown-item">English</a>
+            <a class="dropdown-item">French</a>
+            <a class="dropdown-item">Japanese</a>
+            <a class="dropdown-item">Portuguese</a>
+            <a class="dropdown-item">Russian</a>
+          </div>
+        </div> -->
+        <div class="dropdown" ngbDropdown>
+          <button class="btn btn-light btn-link btn-sm dropdown-toggle fw-normal py-2 pe-0" type="button"
+            data-bs-toggle="dropdown" ngbDropdownToggle>
+            <i class="fi-map-pin me-2"></i>Global
+          </button>
+          <div class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-end" style="min-width: 7.5rem" ngbDropdownMenu>
+            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'jp' }">Japan</a>
+            <a class="dropdown-item" routerLink="/catalog/search/list"
+              [queryParams]="{ CountryCode: 'tz' }">Tanzania</a>
+            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'ke' }">Kenya</a>
+            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'ug' }">Uganda</a>
+            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'by' }">Bela
+              Cars</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container pt-4 pb-3 pt-lg-5 pb-lg-4 ml-3">
+    <div class="row pt-2 pt-lg-0">
+      <div class="col-lg-3 col-md-3 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light">MAIN LINKS</h3>
+        <ul class="list-unstyled fs-sm">
+          <li><a class="nav-link-light" routerLink="/" role="button">Home</a></li>
+          <li>
+            <a class="nav-link-light" routerLink="/testimonials" role="button">Testimonials</a>
+          </li>
+          <li><a class="nav-link-light" routerLink="/blog-grid" role="button">Blog</a></li>
+          <li><a class="nav-link-light" routerLink="/inquiry" role="button">Inquiry</a></li>
+          <li>
+            <a class="nav-link-light" routerLink="/chasis-check" role="button">Chassis Check</a>
+          </li>
+          <li><a class="nav-link-light" routerLink="/careers" role="button">Careers</a></li>
+          <li><a class="nav-link-light" (click)="navigateRoute()" role="button">Support</a></li>
+          <li>
+            <a class="nav-link-light" routerLink="/promotion" role="button">Promotions</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light">INFORMATION</h3>
+        <ul class="list-unstyled fs-sm">
+          <li><a class="nav-link-light" routerLink="/about-us" role="button">About Us</a></li>
+          <li>
+            <a class="nav-link-light" routerLink="/corporate-profile" role="button">Corporate Profile</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/terms-conditions" role="button">Terms & Conditions</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/shipping-terms" role="button">Shipping Terms</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/buying-tips" role="button">Used Car Buying Tips</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/dealer-tricks" role="button">Dealer Tricks</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/privacy-policy" role="button">Privacy Policy</a>
+          </li>
+          <li>
+            <a class="nav-link-light" routerLink="/contact-us" role="button">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light">REGIONAL SHOWROOMS</h3>
+        <ul class="list-unstyled fs-sm">
+          <li>
+            <a class="nav-link-light" href="javascript:void(0);" routerLink="/catalog/search/list"
+              [queryParams]="{ countryCode: 'jp' }">Japan</a>
+          </li>
+          <li>
+            <a class="nav-link-light" href="javascript:void(0);" routerLink="/catalog/search/list"
+              [queryParams]="{ countryCode: 'tz' }">Tanzania</a>
+          </li>
+          <li>
+            <a class="nav-link-light" href="javascript:void(0);" routerLink="/catalog/search/list"
+              [queryParams]="{ countryCode: 'ke' }">Kenya</a>
+          </li>
+          <li>
+            <a class="nav-link-light" href="javascript:void(0);" routerLink="/catalog/search/list"
+              [queryParams]="{ countryCode: 'ug' }">Uganda</a>
+          </li>
+          <li>
+            <a class="nav-link-light" href="javascript:void(0);" routerLink="/catalog/search/list"
+              [queryParams]="{ countryCode: 'by' }">Bela Cars</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light">CAREER</h3>
+        <img class="d-block" src="assets/img/Career-Banner.jpg" width="250" alt="Finder" />
+        <h3 class="fs-base text-light mt-3">PAYMENT METHODS</h3>
+        <img class="d-block" src="assets/img/payment-options.png" width="250" alt="Finder" />
+      </div>
+    </div>
+
+    <div class="row pt-2 pt-lg-0">
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light mt-3">LIKE US ON FACEBOOK</h3>
+        <div class="d-flex flex-wrap pt-2">
+          <div class="fb-like fb_iframe_widget" data-href="https://www.facebook.com/yuasatrading"
+            data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"
+            fb-xfbml-state="rendered"
+            fb-iframe-plugin-query="action=like&amp;app_id=1586531728290446&amp;container_width=263&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+            bis_skin_checked="1">
+            <span style="vertical-align: bottom; width: 90px; height: 28px"><iframe name="f12d0e7bad01f18"
+                width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin"
+                title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true"
+                scrolling="no" allow="encrypted-media"
+                src="https://web.facebook.com/v2.3/plugins/like.php?action=like&amp;app_id=1586531728290446&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df4a6afbd0ff65c%26domain%3Dyuasatrading.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fyuasatrading.com%252Ff3172554b19f6a4%26relation%3Dparent.parent&amp;container_width=263&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+                style="
+                  border: none;
+                  visibility: visible;
+                  width: 90px;
+                  height: 28px;
+                " class="" bis_size='{"x":104,"y":2727,"w":90,"h":28,"abs_x":104,"abs_y":2727}'></iframe></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-2 mb-sm-4">
+        <h3 class="fs-base text-light mt-3">STAY CONNECTED</h3>
+        <div class="d-flex flex-wrap pt-2">
+          <a class="btn btn-icon btn-translucent-light btn-xs rounded-circle mb-2 me-2"
+            href="http://www.facebook.com/yuasatrading" target="_blank">
+            <i class="fi-facebook"></i>
+          </a>
+
+          <a class="btn btn-icon btn-translucent-light btn-xs rounded-circle mb-2 me-2"
+            href="http://www.twitter.com/yuasatrading" target="_blank">
+            <i class="fi-twitter"></i>
+          </a>
+
+          <!-- <a class="btn btn-icon btn-translucent-light btn-xs rounded-circle mb-2 me-2" href="http://www.linkedin.com"
+            target="_blank">
+            <i class="fi-linkedin"></i>
+          </a> -->
+
+          <a class="btn btn-icon btn-translucent-light btn-xs rounded-circle mb-2"
+            href="https://pinterest.com/yuasatrading" target="_blank">
+            <i class="fi-pinterest"></i>
+          </a>
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-2 mt-3 mb-sm-4">
+        <!-- Subscription form-->
+        <h3 class="fs-base text-light">Subscribe to our newsletter</h3>
+
+        <app-subscribe theme="dark"></app-subscribe>
+        <!-- <form class="form-group form-group-light w-100">
+          <input class="form-control form-control-sm" type="text" placeholder="Your email" />
+          <button class="btn btn-primary btn-sm" type="button">
+            Subscribe
+          </button>
+        </form> -->
+      </div>
+    </div>
+  </div>
+  <div class="container d-lg-flex align-items-center justify-content-between fs-sm pb-3">
+    <!-- <div class="d-flex flex-wrap justify-content-center order-lg-2 mb-3"><a class="nav-link nav-link-dark fw-normal"
+        href="javascript:void(0);">Terms of use</a><a class="nav-link nav-link-dark fw-normal"
+        href="javascript:void(0);">Privacy policy</a><a class="nav-link nav-link-dark fw-normal"
+        href="javascript:void(0);">Accessibility statement</a><a class="nav-link nav-link-dark fw-normal pe-0"
+        href="javascript:void(0);">Interest based ads</a></div> -->
+    <p class="text-center text-lg-start order-lg-1 mb-lg-0">
+      <span class="text-light opacity-50">&copy; All rights reserved. Made by </span><a class="nav-link-light fw-bold"
+        href="javascript:void(0);" target="_blank" rel="noopener">Yuasa Trading.</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Back to top button-->
+<a class="btn-scroll-top" href="javascript:void(0);" [ngxScrollTo]="'#top'" data-scroll><span
+    class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon fi-chevron-up">
+  </i></a>
+
+<!-- Compare Board Btn -->
+<button (click)="toggleSidebar()"
+  class="mt-5 btn btn-icon position-relative btn-primary rounded-circle shadow position-fixed top-50 end-0 translate-middle-y me-3"
+  type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="" style="z-index: 1035"
+  data-bs-original-title="Choose Demo" aria-label="Choose Demo">
+  <span class="d-flex aligfcanvas" data-bs-target="#demo-switcher">
+    <img src="assets/img/car-compare-white.svg" alt="Image" />
+    <span class="position-absolute bg-primary top-0 start-100 translate-middle badge rounded-pill bg-danger">
+      {{ compareItems$.length }}
+      <span class="visually-hidden">unread messages</span>
+    </span>
+  </span>
+</button>
+
+<!-- Compare Board -->
+<div class="offcanvas offcanvas-end border-right" id="demo-switcher" style="visibility: visible" aria-modal="true"
+  role="dialog">
+  <div class="offcanvas-header d-block border-bottom">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <button class="w-10 my-1 btn btn-primary btn-icon shadow-sm rounded-circle" (click)="toggleSidebar()">
+        <i class="fi-x"></i>
+      </button>
+      <h2 class="h5  my-1 mb-0">Compare List</h2>
+      <button class="btn  my-1 btn-outline-secondary btn-sm me-2" (click)="deleteAllItems()">
+        <i class="fi-archive me-2"></i>Remove All
+      </button>
+      <button class="btn  my-1 btn-outline-secondary btn-sm me-2" routerLink="/catalog/search/list">
+        <i class="fi-list me-2"></i>Show Catalog
+      </button>
+
+    </div>
+    <span *ngIf="compareItems$.length < 2" class="d-flex align-items-center pt-2 justify-content-center">Please add
+      atleast 2
+      vehicles to compare</span>
+  </div>
+  <!-- [ngStyle]="{ 'background-image': 'url(' + src + ')' }" style="background-image: url(assets/img/comparelist-bg.gif);background-position: center;
+    background-position-x: right; background-repeat: no-repeat;" -->
+  <div class="offcanvas-body">
+    <div class="table-responsive pl-2 ml-2">
+      <table class="table bg-light table-striped w-auto text-center  table-condensed table-bordered table-text-sm">
+        <tbody>
+          <tr class="align-middle image-row h-50">
+            <th class="heading-col h-50" scope="row">Image</th>
+            <td *ngFor="let data of compareItems$" class="td-image">
+              <img src="{{getImageSrc(data)}}" alt="Image" class="td-image h-50 w-60" />
+            </td>
+          </tr>
+          <tr class="align-middle" *ngIf="compareItems$.length > 0">
+            <th class="heading-col" scope="row">Make</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.VehicleSku }}
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Model</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.Year }}
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">SKU</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.Sku }}
+            </td>
+          </tr>
+          <!-- <tr class="align-middle">
+            <th class="heading-col" scope="row">Verified</th>
+            <td *ngFor="let data of  compareItems$  |async  ">
+              {{ data.verified }}
+            </td>
+          </tr> -->
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Country</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.ShowRoom.Title || "Global" }}
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Year</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.Year }}
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Mileage</th>
+            <td *ngFor="let data of compareItems$">{{ data.Mileage }} K mi</td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Fuel / Eng</th>
+            <td *ngFor="let data of compareItems$">
+              {{
+              data.FuelType === 0
+              ? "Petrol"
+              : data.FuelType === 1
+              ? "Petrol"
+              : "CNG"
+              }}
+            </td>
+          </tr>
+          <tr class="align-middle w-20">
+            <th class="heading-col" scope="row">Price</th>
+            <td *ngFor="let data of compareItems$">
+              {{ data.ShowPrice? data.Price : '' | currency }}
+            </td>
+          </tr>
+          <tr class="align-middle ">
+            <th class="heading-col" scope="row">Get Quote</th>
+            <td *ngFor="let data of compareItems$">
+              <button class="btn btn-outline-secondary  btn-xs" (click)="getQuote(data.Sku, data.ShowRoom?.CountryId)">
+                Get Quote
+              </button>
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th class="heading-col" scope="row">Remove</th>
+            <td *ngFor="let data of compareItems$">
+              <button class="btn  btn-outline-secondary btn-sm" (click)="deleteSingleItem(data.VehicleSku)">
+                <i class="fi-x"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
+    </div>
+  </div>
+</div>

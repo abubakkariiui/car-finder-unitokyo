@@ -1,0 +1,301 @@
+<div class="card card-dark card-hover h-lg-100 mb-4 mb-lg-0" *ngIf="Type == 'grid'">
+  <div class=" tns-carousel-wrapper card-img-top card-img-hover">
+    <a class="img-overlay" routerLink="/catalog/search/single"></a>
+    <div *ngIf="isLoggedIn" class="content-overlay end-0 top-0 pt-3 pe-3">
+      <button (click)="AddToWishList(VehicleObject.VehicleSku)"
+        class="d-table btn btn-icon btn-info btn-xs mb-1 text-light rounded-circle" type="button" placement="left"
+        ngbTooltip="Add to Wishlist">
+        <i class="fi-heart"></i>
+      </button>
+    </div>
+    <swiper [config]="config" class="mb-5" *ngIf="showSlider">
+
+      <div class="swiper-slide" *ngFor="let src of splitImages(VehicleObject)">
+        <img src="{{ src }}" alt="Image" class="h-90" />
+      </div>
+
+    </swiper>
+
+    <div style="max-height: 16rem !important;">
+      <img *ngIf="!showSlider" src="{{ getSingleImageSrc()}}" alt="Image" class="h-90" />
+
+    </div>
+  </div>
+  <div class="card-body" *ngIf="VehicleObject">
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <span class="fs-sm text-dark me-3">{{ VehicleObject.Year || "" }}</span>
+      <div class="form-check form-check-dark text-dark">
+        <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onCompareCheckChange(VehicleObject)"
+          type="button" placement="left">
+          compare
+        </button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <h3 class="h6 mb-1">
+        <a class="nav-link-light text-dark hover-cursor" (click)="onItemClicked(VehicleObject)">{{ VehicleObject.Title
+          }}
+        </a>
+      </h3>
+      <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onBuyClicked(VehicleObject)" type="button"
+        placement="left">
+        Buy Now
+      </button>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between pb-1" *ngIf="VehicleObject.ShowPrice">
+      <div>
+        <div class="text-danger fw-bold mb-1">
+          {{
+          VehicleObject.PriceType === 0
+          ? "FOB"
+          : VehicleObject.PriceType === 1
+          ? "CIF"
+          : "DDP"
+          }}
+          : {{ VehicleObject.Price | currency }}
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between pb-1">
+        <i (click)="onCartCheckChange(VehicleObject)" ngbTooltip="Add to Cart" [placement]="['left']"
+          class="hover-cursor fi-cart d-block h4 text-dark mb-0 mx-center"></i>
+      </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <div class="fs-sm text-dark opacity-70">
+        <i class="fi-map-pin me-1"></i>{{ VehicleObject.ShowRoom.Title || "Global" }}
+      </div>
+      <img (click)="toggleModal(toggleFirstModal , toggleLoginModel)" data-bs-target="#modalScroll"
+        ngbTooltip="Make an Offer" [placement]="['left']"
+        class="d-block mx-center hover-cursor d-block h4 text-dark mb-0 mx-center" src="assets/img/makeoffer.svg"
+        width="30" alt="Icon" />
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <div class="fs-sm text-dark opacity-70">
+        SKU#{{ VehicleObject.VehicleSku }}
+      </div>
+      <i ngbTooltip="Request
+              Information" [placement]="['left']" (click)="onRequestInformationClicked(VehicleObject)"
+        class="hover-cursor fi-info-square d-block h4 text-dark mb-0 mx-center"></i>
+    </div>
+  </div>
+
+  <div class="card-footer   pt-0" *ngIf="VehicleObject">
+    <div class="   pt-3">
+      <div class="row g-2">
+        <div class="col me-sm-1">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <img placement="top" ngbTooltip="Chassis" src="assets/img/car-finder/icons/chassis-icon.svg" width="23"
+              class="mx-auto d-block h4 pt-2 pb-1 text-dark mb-0 mx-center" />
+            <span class="fs-xs text-dark">
+              {{ VehicleObject.Chesis }}
+            </span>
+          </div>
+        </div>
+
+        <div class="col me-sm-1">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <i placement="top" ngbTooltip="Mileage" class="fi-dashboard d-block h4 text-dark mb-0 mx-center">
+            </i>
+            <span class="fs-xs text-dark">
+              {{ VehicleObject.Mileage }}K mi
+            </span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <i placement="top" ngbTooltip="Fuel Type" class="fi-petrol d-block h4 text-dark mb-0 mx-center"></i><span
+              class="fs-xs text-dark">{{
+              VehicleObject.FuelType === 0
+              ? "Petrol"
+              : VehicleObject.FuelType === 1
+              ? "Petrol"
+              : "CNG"
+              }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card card-dark card-hover card-horizontal mb-4" *ngIf="Type == 'list'">
+  <div class="tns-carousel-wrapper card-img-top card-img-hover">
+    <a class="img-overlay" routerLink="/catalog/search/single"></a>
+    <div *ngIf="isLoggedIn" class="content-overlay end-0 top-0 pt-3 pe-3">
+      <button (click)="AddToWishList(VehicleObject.VehicleSku)"
+        class="d-table btn btn-icon btn-info btn-xs mb-1 text-light rounded-circle" type="button" placement="left"
+        ngbTooltip="Add to Wishlist">
+        <i class="fi-heart"></i>
+      </button>
+    </div>
+
+    <swiper [config]="config" class="mb-5">
+      <div class="swiper-slide" *ngFor="let src of splitImages(VehicleObject)">
+        <div (click)="onItemClicked(VehicleObject)" class="bg-size-cover bg-position-center w-100 h-100 card-img-size"
+          [ngStyle]="{ 'background-image': 'url(' + src + ')' }">
+        </div>
+      </div>
+    </swiper>
+
+  </div>
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <span class="fs-sm text-dark me-3">{{ VehicleObject.Year || "" }}</span>
+      <div class="form-check form-check-dark text-dark">
+        <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onCompareCheckChange(VehicleObject)"
+          type="button" placement="left">
+          compare
+        </button>
+      </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <h3 class="h6 mb-1">
+        <a class="nav-link-light text-dark hover-cursor" (click)="onItemClicked(VehicleObject)">{{ VehicleObject.Title
+          }}
+        </a>
+      </h3>
+      <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onBuyClicked(VehicleObject)" type="button"
+        placement="left">
+        Buy Now
+      </button>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between pb-1" *ngIf="VehicleObject.ShowPrice">
+      <div>
+        <div class="text-danger fw-bold mb-1">
+          {{
+          VehicleObject.PriceType === 0
+          ? "FOB"
+          : VehicleObject.PriceType === 1
+          ? "CIF"
+          : "DDP"
+          }}
+          : {{ VehicleObject.Price | currency }}
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between pb-1">
+        <i (click)="onCartCheckChange(VehicleObject)" ngbTooltip="Add to Cart" [placement]="['left']"
+          class="hover-cursor fi-cart d-block h4 text-dark mb-0 mx-center"></i>
+      </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <div class="fs-sm text-dark opacity-70">
+        <i class="fi-map-pin me-1"></i>{{ VehicleObject.ShowRoom.Title || "Global" }}
+      </div>
+      <img data-bs-toggle="modal" (click)="toggleModal(toggleFirstModal , toggleLoginModel)"
+        data-bs-target="#modalScroll" ngbTooltip="Make an Offer" [placement]="['left']"
+        class="d-block mx-center hover-cursor d-block h4 text-dark mb-0 mx-center" src="assets/img/makeoffer.svg"
+        width="30" alt="Icon" />
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between pb-1">
+      <div class="fs-sm text-dark opacity-70">
+        SKU#{{ VehicleObject.VehicleSku }}
+      </div>
+      <i ngbTooltip="Request
+              Information" [placement]="['left']" (click)="onRequestInformationClicked(VehicleObject)"
+        class="hover-cursor fi-info-square d-block h4 text-dark mb-0 mx-center"></i>
+    </div>
+
+    <div class=" mt-3 pt-3">
+      <div class="row g-2">
+        <div class="col me-sm-1">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <img placement="top" ngbTooltip="Chassis" src="assets/img/car-finder/icons/chassis-icon.svg" width="23"
+              class="mx-auto d-block h4 pt-2 pb-1 text-dark mb-0 mx-center" />
+            <span class="fs-xs text-dark">
+              {{ VehicleObject.Chesis }}
+            </span>
+          </div>
+        </div>
+
+        <div class="col me-sm-1">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <i placement="top" ngbTooltip="Mileage" class="fi-dashboard d-block h4 text-dark mb-0 mx-center">
+            </i>
+            <span class="fs-xs text-dark">
+              {{ VehicleObject.Mileage }}K mi
+            </span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="bg-red-light rounded text-center w-100 h-100 p-2">
+            <i placement="top" ngbTooltip="Fuel Type" class="fi-petrol d-block h4 text-dark mb-0 mx-center"></i><span
+              class="fs-xs text-dark">{{
+              VehicleObject.FuelType === 0
+              ? "Petrol"
+              : VehicleObject.FuelType === 1
+              ? "Petrol"
+              : "CNG"
+              }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-template #toggleLoginModel let-modal>
+
+  <div class="modal-body ">
+    <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+      data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+    <app-signin [isDialog]="true" [route]="rout" (routeChange)="modal.close('Close click')" [showBackButton]="false">
+    </app-signin>
+  </div>
+
+</ng-template>
+
+
+<ng-template #toggleFirstModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Make an offer</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"
+      aria-label="Close"></button>
+  </div>
+  <form (ngSubmit)="validSubmit()" [formGroup]="makeOfferForm">
+    <div class="modal-body">
+      <div class="mb-4">
+        <label class="form-label text-dark mb-2" for="signin-email">Offer Price</label>
+        <input class="form-control form-control-dark" placeholder="1500" type="text" required
+          formControlName="OfferPrice">
+      </div>
+      <div class="mb-4">
+        <label class="form-label text-dark" for="CountryId">Country</label>
+        <select class="form-select form-select-sm form-select-dark" id="c-subject" formControlName="CountryId" required>
+          <option value="" selected disabled>Choose Country</option>
+          <option *ngFor="let c of countriesList" [value]="c.Id">{{c.Name}}</option>
+        </select>
+      </div>
+      <!-- <div class="mb-4">
+        <label class="form-label text-dark mb-2" for="signin-email">Name</label>
+        <input class="form-control form-control-dark" placeholder="John Smith" type="text" required
+          formControlName="Name">
+      </div>
+      <div class="mb-4">
+        <label class="form-label text-dark mb-2" for="signin-email">Email</label>
+        <input class="form-control form-control-dark" placeholder="example@domain.com" type="email" required
+          formControlName="Email">
+      </div>
+      <div class="mb-4">
+        <label class="form-label text-dark mb-2" for="signin-email">Phone</label>
+        <input class="form-control form-control-dark" placeholder="12345678965" type="text" required
+          formControlName="Phone">
+      </div> -->
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" type="submit" class="btn btn-primary btn-sm">Submit
+        <span *ngIf="quoteSubmitLoading" class="spinner-border spinner-border-sm me-2" role="status"
+          aria-hidden="true"></span>
+      </button>
+    </div>
+  </form>
+
+
+</ng-template>

@@ -1,0 +1,199 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <!-- <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <app-account-asidebar componentType="orders"></app-account-asidebar>
+
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-9 col-md-7 mb-5">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-2">
+                <h1 class="h2 text-dark mb-0">My Orders<span
+                        class="badge bg-faded-dark fs-base align-middle ms-3">{{ordersList.Items?.length}}</span>
+                </h1>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order Code</th>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of ordersList.Items">
+                            <td>{{i.OrderCode || '-'}} </td>
+                            <td>{{i.VehicleSku || '-'}}</td>
+                            <td>
+                                <span *ngIf="i.Vehicle.Title" (click)="showInfo(i , vInfo)"
+                                    [ngClass]="{'text-primary hover-cursor': i.OrderType === 0}">
+
+                                    {{i.Vehicle.Title
+
+                                    || '-'}}</span>
+                                <span *ngIf="!i.Vehicle.Title">---</span>
+                            </td>
+
+                            <td>{{i.OrderDate | date}}</td>
+                            <td>{{i.GrandTotal | currency}}</td>
+                            <td>
+                                {{
+                                i.OrderStatus == 1 ? "Pending Confimation" :
+                                i.OrderStatus == 2 ? "Order Confirmed" :
+                                i.OrderStatus == 3 ? "Down Payment Received" :
+                                i.OrderStatus == 4 ? "Full Payment Received" :
+                                i.OrderStatus == 5 ? "Awaiting Shipment" :
+                                i.OrderStatus == 6 ? "Completed" :
+                                i.OrderStatus == 7 ? "Cancelled" : ""
+                                }}
+                            </td>
+                            <td>
+                                {{
+                                i.OrderType === 0 ?'Standard ':'Advance'
+                                }}
+
+                            </td>
+                            <td>
+                                <button class="btn btn-success btn-xs mb-1 mx-1"
+                                    (click)="getOrderDetails(i,toggleDetailsModel)">Details</button>
+                                <button [disabled]="i.OrderStatus === 7" class="btn btn-primary btn-xs mb-1 mx-1"
+                                    (click)="cancelOrder(i)">Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="row" *ngIf="ordersList.Items?.length == 0 ">
+                <div class="col-4 offset-4">
+                    <span class="text-dark">
+                        <h3> No data found</h3>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Sorting + Pagination-->
+            <div class="d-flex align-items-center justify-content-between py-2" *ngIf="showPagination">
+                <div class="d-flex align-items-center me-sm-4"></div>
+                <nav aria-label="Pagination">
+                    <ngb-pagination [rotate]="true" [(page)]="filters.page" (pageChange)="getUserOrders()"
+                        [pageSize]="filters.pageSize" [maxSize]="2" [collectionSize]="collectionSize"
+                        [boundaryLinks]="true" [directionLinks]="true">
+                    </ngb-pagination>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h3 class="text-primary" *ngIf="errorResult.status == 401"> Please login </h3>
+                    <h3 class="text-primary" *ngIf="errorResult.status != 401 || errorResult.status != 200">
+                        {{errorResult.Message}}
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ng-template #vInfo let-modal>
+
+
+    <div class="modal-body ">
+        <div class="col d-flex align-items-center justify-content-between">
+            <h3 class="align-items-center justify-content-between">Vehcile Information</h3>
+            <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+
+        <app-vehicle-information [vSKU]="selectedOrder.Vehicle.VehicleSku"></app-vehicle-information>
+    </div>
+</ng-template>
+
+<ng-template #toggleDetailsModel let-modal>
+
+    <div class="modal-body ">
+
+        <div class="row">
+            <div class="col d-flex align-items-center justify-content-between">
+                <h3 class="align-items-center justify-content-between">Order Details</h3>
+                <button class="btn-close btn-close-dark " type="button" data-bs-dismiss="modal"
+                    (click)="modal.dismiss('Cross click')"></button>
+            </div>
+        </div>
+
+
+        <div class="">
+            <div *ngIf="loading">
+                <div class="panel panel-default" bis_skin_checked="1">
+                    <div class="panel-body" bis_skin_checked="1">
+                        <div class="row" *ngFor="let i of [1,2,3,4,5]">
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                            <div class="col-4">
+                                <p class="animate-bg small-bg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped border" *ngIf="!loading">
+                    <tbody>
+                        <tr>
+                            <th class="border">Order Code</th>
+                            <td class="border">{{ selectedOrder.OrderCode || '-'}} </td>
+                        </tr>
+                        <tr>
+                            <th class="border">Order Date</th>
+                            <td class="border">{{ selectedOrder.OrderDate | date}} </td>
+                        </tr>
+                        <tr>
+                            <th class="border">Price</th>
+                            <td class="border">{{ selectedOrder.Price | currency}} </td>
+                        </tr>
+                        <tr>
+                            <th class="border">Down Payment</th>
+                            <td class="border">{{ selectedOrder.DownPayment | currency}} </td>
+                        </tr>
+                        <tr>
+                            <th class="border">Discount</th>
+                            <td class="border">{{ selectedOrder.Discount }} % </td>
+                        </tr>
+                        <tr>
+                            <th class="border">Grand Total</th>
+                            <td class="border">{{ selectedOrder.GrandTotal | currency}} </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- Footer-->
+<div class="bg-dark">
+    <app-footer></app-footer>
+</div>

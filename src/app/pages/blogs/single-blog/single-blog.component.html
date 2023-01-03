@@ -1,0 +1,208 @@
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+  <!-- Page container-->
+  <div class="container mt-5 mb-md-4 py-5" *ngIf="isDataAvailable">
+    <!-- Title + Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <!-- Page title-->
+    <h1 class="h2 text-dark pb-3">{{selectedBlog.Title}}</h1>
+    <div class="rounded-3" style="max-height: 25rem;  overflow: hidden;">
+
+      <img class="rounded-3" style="object-fit: cover; object-position: center;"
+        src="{{admin_base_url+'/Content/Images/Blogs/'+ selectedBlog.Img2 || ''}}" alt="Image">
+
+    </div>
+
+    <div class="row mt-4 pt-3">
+      <!-- Post content-->
+      <div class="col-lg-8">
+        <!-- Post meta-->
+        <!-- <div class="d-flex flex-wrap border-bottom border-dark pb-3 mb-4"><a
+            class="text-uppercase text-decoration-none border-end border-dark pe-3 me-3 mb-2"
+            href="javascript:void(0);">Reviews</a>
+
+          <a class="d-flex align-items-center text-dark text-decoration-none mb-2" href="javascript:void(0);"
+            data-scroll (click)="inView(comments)">
+            <i class="fi-chat-circle opacity-70 me-2"></i><span>No
+              comments</span></a>
+        </div>
+        <p class="fs-lg fw-bold text-dark mb-4">{{selectedBlog.ShortDescription|| ''}}
+        </p> -->
+
+
+        <div [innerHTML]="selectedBlog.Body || ''"></div>
+
+
+        <!-- Tags + Sharing-->
+        <div class="pt-4 pb-5 mb-md-3" *ngIf="selectedBlog.Tags">
+          <div class="d-md-flex align-items-center justify-content-between border-top border-dark pt-4">
+            <div class="d-flex align-items-center me-3 mb-3 mb-md-0">
+              <div class="d-none d-sm-block text-dark fw-bold text-nowrap mb-2 me-2 pe-1">Tags:</div>
+              <div class="d-flex flex-wrap">
+                <a class="btn btn-xs btn-translucent-dark rounded-pill fs-sm fw-normal me-2 mb-2"
+                  href="javascript:void(0);">{{selectedBlog.Tags || ''}} </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- comment section form goes here  -->
+        <!-- <div class="comment-section">
+          <h2>Comment</h2>
+          <div class="mb-3">
+            <label for="text-input" class="form-label">Text</label>
+            <input class="form-control" type="text" id="text-input" value="Artisanal kale">
+          </div>
+
+          <div class="mb-3">
+            <label for="textarea-input" class="form-label">Textarea</label>
+            <textarea class="form-control" id="textarea-input" rows="5">Hello World!</textarea>
+          </div>
+
+        </div> -->
+
+        <!-- comments rating , and submitting comments -->
+        <div id="comments" class="mb-4 mb-md-5">
+          <div *ngIf="showComments; else NoComments">
+            <h3 class="mb-4 pb-2">{{totalComments}} comments
+              <ngb-rating [(rate)]="selectedBlog.Rating" [readonly]="true" [max]="5">
+              </ngb-rating>
+
+            </h3>
+
+            <div class="border-bottom pb-4 mb-4" *ngFor="let comment of comments">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center pe-2">
+                  <div class="ps-2">
+                    <h6 class="fs-base mb-0">{{comment.UserName}}</h6>
+                    <span class="text-muted fs-sm">{{calculateDiff(comment.CreatedOn)}} days ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="border-start border-4 ps-2 mt-4">
+                <p>{{comment.Comment}}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #NoComments>
+            <h3 class="mb-4 pb-2">Comments <ngb-rating [readonly]="true" [(rate)]="selectedBlog.Rating" [max]="5">
+              </ngb-rating>
+            </h3>
+            No Comments
+          </ng-template>
+
+        </div>
+        <div *ngIf="isLoggedIn">
+
+
+          <h3 class="text-dark mb-4 pb-sm-2">Leave your comment</h3>
+          <ngb-rating [(rate)]="currentRate" [max]="5" [(ngModel)]="currentRate" (click)="getRating()"></ngb-rating>
+          <form class="needs-validation row gy-md-4 gy-3 pb-sm-2" novalidate (ngSubmit)="validSubmit()"
+            [formGroup]="validationform">
+
+            <!-- <div class="col-sm-6">
+            <label class="form-label   text-dark" for="comment-name">Name</label>
+            <input class="form-control form-control-dark form-control-lg" type="text" id="comment-name"
+              placeholder="Enter your name" required formControlName="name"
+              [ngClass]="{'is-invalid': submit && form['name'].errors}">
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div> -->
+
+            <div class="col-sm-6">
+              <label class="form-label text-dark" for="comment-email">Title</label>
+              <input class="form-control form-control-dark form-control-lg" type="text" id="comment-Title"
+                placeholder="Enter your Title" required formControlName="Title"
+                [ngClass]="{'is-invalid': submit && form['Title'].errors}">
+              <div class="invalid-feedback">Please provide a valid Title</div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label text-dark" for="comment-text">Comment</label>
+              <textarea class="form-control form-control-dark form-control-lg" id="comment-text" rows="4"
+                placeholder="Type comment here" required formControlName="CommentBody"
+                [ngClass]="{'is-invalid': submit && form['CommentBody'].errors}"></textarea>
+              <div class="invalid-feedback">Please type your comment.</div>
+            </div>
+
+            <div class="col-12 py-2">
+              <button class="btn btn-lg btn-primary" type="submit">Post comment</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <!-- Sidebar-->
+      <aside class="col-lg-4 col-12">
+        <div class="offcanvas offcanvas-end offcanvas-collapse bg-light" id="blog-sidebar">
+          <div class="offcanvas-header bg-transparent border-bottom border-dark">
+            <h2 class="h5 text-dark mb-0">Sidebar</h2>
+            <button class="btn-close btn-close-dark" type="button" data-bs-dismiss="offcanvas"
+              (click)="SidebarHide()"></button>
+          </div>
+          <div class="offcanvas-body">
+            <!-- Search-->
+            <!-- <div class="position-relative mb-4">
+              <input class="form-control form-control-dark" type="text" placeholder="Search..."><i
+                class="fi-search position-absolute top-50 end-0 translate-middle-y text-dark opacity-70 me-3"></i>
+            </div> -->
+
+            <!-- Recent posts widget-->
+            <div class="card card-flush bg-transparent border-dark mb-4">
+              <div class="card-body">
+                <h3 class="h5 text-dark pt-3 pt-lg-0">Recent Posts</h3>
+                <div *ngFor="let blogs of (latestBlogs | async) ">
+
+                  <div class="d-flex align-items-start border-bottom border-dark pb-3 mb-3"
+                    *ngFor="let blogItem of blogs.Items  ; index as idx">
+                    <a class="flex-shrink-0" href="javascript:void(0);" (click)="blogclicked(blogItem)">
+                      <img class="rounded-3" width="80" src="{{admin_base_url+'/Content/Images/Blogs/'+ blogItem.Img1}}"
+                        alt="{{blogItem.Img1}}">
+                    </a>
+                    <div class="ps-3">
+                      <h4 class="fs-base text-dark pt-1 mb-2">
+                        <a class="nav-link text-dark" href="javascript:void(0);"
+                          (click)="blogclicked(blogItem)">{{blogItem.Title}}
+                        </a>
+                      </h4>
+                      <div class="d-flex fs-xs text-dark opacity-70">
+                        <span class="me-2 pe-1"><i class="fi-calendar-alt me-1"></i>{{blogItem.CreatedOn |
+                          date}}</span><span><i class="fi-chat-circle me-1"></i>{{blogItem.Comments ?
+                          blogItem.Comments.length:0}}
+                          comments</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="modal-header border-0">
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body p-0 border-0">
+      <div class="ratio ratio-4x3">
+        <youtube-player [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+        </youtube-player>
+      </div>
+    </div>
+  </ng-template>
+
+</main>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>
+
+<!-- Filters sidebar toggle button (mobile)-->
+<button class="btn btn-primary btn-sm w-100 rounded-0 fixed-bottom d-lg-none" type="button" data-bs-toggle="offcanvas"
+  data-bs-target="#blog-sidebar" (click)="FilterSidebar()"><i class="fi-sidebar-left me-2"></i>Sidebar</button>
+<div class="vertical-overlay" (click)="SidebarHide()"></div>

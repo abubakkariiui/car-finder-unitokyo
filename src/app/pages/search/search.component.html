@@ -1,0 +1,17 @@
+<main class="page-wrapper pb-5 mb-5">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+
+  <!-- Page container-->
+  <section class="container mt-5 mb-md-4 py-5">
+    <app-products-list [showTitle]="false" [showAdvanceSearch]="true" [showBreadcrumb]="false" [showMiniSearch]="true"
+      type="list"></app-products-list>
+  </section>
+
+  <app-brands [brandsData]="brandsData"></app-brands>
+</main>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

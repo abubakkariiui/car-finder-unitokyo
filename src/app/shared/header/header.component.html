@@ -1,0 +1,113 @@
+<!-- Navbar-->
+<header class="navbar navbar-expand-lg navbar-dark fixed-top navbar-stuck">
+  <div class="container ">
+    <a class="navbar-brand mx-0 px-0" routerLink=""><img class="d-block" src="assets/img/logo/logo.png" width="300"
+        alt="Finder" /></a>
+
+
+    <button class="navbar-toggler mr-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMobileMenu()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse order-lg-2 justify-content-end align-items-end " id="navbarNav">
+      <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem">
+
+        <ng-container *ngFor="let item of menuItems">
+          <li class="nav-item dropdown">
+            <a class="nav-link side-nav-link-ref" *ngIf="!item.subItems" (click)="onMenuClick($event)"
+              id="topnav-components" routerLink="{{ item.link }}" role="button">
+              {{ item.label }}
+            </a>
+
+            <a *ngIf="item.subItems  side-nav-link-ref" class="nav-link dropdown-toggle" (click)="onMenuClick($event)"
+              id="topnav-components" role="button">
+              {{ item.label }}
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="topnav-dashboard" *ngIf="hasItems(item)">
+              <ng-template ngFor let-i="index" let-subitem [ngForOf]="item.subItems">
+                <a class="col dropdown-item  " *ngIf="!hasItems(subitem)" routerLink="{{ subitem.link }}"
+                  routerLinkActive="active">{{ subitem.label }}</a>
+
+                <div class="dropdown" *ngIf="hasItems(subitem)">
+                  <a class="dropdown-item dropdown-toggle" href="javascript:void(0);" (click)="onMenuClick($event)">{{
+                    subitem.label }}
+                    <div class="arrow-down"></div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <ng-template ngFor let-subSubitem [ngForOf]="subitem.subItems">
+                      <a class="dropdown-item" *ngIf="!hasItems(subSubitem)" routerLink="{{ subSubitem.link }}"
+                        routerLinkActive="active">{{ subSubitem.label }}</a>
+                    </ng-template>
+                  </ul>
+                </div>
+              </ng-template>
+            </ul>
+          </li>
+        </ng-container>
+        <ng-container>
+          <li class="nav-item dropdown" *ngIf="isLoggedIn">
+            <a class="nav-link" (click)="onMenuClick($event)" id="topnav-components" routerLink="/account/info"
+              role="button">
+              My Account
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void(0);" (click)="toggleModal(toggleFirstModal)"
+              data-bs-toggle="modal">
+              <i class="fi-user me-2"></i>Sign in
+            </a>
+          </li>
+        </ng-container>
+        <ng-container>
+          <li class="nav-item dropdown"> <a class="position-relative nav-link" href="/shipping-cart"
+              data-bs-toggle="modal">
+              <i class="fi-cart me-2"></i> Cart
+              <span *ngIf="cartItems$.length > 0"
+                class="position-absolute bg-none top-0 start-100 translate-middle badge rounded-pill">
+                {{ cartItems$.length }}
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </a>
+          </li>
+        </ng-container>
+
+
+      </ul>
+    </div>
+  </div>
+</header>
+
+
+<!-- Sign In Modal-->
+<ng-template #toggleFirstModal let-modal>
+
+
+  <div class="modal-body ">
+    <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+      data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+    <app-signin [isDialog]="true" (routeChange)="modal.close('Close click')" [showBackButton]="false">
+    </app-signin>
+  </div>
+
+
+</ng-template>
+
+<!-- Sign Up Modal-->
+<ng-template #toggleSecondModal let-modal>
+
+
+  <div class="modal-body  ">
+    <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3  mx-3 px-3" type="button"
+      data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+    <app-signup [isDialog]="true" (close)="modal.dismiss('Cross click')" (routeChange)="modal.close('Close click')"
+      (routeChange)="toggleModal(toggleFirstModal)" [showBackButton]="false">
+    </app-signup>
+  </div>
+
+</ng-template>

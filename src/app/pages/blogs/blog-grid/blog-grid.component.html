@@ -1,0 +1,167 @@
+<app-preloader *ngIf="loading"></app-preloader>
+
+
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+  <!-- Page container-->
+  <div class="container mt-5 mb-md-4 py-5">
+    <!-- Title + Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <!-- Page title-->
+    <h1 class="text-dark mb-4">News &amp; reviews</h1>
+    <!-- Sorting, filters and search-->
+    <div class="d-lg-flex pt-1 pb-4 mb-3">
+      <div class="d-flex mb-3 mb-lg-0 pe-lg-2">
+
+        <div
+          class="d-flex flex-md-row flex-column align-items-md-center flex-grow-1 border-end-md border-dark pe-md-4 me-md-4">
+          <label class="d-inline-block text-dark me-sm-2 mb-md-0 mb-2 text-nowrap" for="monthes"><i
+              class="fi-align-left mt-n1 me-2 align-middle opacity-70"></i>Month:</label>
+          <select (change)="blogsByMonth($event)" [(ngModel)]="monthSelector"
+            class="month form-select form-select-dark me-lg-2" id="monthes">
+            <option value="null">-- select --</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="12">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+
+        <div
+          class="d-flex flex-md-row flex-column align-items-md-center flex-grow-1 border-end-lg border-dark ps-3 ps-md-2 pe-lg-4 me-lg-4">
+          <label class="d-inline-block text-dark me-sm-2 mb-md-0 mb-2 text-nowrap" for="categories"><i
+              class="fi-align-left mt-n1 me-2 align-middle opacity-70"></i>Category:</label>
+          <select (change)="blogsByCategoryId($event)" [(ngModel)]="catSelector"
+            class="category form-select form-select-dark me-lg-2" id="categories">
+            <option value="null">-- select --</option>
+            <option *ngFor="let cat of categories.Items" [value]="cat.Id"> {{cat.Title}}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="position-relative flex-grow-1">
+        <input class="form-control form-control-dark" id="searchInput" type="text"
+          placeholder="Search articles by keywords..." [(ngModel)]="filters.q" (keyup)="BlogSearching()"><i
+          class="fi-search position-absolute top-50 end-0 translate-middle-y text-dark opacity-70 me-3"></i>
+      </div>
+
+      <button class="btn btn-primary btn-md me-1 my-2" (click)="clearForm()" style="margin-left: 0.5rem;">Clear</button>
+
+    </div>
+
+    <div *ngIf="blogsData.TotalItems == 0">
+
+      <span class="h3"> No record found !</span>
+
+    </div>
+
+    <div *ngFor="let item of blogsData1; index as i">
+
+      <!-- Featured article-->
+      <article *ngIf="i == 0" class="row pb-2 pb-md-1 mb-4 mb-md-5">
+        <div class="col-md-6 ">
+          <a class="d-block position-relative rounded-3" style="max-height: 19rem;  overflow: hidden;"
+            [queryParams]="{ blog_id: item.Id, title: item.Title }" routerLink="/single-blog">
+            <img class="rounded-3" style="object-fit: cover; object-position: center;" src="{{
+                admin_base_url + '/Content/Images/Blogs/' + item.Img2 || ''
+              }}" alt="Post image" /></a>
+        </div>
+        <div class="col-md-6 ">
+          <h2 class="h5 text-dark pt-1">
+            <a class="nav-link" [queryParams]="{ blog_id: item.Id, title: item.Title }" routerLink="/single-blog">
+              {{ item.Title }}
+            </a>
+          </h2>
+          <p class="d-md-none d-xl-block text-dark opacity-70 mb-4">
+            {{ item.ShortDescription }}
+          </p>
+          <a class="d-flex align-items-center text-decoration-none">
+            <div class="ps-2">
+              <div class="d-flex  align-items-center fs-sm text-dark opacity-70">
+                <span class="me-2 pe-1"><i class="fi-calendar-alt opacity-70 mt-n1 me-1"></i>
+                  {{ item.CreatedOn | date: 'MMMM' }}</span>
+
+                <ngb-rating [(rate)]="item.Rating" [readonly]="true" [max]="5">
+                </ngb-rating>
+              </div>
+            </div>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+
+    <!-- Latest articles (3 columns)-->
+
+    <div class="row gx-3 gx-md-4 gy-md-5 gy-4 mb-lg-5 mb-4">
+      <article class="col-6 pb-2 pb-md-1" *ngFor="let item of blogsData2; index as i">
+        <a class="d-block position-relative mb-3 rounded-3" style="max-height: 19rem;  overflow: hidden;"
+          routerLink="/single-blog" [queryParams]="{ blog_id: item.Id, title: item.Title }">
+          <img class="d-block rounded-3" style="object-fit: cover; object-position: center;"
+            src="{{admin_base_url + '/Content/Images/Blogs/' + item.Img2 || '' }}" alt="Post image" /></a>
+
+        <h3 class="fs-base text-dark pt-1">
+          <a class="nav-link" [queryParams]="{ blog_id: item.Id, title: item.Title }" routerLink="/single-blog">{{
+            item.Title }}</a>
+        </h3>
+        <a class="d-flex align-items-center text-decoration-none" href="javascript:void(0);">
+          <div class="ps-2">
+            <div class="d-flex fs-xs text-dark opacity-70  align-items-center">
+              <span class="me-2 pe-1"><i class="fi-calendar-alt opacity-70 mt-n1 me-1 align-middle"></i>
+                {{
+                item.CreatedOn | date }}</span>
+              <ngb-rating [(rate)]="item.Rating" [readonly]="true" [max]="5">
+              </ngb-rating>
+            </div>
+          </div>
+        </a>
+      </article>
+    </div>
+
+    <!-- Latest articles (2 columns)-->
+
+    <div class="row  gy-md-5 gy-4 mb-lg-5 mb-4">
+      <article class="col-4 pb-2 pb-md-1" *ngFor="let item of blogsData3; index as i">
+        <a class="d-block position-relative mb-3 rounded-3" style="max-height: 19rem;  overflow: hidden;"
+          [queryParams]="{ blog_id: item.Id, title: item.Title }" routerLink="/single-blog"></a>
+        <img class="d-block rounded-3" style="object-fit: cover; object-position: center;" src="{{
+              admin_base_url + '/Content/Images/Blogs/' + item.Img2 || ''
+            }}" alt="Post image" />
+        <h3 class="h5 text-dark mb-2 pt-1">
+          <a class="nav-link" [queryParams]="{ blog_id: item.Id, title: item.Title }" routerLink="/single-blog">{{
+            item.Title }}</a>
+        </h3>
+        <p class="text-dark opacity-70 mb-3">
+          {{ item.ShortDescription }}
+        </p>
+        <a class="d-flex align-items-center text-decoration-none" href="javascript:void(0);">
+          <div class="ps-2">
+            <div class="d-flex fs-sm text-dark opacity-70 align-items-center">
+              <span class="me-2 pe-1"><i class="fi-calendar-alt opacity-70 mt-n1 me-1 align-middle"></i>{{
+                item.CreatedOn | date }}</span>
+              <ngb-rating [(rate)]="item.Rating" [readonly]="true" [max]="5">
+              </ngb-rating>
+            </div>
+          </div>
+        </a>
+      </article>
+    </div>
+
+  </div>
+</main>
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,6 @@
+{
+  "/list": {
+    "target": "http://amdcncri.fortiddns.com:60123",
+    "secure": false
+  }
+}

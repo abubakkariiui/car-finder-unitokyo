@@ -1,0 +1,103 @@
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+
+  <section class="container my-5 pt-5 pb-lg-5">
+    <div class="row mx-0">
+      <div class="col-md-8 border-end-md border-dark p-2 p-sm-5">
+        <!-- <button  class="btn btn-primary btn-md mb-4" (click)="clearCart()">Clear Cart</button> -->
+        <div *ngIf="cartCatalogList.length === 0" class="alert d-flex flex-wrap alert-info justify-content-between">
+          <span> Cart is Empty. </span><a class="text-decoration-none hover-cursor px-2 active"
+            href="javascript:void(0);" routerLink="/catalog/search/list">
+            Search List
+          </a>
+        </div>
+
+        <div *ngFor="let item of cartCatalogList; index as i"
+          class="card card-light card-hover card-horizontal mb-4 border">
+          <div class="tns-carousel-wrapper card-img-top card-img-hover">
+            <a class="img-overlay" routerLink="/catalog/search/single"></a>
+            <img src="{{ carsData[i].image[0].img }}" alt="Image" class="h-100" />
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between pb-1">
+              <span class="fs-sm text-dark">{{ item.Year }}</span>
+              <div class="form-check form-check-dark">
+                <button ngbTooltip="Remove Item" class="btn badge pa-0 text-dark"
+                  (click)="deleteSingleItem(item.VehicleSku)" type="button" placement="left">
+                  <i class="fi-x"></i>
+                </button>
+              </div>
+            </div>
+            <h3 class="h6 mb-1">
+              <a class="nav-link-dark">{{ item.Title }} (
+                {{
+                item.FuelType === 0
+                ? "Petrol"
+                : item.FuelType === 1
+                ? "Petrol"
+                : "CNG"
+                }})</a>
+            </h3>
+            <div class="text-primary fw-bold mb-1">
+              {{ item.ShowPrice? item.Price : '' | currency }}
+            </div>
+            <div class="fs-sm text-dark opacity-70">
+              <i class="fi-map-pin me-1"></i>{{ item.ShowRoom.Title || "Global" }}
+            </div>
+            <div class="fs-sm text-dark opacity-70">
+              SKU#{{ item.VehicleSku }}
+            </div>
+
+            <div class="fs-sm text-dark opacity-70">
+              Mileage: {{ item.Mileage }}K mi
+            </div>
+            <div class="fs-sm text-dark opacity-70">
+              Chasis: {{ item.Chesis }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 border-end-md mt-0 border-dark p-2 p-sm-5">
+        <div class="card sticky-top">
+          <div class="card-header w-100 d-flex align-items-center justify-content-between">
+            <span class="text-dark">Total</span>
+            <button (click)="deleteAllItems()" *ngIf="total > 1" class="btn btn-primary btn-xs   rounded-0"
+              type="button">
+              <i class="fi-trash me-2"></i> Empty Cart
+            </button>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let item of cartCatalogList; index as i"
+              class="d-flex align-items-center justify-content-between pb-1">
+              <span class="text-dark">{{ i + 1 + ". " + item.Title }} </span>
+              <span class="text-dark"> {{ item.Price | currency }} </span>
+            </div>
+          </div>
+
+          <div class="card-body border-top">
+            <div class="d-flex align-items-center justify-content-between pb-1">
+              <span class="text-dark">Sub-total</span>
+              <span class="text-dark">{{ total | currency }}</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button *ngIf="total > 0" routerLink="/checkout" class="btn btn-primary btn-sm w-100 rounded-0"
+              type="button">
+              <i class="fi-wallet me-2"></i>Check Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-latest-vehicles></app-latest-vehicles>
+</main>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

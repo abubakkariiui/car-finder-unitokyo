@@ -1,0 +1,327 @@
+<div class="offcanvas offcanvas-start offcanvas-collapse bg-light" id="filters-sidebar">
+  <div class="offcanvas-header bg-transparent d-flex d-lg-none align-items-center">
+    <h2 class="h5 text-dark mb-0">Filters</h2>
+    <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas"
+      (click)="SidebarHide()"></button>
+  </div>
+
+  <div class="offcanvas-body py-lg-4">
+    <!-- <div class="row border-bottom border-red-light pb-2">
+      <div class="col col-6">
+        <button class="btn btn-primary btn-sm w-100" (click)="emitFilter(filters)">
+          <i class="fi-search me-2"></i> Search
+        </button>
+      </div>
+      <div class="col col-6">
+        <button (click)="clearFilters(defaultFilters)" class="btn btn-sm w-100">
+          Clear Filters
+        </button>
+      </div>
+    </div> -->
+    <div class="mb-2">
+      <h6 class="h6 text-dark">Keywords</h6>
+      <input class="form-control form-control-dark" [(ngModel)]="filters.Keywords" type="text" id="keywords"
+        placeholder="Keywords">
+    </div>
+
+    <div class="pb-1">
+      <h3 class="h6 text-dark">Body Type</h3>
+      <div class="col">
+        <select [(ngModel)]="filters.Type" class="form-select form-select-dark mb-2">
+          <option value="" disabled selected>All</option>
+          <option [value]="data.id" *ngFor="let data of manuFacturers">
+            {{ data.title }}
+          </option>
+        </select>
+        <!-- <select [(ngModel)]="filters.SubType" class="form-select form-select-dark mb-2">
+          <option value="" disabled selected>sub type</option>
+          <option value="Audi">honda</option>
+        </select> -->
+      </div>
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Make &amp; Model</h6>
+
+        <select (ngModelChange)="onChangeBrand($event)" [(ngModel)]="filters.ManufacturerId"
+          class="form-select form-select-dark mb-2">
+          <option value="" disabled selected>Any make</option>
+          <option *ngFor="let b of brandsData" [value]="b.Id">
+            <span class="dropdown-item-label">{{ b.Title }}</span>
+          </option>
+        </select>
+        <select [(ngModel)]="filters.ModelId" class="form-select form-select-dark mb-1">
+          <option value="" disabled selected>Any model</option>
+          <option *ngFor="let model of modelsList" [value]="model.Id">
+            {{ model.Title }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-1">
+        <h6 class="h6 text-dark">Year</h6>
+        <div class="range-slider range-slider-dark mb-1" data-start-min="1960" data-start-max="2023" data-min="1960"
+          data-max="2023" data-step="1">
+          <ngx-slider [(value)]="filters.MinYear" [(highValue)]="filters.MaxYear" [options]="YearOptions"></ngx-slider>
+        </div>
+      </div>
+      <div class="mb-2">
+        <h3 class="h6 text-dark">Mileage</h3>
+        <div class="range-slider range-slider-dark mb-3" data-start-min="50000" data-start-max="300000" data-min="50000"
+          data-max="300000" data-step="10">
+          <ngx-slider [(value)]="filters.MinMileage" [(highValue)]="filters.MaxMileage" [options]="MileageOptions">
+          </ngx-slider>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Transmission</h6>
+        <select [(ngModel)]="filters.Transmission" class="form-select form-select-dark mb-2">
+          <option value="" selected>Transmission All</option>
+          <option [value]="t" *ngFor="let t of transmissionsList">
+            {{ t }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Fuel</h6>
+        <select [(ngModel)]="filters.FuelType" class="form-select form-select-dark mb-2">
+          <option value="" selected>Fuel All</option>
+          <option [value]="f" *ngFor="let f of fuelTypesList">
+            {{ f }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Color</h6>
+        <select [(ngModel)]="filters.Color" class="form-select form-select-dark mb-2">
+          <option value="" selected>Color All</option>
+          <option [value]="color" *ngFor="let color of colorsList">
+            {{ color }}
+          </option>
+
+        </select>
+      </div>
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Drivetrain</h6>
+        <select [(ngModel)]="filters.Drivertrain" class="form-select form-select-dark mb-2">
+          <option value="" selected>Fuel All</option>
+          <option value="FWD">FWD</option>
+          <option value="TWD">TWD</option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Stock Location</h6>
+        <select [(ngModel)]="filters.StockLocation" class="form-select form-select-dark mb-2">
+          <option value="" selected>Stock Location (All)</option>
+          <option value="10019">Bela Cars</option>
+          <option value="1">Japan</option>
+          <option value="3">Kenya</option>
+          <option value="2">Tanzania</option>
+          <option value="16">Uganda</option>
+        </select>
+      </div>
+
+      <div class="mb-2">
+        <h6 class="h6 text-dark">Engine Size</h6>
+        <select [(ngModel)]="filters.EngineSize" class="form-select form-select-dark mb-2">
+          <option value="" selected>Engine Size (All)</option>
+          <option [value]="e" *ngFor="let e of enginCapacities">
+            {{ e }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="!settingParamsLoading" class="mb-2">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="  panel-x accordion accordion-dark">
+          <ngb-panel class="border   ">
+            <ng-template class="pa-0" ngbPanelTitle> ACCESSORIES </ng-template>
+            <ng-template ngbPanelContent>
+
+              <div class="row px-3">
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+
+                    <input [(ngModel)]="filters.AirConditioning" class="form-check-input" type="checkbox"
+                      id="AirConditioning" />
+                    <label class="form-check-label fs-sm" for="AirConditioning">
+                      Air Conditioning</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.PowerSteering" class="form-check-input" type="checkbox"
+                      id="PowerSteering" />
+                    <label class="form-check-label fs-sm" for="PowerSteering">Power Steering</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+
+                    <input [(ngModel)]="filters.PowerWindows" class="form-check-input" type="checkbox"
+                      id="PowerWindows" />
+                    <label class="form-check-label fs-sm" for="PowerWindows">Power Windows</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.PowerMirror" class="form-check-input" type="checkbox"
+                      id="PowerMirror" />
+                    <label class="form-check-label fs-sm" for="PowerMirror">Power Mirror</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.CentralLocking" class="form-check-input" type="checkbox"
+                      id="CentralLocking" />
+                    <label class="form-check-label fs-sm" for="CentralLocking">Central Locking</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.Stereo" class="form-check-input" type="checkbox" id="Stereo" />
+                    <label class="form-check-label fs-sm" for="Stereo">Stereo</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.AlloyWheel" class="form-check-input" type="checkbox" id="AlloyWheel" />
+                    <label class="form-check-label fs-sm" for="AlloyWheel">Alloy Wheel</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.RearSpoiler" class="form-check-input" type="checkbox"
+                      id="RearSpoiler" />
+                    <label class="form-check-label fs-sm" for="RearSpoiler">Rear Spoiler</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.Airbag" class="form-check-input" type="checkbox" id="Airbag" />
+                    <label class="form-check-label fs-sm" for="Airbag">Airbag</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.DualAirbags" class="form-check-input" type="checkbox"
+                      id="DualAirbags" />
+                    <label class="form-check-label fs-sm" for="DualAirbags">
+                      Dual Airbags</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.SunRoof" class="form-check-input" type="checkbox" id="SunRoof" />
+                    <label class="form-check-label fs-sm" for="SunRoof">
+                      Sun Roof</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.BodyKit" class="form-check-input" type="checkbox" id="BodyKit" />
+                    <label class="form-check-label fs-sm" for="BodyKit">
+                      Body Kit</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.LeatherSeats" class="form-check-input" type="checkbox"
+                      id="LeatherSeats" />
+                    <label class="form-check-label fs-sm" for="LeatherSeats">
+                      Leather Seats</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.KeylessEntry" class="form-check-input" type="checkbox"
+                      id="KeylessEntry" />
+                    <label class="form-check-label fs-sm" for="KeylessEntry">
+                      Keyless Entry</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.HeightControl" class="form-check-input" type="checkbox"
+                      id="HeightControl" />
+                    <label class="form-check-label fs-sm" for="HeightControl">
+                      Height Control</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.HIDLights" class="form-check-input" type="checkbox" id="HIDLights" />
+                    <label class="form-check-label fs-sm" for="HIDLights">
+                      HID Lights</label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.AntiTheftSystem" class="form-check-input" type="checkbox"
+                      id="Anti Theft System" />
+                    <label class="form-check-label fs-sm" for="Anti Theft System">
+                      Anti Theft System
+                    </label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.Long" class="form-check-input" type="checkbox" id="Long" />
+                    <label class="form-check-label fs-sm" for="Long">
+                      Long
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.HighRoof" class="form-check-input" type="checkbox" id="HighRoof" />
+                    <label class="form-check-label fs-sm" for="HighRoof">
+                      High Roof
+                    </label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.HighDeck" class="form-check-input" type="checkbox" id="HighDeck" />
+                    <label class="form-check-label fs-sm" for="HighDeck">
+                      High Deck
+                    </label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-check-dark">
+                    <input [(ngModel)]="filters.AntilockBreakingSystem" class="form-check-input" type="checkbox"
+                      id="AntilockBreakingSystem" />
+                    <label class="form-check-label fs-sm" for="AntilockBreakingSystem">
+                      Antilock Breaking System
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+
+      <div class="row border-top border-red-light pb-2 py-2">
+        <div class="col col-6">
+          <button class="btn btn-primary btn-sm w-100" (click)="emitFilter(filters)">
+            <i class="fi-search me-2"></i> Search
+          </button>
+        </div>
+        <div class="col col-6">
+          <button (click)="clearFilters(defaultFilters)" class="btn btn-sm w-100">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

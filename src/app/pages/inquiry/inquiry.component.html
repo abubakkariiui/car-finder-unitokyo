@@ -1,0 +1,207 @@
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+
+  <section class="container my-5 pt-5 pb-lg-5">
+    <div class="row mx-0">
+      <div class="col-md-3">
+        <app-searchform [small]="true"></app-searchform>
+
+        <div class="card">
+          <div class="card-header bg-shadid-light">
+            <span class="">Like us on facebook</span>
+          </div>
+          <div class="card-body">
+            <div class="fb-like fb_iframe_widget" data-href="https://www.facebook.com/yuasatrading"
+              data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"
+              fb-xfbml-state="rendered"
+              fb-iframe-plugin-query="action=like&amp;app_id=1586531728290446&amp;container_width=227&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+              bis_skin_checked="1">
+              <span style="vertical-align: bottom; width: 90px; height: 28px"><iframe name="f22c66e814a0ac"
+                  width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin"
+                  title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true"
+                  scrolling="no" allow="encrypted-media"
+                  src="https://www.facebook.com/v2.3/plugins/like.php?action=like&amp;app_id=1586531728290446&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df1faf9f0bd407d8%26domain%3Dyuasatrading.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fyuasatrading.com%252Ff11773ee9e50fc%26relation%3Dparent.parent&amp;container_width=227&amp;href=https%3A%2F%2Fwww.facebook.com%2Fyuasatrading&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"
+                  style="
+                    border: none;
+                    visibility: visible;
+                    width: 90px;
+                    height: 28px;
+                  " class="" bis_size='{"x":227,"y":527,"w":90,"h":28,"abs_x":227,"abs_y":527}'></iframe></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header bg-shadid-light">
+            <span class="">Inquiry</span>
+          </div>
+          <div class="card-body">
+            <form class="needs-validation" novalidate (ngSubmit)="validSubmit(toggleLoginModel)"
+              [formGroup]="validationform">
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="Name">Full name <span class="text-primary">*</span></label>
+                    <input class="form-control form-control-sm form-control-dark" type="text" id="Name"
+                      placeholder="Full Name" required formControlName="Name"
+                      [ngClass]="{'is-invalid': submit && form['Name'].errors}" />
+                  </div>
+
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="email">Email <span class="text-primary">*</span></label>
+                    <input class="form-control form-control-sm form-control-dark" type="text" id="email"
+                      placeholder="Email" required formControlName="Email"
+                      [ngClass]="{'is-invalid': submit && form['Email'].errors}" />
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="RetypeEmail">Retype Email <span
+                        class="text-primary">*</span></label>
+                    <input class="form-control form-control-sm form-control-dark" type="text" id="RetypeEmail"
+                      placeholder="Retype Email" required formControlName="RetypeEmail" />
+                  </div>
+
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="phone">Phone <span class="text-primary">*</span></label>
+                    <input class="form-control form-control-sm form-control-dark" type="text" id="phone"
+                      placeholder="Phone" required formControlName="Phone"
+                      [ngClass]="{'is-invalid': submit && form['Phone'].errors}" />
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="company">Company Name</label>
+                    <input class="form-control form-control-sm form-control-dark" type="text" id="company"
+                      placeholder="Company" formControlName="Company" />
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="CountryId">Country <span
+                        class="text-primary">*</span></label>
+
+                    <select required class="form-select form-select-sm form-select-dark" id="c-subject"
+                      formControlName="CountryId" [ngClass]="{'is-invalid': submit && form['CountryId'].errors}">
+                      <option value="choose country" selected disabled>Choose Country</option>
+                      <option *ngFor="let c of countriesList" [value]="c.Id">
+                        {{ c.Name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="ManufacturerId">Make<span
+                        class="text-primary">*</span></label>
+
+                    <select (ngModelChange)="onChangeBrand($event)" formControlName="ManufacturerId"
+                      class="form-select form-select-sm form-select-dark mb-2" *ngFor="let items of brandsData | async"
+                      id="ManufacturerId" required [ngClass]="{'is-invalid': submit && form['ManufacturerId'].errors}">
+                      <option value="" disabled selected>Any make</option>
+                      <option *ngFor="let b of items" [value]="b.Id">
+                        <span class="dropdown-item-label">{{ b.Title }}</span>
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="ModelId">Model<span class="text-primary">*</span>
+                    </label>
+                    <select required class="form-select form-select-sm form-select-dark model.Title  mb-1"
+                      formControlName="ModelId" [ngClass]="{'is-invalid': submit && form['ModelId'].errors}">
+                      <option value="" disabled selected>Any model</option>
+                      <option *ngFor="let model of modelsList" [value]="model.Id">
+                        {{model.Title}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="Transmission">Transmission
+                    </label>
+                    <select class="form-select form-select-sm form-select-dark mb-1" formControlName="Transmission">
+                      <option value="" disabled selected>Transmission</option>
+                      <option value="1">AT</option>
+                      <option value="2">CAT</option>
+                      <option value="3">IAT</option>
+                      <option value="4">MT</option>
+                      <option value="5">NA</option>
+                    </select>
+
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="Steering">Steering</label>
+                    <select class="form-select form-select-sm form-select-dark mb-1" formControlName="Steering">
+                      <option value="" disabled selected>All</option>
+                      <option value="0">LHD</option>
+                      <option value="1">RHD</option>
+                    </select>
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="PriceType">Price Type
+                    </label>
+
+                    <select class="form-select form-select-sm form-select-dark mb-1" formControlName="PriceType">
+                      <option value="" disabled selected>All</option>
+                      <option value="1">CIF</option>
+                      <option value="2">DDP</option>
+                      <option value="0">FOB</option>
+                    </select>
+                  </div>
+                  <div class="mb-2 fields-elements">
+                    <label class="form-label text-dark" for="year">Year</label>
+                    <div class="range-slider range-slider-dark mb-1" data-start-min="1960" data-start-max="2023"
+                      data-min="1960" data-max="2023" data-step="1">
+
+                      <ngx-slider [(value)]="filters.YearFrom" id="year" [(highValue)]="filters.YearTo"
+                        [options]="YearOptions">
+                      </ngx-slider>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-2 fields-elements">
+                  <label class="form-label text-dark" for="Message">Message</label>
+                  <textarea class="form-control form-control-sm form-control-dark" type="textarea" id="Message"
+                    placeholder="Message" formControlName="Message"></textarea>
+                </div>
+
+                <div class="mb-2 fields-elements my-1">
+                  <input class="form-check-input" type="checkbox" id="RecaptchaValid" required checked
+                    formControlName="RecaptchaValid"
+                    [ngClass]="{'is-invalid': submit && form['RecaptchaValid'].errors}" />
+
+                  <label class="form-check-label px-2" for="RecaptchaValid"><span class="opacity-70"> Recaptcha
+                      Valid</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="d-flex    align-items-center justify-content-between">
+                <button [disabled]="isLoading" class="btn btn-primary  mt-3 " name="btn1" type="submit">
+                  Submit Inquiry
+
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                    aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Body type selection-->
+
+  <app-types></app-types>
+</main>
+
+<ng-template #toggleLoginModel let-modal>
+  <div class="modal-body">
+    <button class="btn-close btn-close-dakr position-absolute top-0 end-0 mt-3 mx-3 px-3" type="button"
+      data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+    <app-signin [isDialog]="true" route="/inquiry" (routeChange)="modal.close('Close click')" [showBackButton]="false">
+    </app-signin>
+  </div>
+</ng-template>
+
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,202 @@
+<div class="container pb-5 mb-4">
+  <!-- Form group-->
+
+  <form class="form-group form-group-dark d-block " (ngSubmit)="onSubmit()" *ngIf="!small">
+    <div class="row g-0 ms-lg-n2">
+      <div
+        Class="border-end-lg border-dark col-lg-2 col-md-3 col-sm-12 d-flex align-items-center justify-content-center">
+        <div class="input-group">
+          <span class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-search"></i></span>
+          <input class="form-control" id="title-text" [(ngModel)]="searchform.Keywords" type="text" name="keywords"
+            placeholder="Keywords..." />
+        </div>
+      </div>
+      <hr class="hr-dark d-lg-none my-2" />
+      <div
+        Class="border-end-lg border-dark col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+        <div class="row g-2 g-sm-4" *ngFor="let items of brandsData | async">
+          <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+            <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+              ngbDropdownToggle>
+              <i class="fi-list me-2"></i><span class="dropdown-toggle-label brand">Brand</span>
+            </button>
+            <input type="hidden" name="brand" />
+
+            <ul class="dropdown-menu dropdown-menu-dark simplebar-scroll-show" ngbDropdownMenu id="brand-content">
+              <ngx-simplebar style="height: 20rem" class="overflow-auto">
+                <li>
+                  <a class="dropdown-item" (click)="setBrand({})">
+                    <span class="dropdown-item-label">Brand</span></a>
+                </li>
+
+                <li *ngFor="let brand of items">
+                  <a class="dropdown-item" (click)="setBrand(brand)"><span class="dropdown-item-label">{{
+                      brand.Title
+                      }}</span></a>
+                </li>
+              </ngx-simplebar>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-dark d-sm-none my-2" />
+      <div
+        Class="border-end-lg border-dark col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+        <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+          <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+            ngbDropdownToggle>
+            <i class="fi-list me-2"></i><span class="dropdown-toggle-label model">Model</span>
+          </button>
+          <input type="hidden" name="model" />
+          <ul style="max-height: 350px; overflow: auto" class="dropdown-menu dropdown-menu-dark simplebar-scroll-show"
+            ngbDropdownMenu id="model-content">
+            <ngx-simplebar style="max-height: 20rem" class="overflow-auto">
+              <li>
+                <a class="dropdown-item" (click)="setModel({})"><span class="dropdown-item-label">Model</span></a>
+              </li>
+
+              <li *ngFor="let model of modelsList">
+                <a class="dropdown-item" (click)="setModel(model)"><span class="dropdown-item-label">{{ model.Title
+                    }}</span></a>
+              </li>
+            </ngx-simplebar>
+          </ul>
+        </div>
+      </div>
+      <hr class="hr-dark d-sm-none my-2" />
+      <div
+        Class="border-end-lg border-dark col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+        <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+          <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+            ngbDropdownToggle>
+            <i class="me-2"></i><span class="dropdown-toggle-label year">Year</span>
+          </button>
+          <input type="hidden" name="year" />
+          <ul style="max-height: 350px; overflow: auto" class="dropdown-menu dropdown-menu-dark simplebar-scroll-show"
+            ngbDropdownMenu id="year-content">
+            <ngx-simplebar style="height: 20rem" class="overflow-auto">
+              <li>
+                <a class="dropdown-item" (click)="setYear({})">
+                  <span class="dropdown-item-label">Year</span></a>
+              </li>
+              <li *ngFor="let year of yearsList" (click)="setYear(year)">
+                <a class="dropdown-item">
+                  <span class="dropdown-item-label">{{ year}}</span></a>
+              </li>
+            </ngx-simplebar>
+          </ul>
+        </div>
+      </div>
+      <hr class="hr-dark d-sm-none my-2" />
+      <div Class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+        <div class="range-slider range-slider-dark mb-3" data-start-min="25000" data-start-max="65000" data-min="4000"
+          data-max="100000" data-step="1000">
+          <ngx-slider [(value)]="searchform.minPrice" [(highValue)]="searchform.maxPrice" [options]="options">
+          </ngx-slider>
+        </div>
+      </div>
+      <div Class="d-flex  col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+        <button class="btn btn-primary w-50  px-1" type="submit">Search</button>
+        <button type="button" class="btn px-1" (click)="clear()">Clear</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="small">
+
+    <button class="btn btn-primary w-100" (click)="navigateRoute('/catalog/search/list')">Search Catalog</button>
+
+  </div>
+
+
+  <!-- <form class="form-group form-group-dark d-block  " (ngSubmit)="onSubmit()" *ngIf="small">
+    <div class="row g-0 ms-lg-n2">
+      <div Class=" col-12 d-flex ">
+        <div class="input-group">
+          <span class="input-group-text text-muted ps-2 ps-sm-3"><i class="fi-search"></i></span>
+          <input class="form-control" id="title-text" [(ngModel)]="searchform.Keywords" type="text" name="keywords"
+            placeholder="Keywords..." />
+        </div>
+      </div>
+      <hr class="hr-dark d-lg-none my-2" />
+
+      <div class="w-100" *ngFor="let items of brandsData | async">
+        <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+          <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+            ngbDropdownToggle>
+            <i class="fi-list me-2"></i><span class="dropdown-toggle-label brand">Brand</span>
+          </button>
+          <input type="hidden" name="brand" />
+          <ul style="max-height: 350px; overflow: auto; width: 100%" class="dropdown-menu dropdown-menu-dark"
+            ngbDropdownMenu id="brand-content">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" (click)="setBrand({})"><span
+                  class="dropdown-item-label">-- Select --</span></a>
+            </li>
+
+            <li *ngFor="let brand of items">
+              <a class="dropdown-item" href="javascript:void(0);" (click)="setBrand(brand)"><span
+                  class="dropdown-item-label">{{ brand.Title }}</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="hr-dark d-sm-none my-2" />
+      <div Class=" w-100">
+        <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+          <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+            ngbDropdownToggle>
+            <i class="fi-list me-2"></i><span class="dropdown-toggle-label model">Model</span>
+          </button>
+          <input type="hidden" name="model" />
+          <ul style="max-height: 350px; overflow: auto; width: 100%" class="dropdown-menu dropdown-menu-dark"
+            ngbDropdownMenu id="model-content">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" (click)="setModel({})"><span
+                  class="dropdown-item-label">-- Select --</span></a>
+            </li>
+
+            <li *ngFor="let model of modelsList">
+              <a class="dropdown-item" href="javascript:void(0);" (click)="setModel(model)"><span
+                  class="dropdown-item-label">{{ model.Title }}</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="hr-dark d-sm-none my-2" />
+      <div Class="    w-100">
+        <div class="dropdown" data-bs-toggle="select" ngbDropdown>
+          <button class="btn btn-link dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"
+            ngbDropdownToggle>
+            <i class="me-2"></i><span class="dropdown-toggle-label year">Year</span>
+          </button>
+          <input type="hidden" name="year" />
+          <ul style="max-height: 350px; overflow: auto; width: 100%" class="dropdown-menu dropdown-menu-dark"
+            ngbDropdownMenu id="year-content">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0);" (click)="setYear(0000)"><span
+                  class="dropdown-item-label">-- Select --</span></a>
+            </li>
+            <li *ngFor="let year of yearsList" (click)="setYear(year)">
+              <a class="dropdown-item" href="javascript:void(0);"><span class="dropdown-item-label">{{ year
+                  }}</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="hr-dark d-sm-none my-2" />
+      <div Class="  d-flex ">
+        <div class="range-slider range-slider-dark mb-3" data-start-min="25000" data-start-max="65000" data-min="4000"
+          data-max="100000" data-step="1000">
+          <ngx-slider [(value)]="searchform.minPrice" [(highValue)]="searchform.maxPrice" [options]="options">
+          </ngx-slider>
+        </div>
+      </div>
+      <div Class="  px-2">
+        <button class="btn btn-primary w-100" type="submit">Search</button>
+      </div>
+    </div>
+  </form> -->
+
+</div>

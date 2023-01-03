@@ -1,0 +1,31 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <!-- <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <app-account-asidebar componentType="support"></app-account-asidebar>
+
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-9 col-md-7 mb-5">
+
+            <app-support-list></app-support-list>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer-->
+<div class="bg-dark">
+    <app-footer></app-footer>
+</div>

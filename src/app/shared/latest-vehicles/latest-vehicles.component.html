@@ -1,0 +1,19 @@
+<section class="container pt-sm-5 pt-4 pb-3">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4 pb-2">
+        <h2 class="h3 text-dark mb-3 mb-sm-0">Latest Vehicles</h2>
+        <div class="d-flex align-items-center">
+
+        </div>
+    </div>
+
+    <swiper [config]="config" class="custom-swiper" *ngIf="latestCatalog.Items?.length> 0">
+        <div class="swiper-slide " *ngFor="let item of latestCatalog.Items ; index as i">
+            <VehicleDetails (whishListChange)="onWhishListChange()" [VehicleObject]="item" [showSlider]="false" [id]="i"
+                Type="grid">
+            </VehicleDetails>
+        </div>
+
+    </swiper>
+
+</section>

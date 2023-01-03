@@ -1,0 +1,102 @@
+<div class=" d-flex align-items-center  justify-content-center">
+    <div class="container-fluid">
+        <div class="  mx-auto" style="border:none !important; max-width: 940px">
+
+            <a *ngIf="!isDialog" class="position-absolute top-0 end-0 nav-link-dark fs-sm py-1 px-2 mt-3 me-3"
+                routerLink=""><i class="fi-arrow-long-left fs-base me-2"></i>Go back</a>
+
+            <div class="row mx-0 align-items-center">
+                <div class="col-md-6 border-end-md border-dark p-2 p-sm-5">
+                    <h2 class="h3 text-dark mb-4 mb-sm-5">Hey there!<br>Welcome back.</h2>
+
+                    <img class="d-block mx-auto" (dblclick)="doubleClick()"
+                        src="assets/img/signin-modal/signin-dark.svg" width="344" alt="Illustartion">
+                    <div class="text-dark mt-4 mt-sm-5"><span class="opacity-60">Don't have an account? </span>
+
+                        <a class="text-dark" (click)="toggleComponent()">Sign up
+                            here</a>
+                    </div>
+                </div>
+                <div class="col-md-6 px-2 pt-2 pb-4 px-sm-5 pb-sm-5 pt-md-5">
+                    <!-- <a class="btn btn-outline-info w-100 mb-3" (click)="loginWithGoogle()">
+                        <i class="fi-google fs-lg me-1"></i> Sign in with Google</a> -->
+                    <a class="btn btn-outline-info w-100 mb-3" (click)="signInWithFB()">
+                        <i class="fi-facebook fs-lg me-1"></i>Sign in with Facebook</a>
+                    <!-- <div id="g_id_onload"
+                        data-client_id="766244996952-rjnuigs104l7mguvdoq62hpf6s0kri75.apps.googleusercontent.com"
+                        data-login_uri="http://amdcncri.fortiddns.com:60123/SocialLogin" data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                        data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+                    </div> -->
+                    <div class="w-100 mb-3" #gbutton ></div>
+                    <!-- <asl-google-signin-button></asl-google-signin-button> -->
+                    <!-- <a class="btn btn-outline-info w-100 mb-3" (click)="loginWithGoogle()">
+                        <i class="fi-google fs-lg me-1"></i>Sign in with Google</a> -->
+                    <div class="d-flex align-items-center py-3 mb-3">
+
+                        <hr class="hr-dark w-100">
+                        <div class="text-dark opacity-70 px-3">Or</div>
+
+                        <hr class="hr-dark w-100">
+
+                    </div>
+
+                    <div>
+
+                        <h2 class="h6 text-dark" *ngIf="resultMessage.status ==  200">
+                            {{resultMessage.body }}
+                        </h2>
+
+                        <h2 class="h6 text-primary" *ngIf="resultMessage.status >= 200">
+                            {{resultMessage.statusText }}
+                        </h2>
+
+
+                    </div>
+                    <form class="needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationform">
+                        <div class="mb-4">
+                            <label class="form-label text-dark mb-2" for="signin-email">Email address</label>
+                            <input class="form-control form-control-dark" type="email" id="signin-email"
+                                placeholder="Enter your email" required formControlName="email"
+                                [ngClass]="{'is-invalid': submit && form['email'].errors}">
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label class="form-label text-dark mb-0" for="signin-password">Password</label><a
+                                    class="fs-sm text-dark" (click)="closeModels()"
+                                    routerLink="/password-recovery">Forgot password?</a>
+                            </div>
+                            <div class="password-toggle">
+                                <input class="form-control form-control-dark"
+                                    [type]="fieldTextType ? 'text' : 'password'" id="signin-password"
+                                    placeholder="Enter password" required formControlName="password"
+                                    [ngClass]="{'is-invalid': submit && form['password'].errors}">
+                                <label class="password-toggle-btn" aria-label="Show/hide password">
+                                    <input class="password-toggle-check" type="checkbox">
+                                    <span class="password-toggle-indicator"
+                                        [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType }"
+                                        (click)="toggleFieldTextType()"></span>
+                                </label>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <ngx-recaptcha2
+                                    #captchaElem 
+                                    [ngClass]="{'is-invalid': submit && form['captcha'].errors}"
+                                    siteKey="6LfRqmQjAAAAAEi7VxuzQzomnOKSSqySjTPU2tHY" 
+                                    formControlName="captcha">
+                                </ngx-recaptcha2>
+                            </div>
+                        </div>
+                        <button [disabled]="loading" class="btn btn-primary btn-lg w-100" type="submit">Sign in
+
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"
+                                aria-hidden="true"></span>
+
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

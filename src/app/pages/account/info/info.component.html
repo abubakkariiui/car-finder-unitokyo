@@ -1,0 +1,126 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+  <!-- Breadcrumb-->
+  <!-- <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+  <!-- Page content-->
+  <div class="row">
+    <!-- Sidebar-->
+    <aside class="col-lg-3 col-md-5 pe-xl-4 mb-5">
+      <!-- Account nav-->
+      <app-account-asidebar componentType="info"></app-account-asidebar>
+    </aside>
+    <!-- Content-->
+    <div class="col-lg-9 col-md-7 mb-5">
+      <h1 class="h2 text-dark">Personal Info</h1>
+
+      <div class="row pt-2">
+        <div class="col mb-2 mb-m-4">
+          <div class="p-3 mb-4 border-accordion " id="personal-info">
+            <form class="needs-validation pt-3 mt-3" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationform">
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4">
+                  <label class="form-label text-dark" for="signup-FirstName">First Name</label>
+                </div>
+                <div class="col-md-8">
+                  <input class=" form-control  form-control-sm form-control-dark" type="text" id="signup-FirstName"
+                    placeholder="Enter First Name" required formControlName="FirstName"
+                    [ngClass]="{'is-invalid': submit && form['FirstName'].errors}">
+
+                </div>
+              </div>
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4">
+                  <label class="form-label text-dark" for="signup-name">Last name</label>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control  form-control-sm form-control-dark" type="text" id="signup-name"
+                    placeholder="Enter Last Name" required formControlName="LastName"
+                    [ngClass]="{'is-invalid': submit && form['LastName'].errors}">
+                </div>
+              </div>
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"><label class="form-label text-dark" for="signup-Email">Email
+                  </label> </div>
+                <div class="col-md-8">
+                  <input class="form-control  form-control-sm form-control-dark" type="Email" id="signup-Email"
+                    placeholder="Enter Email" required formControlName="Email"
+                    [ngClass]="{'is-invalid': submit && form['Email'].errors}">
+                </div>
+              </div>
+
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"> <label class="form-label text-dark" for="Company">Company</label>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control form-control-sm form-control-dark" type="text" id="Company"
+                    placeholder="Company" formControlName="Company">
+                </div>
+              </div>
+
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"> <label class="form-label text-dark" for="City">City</label></div>
+                <div class="col-md-8">
+                  <input class="form-control form-control-sm form-control-dark" type="text" id="City" placeholder="City"
+                    formControlName="City">
+                </div>
+              </div>
+
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"><label class="form-label text-dark" for="Phone">Phone</label>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control form-control-sm form-control-dark" type="text" id="Phone"
+                    placeholder="Phone" formControlName="Phone">
+                </div>
+              </div>
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"> <label class="form-label text-dark" for="PostalAddress">Address</label>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control form-control-sm form-control-dark" type="text" id="PostalAddress"
+                    placeholder="Address" formControlName="PostalAddress">
+                </div>
+              </div>
+
+              <div class="mb-1 row px-0 justify-content-between align-items-center">
+                <div class="col-md-4"><label class="form-label text-dark" for="PostalCode">Post
+                    Code</label>
+                </div>
+                <div class="col-md-8">
+                  <input class="form-control form-control-sm form-control-dark" type="text" id="PostalCode"
+                    placeholder="PostalCode" formControlName="PostalCode">
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col ">
+                  <div class="d-flex align-items-center  ">
+
+                    <button class="btn btn-primary btn-lg   " type="submit">Save
+                      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer-->
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>
