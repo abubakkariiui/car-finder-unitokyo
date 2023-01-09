@@ -11,10 +11,7 @@ export class LatestCatalogService {
 
   rootURL = environment.rootURL;
 
-  getLatestCatalog(): Observable<latestCatalogModel[]> {
-    return this.http.post<latestCatalogModel[]>(
-      this.rootURL + `/list?page=1&pageSize=5`,
-      {}
-    );
+  getLatestCatalog(url:any): Observable<latestCatalogModel[]> {
+    return this.http.post<latestCatalogModel[]>(url,{});
   }
 }

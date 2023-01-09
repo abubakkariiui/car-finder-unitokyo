@@ -265,7 +265,7 @@ export class SingleComponent implements OnInit {
       ]);
 
       this.titleService.setTitle(
-        this.selectedVehicle.Title + ' | Yuasa Trading'
+        this.selectedVehicle.Title + ' | UniTokyo'
       );
 
       this.loading = false;

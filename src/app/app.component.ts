@@ -27,7 +27,7 @@ import { UserService } from './services/auth/user.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'yuasa trading';
+  title = 'UniTokyo';
   constructor(
     private bnIdle: BnNgIdleService,
     private store: Store<AppState>,

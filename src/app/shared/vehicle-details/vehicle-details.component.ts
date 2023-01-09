@@ -82,8 +82,8 @@ export class VehicleDetailsComponent implements OnInit {
 
   splitImages(item) {
     let images = [];
-    if (item.Images) {
-      images = item.Images.split(',').map(
+    if (item?.Images) {
+      images = item?.Images.split(',').map(
         (i) => `${this.admin_base_url + '/Pictures/VehicleImages/' + i}`
       );
       return images;

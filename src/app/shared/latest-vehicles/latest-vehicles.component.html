@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <swiper [config]="config" class="custom-swiper" *ngIf="latestCatalog.Items?.length> 0">
+    <swiper [config]="config" class="custom-swiper" *ngIf="latestCatalog?.Items?.length> 0;else noCars">
         <div class="swiper-slide " *ngFor="let item of latestCatalog.Items ; index as i">
             <VehicleDetails (whishListChange)="onWhishListChange()" [VehicleObject]="item" [showSlider]="false" [id]="i"
                 Type="grid">
@@ -15,5 +15,9 @@
         </div>
 
     </swiper>
-
+    <ng-template #noCars>
+        <span style="color: red;">
+            No Latest Vehicles in your location
+        </span>
+    </ng-template>
 </section>

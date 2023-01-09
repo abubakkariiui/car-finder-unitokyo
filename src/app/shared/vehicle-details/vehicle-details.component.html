@@ -142,7 +142,7 @@
   </div>
   <div class="card-body">
     <div class="d-flex align-items-center justify-content-between pb-1">
-      <span class="fs-sm text-dark me-3">{{ VehicleObject.Year || "" }}</span>
+      <span class="fs-sm text-dark me-3">{{ VehicleObject?.Year || "" }}</span>
       <div class="form-check form-check-dark text-dark">
         <button class="btn btn-xs badge btn-primary pa-0 text-light" (click)="onCompareCheckChange(VehicleObject)"
           type="button" placement="left">
@@ -152,7 +152,7 @@
     </div>
     <div class="d-flex align-items-center justify-content-between pb-1">
       <h3 class="h6 mb-1">
-        <a class="nav-link-light text-dark hover-cursor" (click)="onItemClicked(VehicleObject)">{{ VehicleObject.Title
+        <a class="nav-link-light text-dark hover-cursor" (click)="onItemClicked(VehicleObject)">{{ VehicleObject?.Title
           }}
         </a>
       </h3>
@@ -162,7 +162,7 @@
       </button>
     </div>
 
-    <div class="d-flex align-items-center justify-content-between pb-1" *ngIf="VehicleObject.ShowPrice">
+    <div class="d-flex align-items-center justify-content-between pb-1" *ngIf="VehicleObject?.ShowPrice">
       <div>
         <div class="text-danger fw-bold mb-1">
           {{
@@ -182,7 +182,7 @@
     </div>
     <div class="d-flex align-items-center justify-content-between pb-1">
       <div class="fs-sm text-dark opacity-70">
-        <i class="fi-map-pin me-1"></i>{{ VehicleObject.ShowRoom.Title || "Global" }}
+        <i class="fi-map-pin me-1"></i>{{ VehicleObject?.ShowRoom?.Title || "Global" }}
       </div>
       <img data-bs-toggle="modal" (click)="toggleModal(toggleFirstModal , toggleLoginModel)"
         data-bs-target="#modalScroll" ngbTooltip="Make an Offer" [placement]="['left']"
@@ -192,7 +192,7 @@
 
     <div class="d-flex align-items-center justify-content-between pb-1">
       <div class="fs-sm text-dark opacity-70">
-        SKU#{{ VehicleObject.VehicleSku }}
+        SKU#{{ VehicleObject?.VehicleSku }}
       </div>
       <i ngbTooltip="Request
               Information" [placement]="['left']" (click)="onRequestInformationClicked(VehicleObject)"
@@ -206,7 +206,7 @@
             <img placement="top" ngbTooltip="Chassis" src="assets/img/car-finder/icons/chassis-icon.svg" width="23"
               class="mx-auto d-block h4 pt-2 pb-1 text-dark mb-0 mx-center" />
             <span class="fs-xs text-dark">
-              {{ VehicleObject.Chesis }}
+              {{ VehicleObject?.Chesis }}
             </span>
           </div>
         </div>
@@ -216,7 +216,7 @@
             <i placement="top" ngbTooltip="Mileage" class="fi-dashboard d-block h4 text-dark mb-0 mx-center">
             </i>
             <span class="fs-xs text-dark">
-              {{ VehicleObject.Mileage }}K mi
+              {{ VehicleObject?.Mileage }}K mi
             </span>
           </div>
         </div>
@@ -224,9 +224,9 @@
           <div class="bg-red-light rounded text-center w-100 h-100 p-2">
             <i placement="top" ngbTooltip="Fuel Type" class="fi-petrol d-block h4 text-dark mb-0 mx-center"></i><span
               class="fs-xs text-dark">{{
-              VehicleObject.FuelType === 0
+              VehicleObject?.FuelType === 0
               ? "Petrol"
-              : VehicleObject.FuelType === 1
+              : VehicleObject?.FuelType === 1
               ? "Petrol"
               : "CNG"
               }}</span>

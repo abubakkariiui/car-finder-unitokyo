@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from 'src/app/toast/toast-service';
 
 import { environment } from 'src/environments/environment';
+import { GetCurrentUserLocation } from 'src/app/services/catalog/getCurrentUser.service';
 @Component({
   selector: 'app-topoffers',
   templateUrl: './topoffers.component.html',
@@ -23,11 +24,16 @@ export class TopoffersComponent implements OnInit {
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
 
+  // get ip address for current country code
+  
+  ipaddress:string = '';
+  userCountryCode:any;
+  
+  
   topOffersData!: any;
 
   carsData!: List[];
   compareItems$: any;
-
   items = [];
   showToast: boolean = false;
 
@@ -42,13 +48,22 @@ export class TopoffersComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router,
     public CompareCatalogService: CompareCatalogService,
-    public CartCatalogService: CartCatalogService
+    public CartCatalogService: CartCatalogService,
+    public userLocation: GetCurrentUserLocation
   ) {}
 
   ngOnInit(): void {
     this.carsData = carsData;
     this.topOffersData = { Items: [] };
     this._fetchData();
+
+    // get current user location
+
+    this.userLocation.getIpAddress().subscribe(res => {
+      this.userLocation.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.userCountryCode = res['country_code2'];
+      })
+    })
   }
 
   config = {
@@ -77,9 +92,13 @@ export class TopoffersComponent implements OnInit {
   }
 
   _fetchData() {
-    this.http.post(this.rootURL + `/TopOffersList`, {}).subscribe((t) => {
+    this.http.post(this.rootURL + `/TopOffersList?countryCode=${this.userCountryCode}`, {}).subscribe((t) => {
       this.topOffersData = t;
-      this.isTopOfferAvailable = true;
+      if(this.topOffersData.Items.length){
+        this.isTopOfferAvailable = true;
+      }else{
+        this.isTopOfferAvailable = false;
+      }
     });
   }
 

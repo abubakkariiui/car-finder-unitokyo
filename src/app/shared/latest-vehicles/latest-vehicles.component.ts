@@ -15,6 +15,7 @@ import {
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/toast/toast-service';
 import { LatestCatalogService } from 'src/app/services/catalog/latest-catalog.service';
+import { GetCurrentUserLocation } from 'src/app/services/catalog/getCurrentUser.service';
 
 @Component({
   selector: 'app-latest-vehicles',
@@ -26,13 +27,15 @@ export class LatestVehiclesComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router,
     public toastService: ToastService,
-    private _latestCatalogService: LatestCatalogService
+    private _latestCatalogService: LatestCatalogService,
+    private userLocation: GetCurrentUserLocation
   ) {}
 
+  ipaddress:string = '';
+  userCountryCode:any;
+
   catalog: any;
-
   latestCatalog: any;
-
   vehiclesData!: Array<{}>;
 
   compareItems$: Observable<Array<CarModel>>;
@@ -40,14 +43,22 @@ export class LatestVehiclesComponent implements OnInit {
   carsData!: List[];
 
   ngOnInit(): void {
-    this._fetchData();
+    this.userLocation.getIpAddress().subscribe(res => {
+      this.userLocation.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.userCountryCode = res['country_code2'];
+      })
+    })    
+    setTimeout(() => {
+      this._fetchData();
+    },2500)
   }
 
   private _fetchData() {
-    this._latestCatalogService.getLatestCatalog().subscribe((data) => {
+    let rootUrl = `https://betaapi.unitokyo.com/list?page=1&pageSize=5&countryCode=${this.userCountryCode}`;
+    this._latestCatalogService.getLatestCatalog(rootUrl).subscribe((data) => {
       this.latestCatalog = data;
     });
-
+    
     this.carsData = carsData;
 
     this.compareItems$ = this.store.select((store) => store.compare);
