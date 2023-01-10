@@ -1,6 +1,6 @@
 # Car Finder
 
-live link : https://beta.unitokyo.com/
+live link: https://beta.unitokyo.com/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
 
