@@ -138,10 +138,32 @@ export class SigninComponent implements OnInit {
 
 // @ts-ignore
 handleCallback(response: google.accounts.id.CredentialResponse) {
-  const responsePayload = jwt_decode(response.credential);
+  const responsePayload :any = jwt_decode(response.credential);
   console.log(responsePayload);
   // window.sessionStorage.setItem('google-token', responsePayloadjti);
   localStorage.setItem('google_login_user', JSON.stringify(responsePayload));
+  let loginModel ={
+    email: responsePayload.email,
+    secret:'secRetKey123'
+    }
+    this.authService.socialLogin(loginModel).subscribe(res=>{
+      this.tokenStorage.saveToken(res.Token);
+      this.tokenStorage.saveUser(res);
+      this.isLoggedIn = true;
+
+        window.location.reload();
+
+  console.log(res)
+    },
+    (err) => {
+      this.loading = false;
+      this.resultMessage = err;
+      this.isLoginFailed = true;
+      if(err.status==400){
+        this.router.navigate(['/signup']);
+        this.routeChange.emit('/signup');
+      }
+    })
   this.closeModels()
   // this.router.navigate(['/']);
 }

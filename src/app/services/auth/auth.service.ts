@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
 const AUTH_API = 'http://amdcncri.fortiddns.com:60123/';
 const googleSignInAPI = 'AIzaSyDFECtsyINLecHNft3yiTfBYSx-h14HAGw';
-
+const rootURL= 'https://betaapi.unitokyo.com/SocialLogin';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -41,6 +41,13 @@ export class AuthService {
         Authorization: `Bearer ${this.tokenStorage.getToken()}`,
       }),
     });
+  }
+  socialLogin(loginModel): Observable<any> {
+    const params = new HttpParams()
+      .set('email', loginModel.email)
+      .set('secret', loginModel.secret);
+
+    return this.http.post(rootURL, {}, { params });
   }
 
   register(
