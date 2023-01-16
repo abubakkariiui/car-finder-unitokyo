@@ -20,6 +20,7 @@ import { TokenStorageService } from './services/auth/token-storage.service';
 import { environment } from 'src/environments/environment';
 import { BnNgIdleService } from 'bn-ng-idle'; // import it to your component
 import { UserService } from './services/auth/user.service';
+import { GetCurrentUserLocation } from './services/catalog/getCurrentUser.service';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,8 @@ import { UserService } from './services/auth/user.service';
 })
 export class AppComponent implements OnInit {
   title = 'UniTokyo';
+  ipaddress: string = '';
+  userCountryCode: any;
   constructor(
     private bnIdle: BnNgIdleService,
     private store: Store<AppState>,
@@ -38,7 +41,8 @@ export class AppComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private router: Router,
     private ref: ChangeDetectorRef,
-    private userService: UserService
+    private userService: UserService,
+    private userLocation: GetCurrentUserLocation
   ) {}
 
   ngAfterContentChecked() {
@@ -46,6 +50,29 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userLocation.getIpAddress().subscribe((res) => {
+      this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
+        this.userCountryCode = res['country_code2'];        
+        this._catalogService
+          .getCatalogList({
+            page: 1,
+            pageSize: 10,
+            countryCode: this.userCountryCode,
+          })
+          .subscribe((data) => {
+            this.store.dispatch(new StoreCatalog(data));
+          });
+      });
+      this._catalogService
+        .getCatalogList({
+          page: 1,
+          pageSize: 10,
+          countryCode: this.userCountryCode,
+        })
+        .subscribe((data) => {
+          this.store.dispatch(new StoreCatalog(data));
+        });
+    });
     // this.bnIdle.startWatching(5).subscribe((isTimedOut: boolean) => {
     //   console.log('session expired');
     //   console.log(this.bnIdle);
@@ -83,16 +110,6 @@ export class AppComponent implements OnInit {
     this._showroomsService.getShowrooms().subscribe((s) => {
       this.store.dispatch(new StoreShowrooms(s));
     });
-
-    this._catalogService
-      .getCatalogList({
-        page: 1,
-        pageSize: 10,
-        countryCode: 'ug',
-      })
-      .subscribe((data) => {
-        this.store.dispatch(new StoreCatalog(data));
-      });
   }
 
   onActivate(event) {

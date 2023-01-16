@@ -46,11 +46,9 @@ export class LatestVehiclesComponent implements OnInit {
     this.userLocation.getIpAddress().subscribe(res => {
       this.userLocation.getGEOLocation(this.ipaddress).subscribe(res => {
         this.userCountryCode = res['country_code2'];
+        this._fetchData();
       })
     })    
-    setTimeout(() => {
-      this._fetchData();
-    },2500)
   }
 
   private _fetchData() {

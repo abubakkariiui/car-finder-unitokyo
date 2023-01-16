@@ -55,13 +55,13 @@ export class TopoffersComponent implements OnInit {
   ngOnInit(): void {
     this.carsData = carsData;
     this.topOffersData = { Items: [] };
-    this._fetchData();
-
+    
     // get current user location
-
+    
     this.userLocation.getIpAddress().subscribe(res => {
       this.userLocation.getGEOLocation(this.ipaddress).subscribe(res => {
         this.userCountryCode = res['country_code2'];
+        this._fetchData();
       })
     })
   }

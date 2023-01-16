@@ -13,13 +13,13 @@ import { catchError, retry } from 'rxjs/operators';
 export class GetCurrentUserLocation {
   constructor(private http: HttpClient) {}
 
-  getIpAddress() {
+  getIpAddress(): Observable<any> {
     return this.http
       .get('https://api.ipify.org/?format=json')
       .pipe(catchError(this.handleError));
   }
 
-  getGEOLocation(ip) {
+  getGEOLocation(ip) : Observable<any>{
     let url =
       'https://api.ipgeolocation.io/ipgeo?apiKey=b81cc74e124247a0b99438bc3c22f79c&ip=' +
       ip +
