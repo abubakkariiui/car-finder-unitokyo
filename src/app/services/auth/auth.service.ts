@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 
-const AUTH_API = 'http://amdcncri.fortiddns.com:60123/';
+const AUTH_API = 'https://betaapi.unitokyo.com';
 const googleSignInAPI = 'AIzaSyDFECtsyINLecHNft3yiTfBYSx-h14HAGw';
 const rootURL= 'https://betaapi.unitokyo.com/SocialLogin';
 const httpOptions = {

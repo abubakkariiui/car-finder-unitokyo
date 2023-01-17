@@ -1,7 +1,15 @@
 // import { SocialUser } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
-import jwt_decode from "jwt-decode";
-import { Component, Input, Output, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import jwt_decode from 'jwt-decode';
+import {
+  Component,
+  Input,
+  Output,
+  OnInit,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -90,7 +98,7 @@ export class SigninComponent implements OnInit {
       captcha: ['', [Validators.required]],
     });
   }
-//https://developers.google.com/identity/gsi/web/reference/js-reference
+  //https://developers.google.com/identity/gsi/web/reference/js-reference
   googleLoginOptions = {
     scope: 'profile email',
   }; // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
@@ -99,74 +107,72 @@ export class SigninComponent implements OnInit {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  signInWithFB(): void {
-    this.socialAuthService
-      .signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then((user) => {
-        window.sessionStorage.setItem('auth-token', user.authToken);
-        localStorage.setItem('fb_login_user', JSON.stringify(user));
-        this.router.navigate(['/']);
-      });
-  }
+  // signInWithFB(): void {
+  //   this.socialAuthService
+  //     .signIn(FacebookLoginProvider.PROVIDER_ID)
+  //     .then((user) => {
+  //       window.sessionStorage.setItem('auth-token', user.authToken);
+  //       localStorage.setItem('fb_login_user', JSON.stringify(user));
+  //       this.router.navigate(['/']);
+  //     });
+  // }
   @ViewChild('gbutton') gbutton: ElementRef = new ElementRef({});
-//https://piraces.dev/posts/how-to-use-google-one-tap/
- // @ts-ignore
- ngAfterViewInit() {
-  const clientId =
-    '766244996952-rjnuigs104l7mguvdoq62hpf6s0kri75.apps.googleusercontent.com';
-    const loginUri = 'http://amdcncri.fortiddns.com:60123/SocialLogin';
+  //https://piraces.dev/posts/how-to-use-google-one-tap/
   // @ts-ignore
-  window.google.accounts.id.initialize({
-    client_id: clientId,
-    itp_support: true,
-    login_uri :loginUri,
-    callback: this.handleCallback.bind(this),
-  });
-  // @ts-ignore
-  window.google.accounts.id.renderButton(this.gbutton.nativeElement, {
-    type: 'standard',
-    theme: 'outline',
-    size: 'large',
-    width: 273,
-    shape: 'rectangular',
-    logo_alignment: 'center'
+  ngAfterViewInit() {
+    const clientId =
+      '766244996952-rjnuigs104l7mguvdoq62hpf6s0kri75.apps.googleusercontent.com';
+    const loginUri = 'https://betaapi.unitokyo.com/SocialLogin';
+    // @ts-ignore
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+      itp_support: true,
+      login_uri: loginUri,
+      callback: this.handleCallback.bind(this),
+    });
+    // @ts-ignore
+    window.google.accounts.id.renderButton(this.gbutton.nativeElement, {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+      width: 273,
+      shape: 'rectangular',
+      logo_alignment: 'center',
+    });
+    // @ts-ignore
+    google.accounts.id.prompt();
+  }
 
-  });
   // @ts-ignore
-  google.accounts.id.prompt();
-}
-
-// @ts-ignore
-handleCallback(response: google.accounts.id.CredentialResponse) {
-  const responsePayload :any = jwt_decode(response.credential);
-  console.log(responsePayload);
-  // window.sessionStorage.setItem('google-token', responsePayloadjti);
-  localStorage.setItem('google_login_user', JSON.stringify(responsePayload));
-  let loginModel ={
-    email: responsePayload.email,
-    secret:'secRetKey123'
-    }
-    this.authService.socialLogin(loginModel).subscribe(res=>{
-      this.tokenStorage.saveToken(res.Token);
-      this.tokenStorage.saveUser(res);
-      this.isLoggedIn = true;
+  handleCallback(response: google.accounts.id.CredentialResponse) {
+    const responsePayload: any = jwt_decode(response.credential);
+    // window.sessionStorage.setItem('google-token', responsePayloadjti);
+    localStorage.setItem('google_login_user', JSON.stringify(responsePayload));
+    let loginModel = {
+      email: responsePayload.email,
+      secret: 'secRetKey123',
+    };
+    this.authService.socialLogin(loginModel).subscribe(
+      (res) => {
+        this.tokenStorage.saveToken(res.Token);
+        this.tokenStorage.saveUser(res);
+        this.isLoggedIn = true;
 
         window.location.reload();
-
-  console.log(res)
-    },
-    (err) => {
-      this.loading = false;
-      this.resultMessage = err;
-      this.isLoginFailed = true;
-      if(err.status==400){
-        this.router.navigate(['/signup']);
-        this.routeChange.emit('/signup');
+      },
+      (err) => {
+        this.loading = false;
+        this.resultMessage = err;
+        this.isLoginFailed = true;
+        if (err.status == 400) {
+          this.router.navigate(['/signup']);
+          this.routeChange.emit('/signup');
+        }
       }
-    })
-  this.closeModels()
-  // this.router.navigate(['/']);
-}
+    );
+    this.closeModels();
+    // this.router.navigate(['/']);
+  }
 
   toggleComponent() {
     this.router.navigate(['/signup']);

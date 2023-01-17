@@ -1,6 +1,6 @@
 {
   "/list": {
-    "target": "http://amdcncri.fortiddns.com:60123",
+    "target": "https://beta.unitokyo.com",
     "secure": false
   }
 }
