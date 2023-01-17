@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/services/auth/token-storage.service';
 
 import { environment } from 'src/environments/environment';
@@ -9,11 +10,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./account-asidebar.component.scss'],
 })
 export class AccountAsidebarComponent implements OnInit {
-  constructor(private tokenStorage: TokenStorageService) {}
+  constructor(
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) {}
   @Input() componentType!: string;
 
   ngOnInit(): void {}
-
   /**
    * On mobile toggle button clicked
    **/
@@ -23,6 +26,7 @@ export class AccountAsidebarComponent implements OnInit {
   }
   loggout() {
     this.tokenStorage.signOut();
-    window.location.reload();
+    // window.location.reload();
+    this.router.navigate(['/']);
   }
 }
