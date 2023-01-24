@@ -5,7 +5,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenStorageService } from 'src/app/services/auth/token-storage.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { countries } from 'src/app/data';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
@@ -51,15 +51,18 @@ export class SignupComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private authService: AuthService,
     private userService: UserService,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {}
-
+  isFromSignInPage:boolean = false;
   ngOnInit(): void {
+  let googleUser = JSON.parse(localStorage.getItem('google_login_user'))
     this.countriesList = countries;
     this.validationform = this.formBuilder.group({
-      FirstName: ['', [Validators.required]],
-      LastName: ['', [Validators.required]],
-      Email: ['', [Validators.email]],
+      FirstName: [''||googleUser.given_name, [Validators.required]],
+      LastName: [''||googleUser.family_name, [Validators.required]],
+
+
+      Email: [''||googleUser.email, [Validators.email]],
       Gender: ['', [Validators.required]],
       DateOfBirth: ['', [Validators.required]],
       Company: ['', []],
@@ -91,13 +94,21 @@ export class SignupComponent implements OnInit {
       AgreeTerms: ['', [Validators.required]],
       captcha: ['', [Validators.required]],
     });
+    if(googleUser){
+      this.toastService.show(
+        `Please fill other remaining fields`,
+        {
+          classname: 'bg-success text-light',
+          delay: 6000,
+        })
+     }
   }
 
   toggleComponent(route: any) {
     this.routeChange.emit(route);
   }
   handleSuccess(data:any){
-    
+
   }
 
   /**

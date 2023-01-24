@@ -81,8 +81,9 @@ export class SigninComponent implements OnInit {
     private modalService: NgbModal,
     private socialAuthService: SocialAuthService
   ) {}
-
+isFromSigin:boolean = true;
   ngOnInit(): void {
+
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
