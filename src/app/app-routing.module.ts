@@ -17,12 +17,12 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () =>
       import('./pages/account/account.module').then((m) => m.AccountModule),
-      canActivate: [AuthGuard] 
+      canActivate: [AuthGuard]
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
