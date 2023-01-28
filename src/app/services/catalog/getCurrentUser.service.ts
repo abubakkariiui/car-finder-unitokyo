@@ -11,6 +11,7 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class GetCurrentUserLocation {
+
   constructor(private http: HttpClient) {}
 
   getIpAddress(): Observable<any> {

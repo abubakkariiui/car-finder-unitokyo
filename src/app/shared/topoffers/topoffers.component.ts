@@ -92,14 +92,28 @@ export class TopoffersComponent implements OnInit {
   }
 
   _fetchData() {
-    this.http.post(this.rootURL + `/TopOffersList?countryCode=${this.userCountryCode}`, {}).subscribe((t) => {
-      this.topOffersData = t;
-      if(this.topOffersData.Items.length){
-        this.isTopOfferAvailable = true;
-      }else{
-        this.isTopOfferAvailable = false;
-      }
-    });
+    let getFromLocalStorage = localStorage.getItem('countryCode');
+
+    if (getFromLocalStorage !== '' || getFromLocalStorage !== null) {
+      this.http.post(this.rootURL + `/TopOffersList?countryCode=${getFromLocalStorage}`, {}).subscribe((t) => {
+        this.topOffersData = t;
+        if(this.topOffersData.Items.length){
+          this.isTopOfferAvailable = true;
+        }else{
+          this.isTopOfferAvailable = false;
+        }
+      });
+    }else{
+
+      this.http.post(this.rootURL + `/TopOffersList?countryCode=${this.userCountryCode}`, {}).subscribe((t) => {
+        this.topOffersData = t;
+        if(this.topOffersData.Items.length){
+          this.isTopOfferAvailable = true;
+        }else{
+          this.isTopOfferAvailable = false;
+        }
+      });
+    }
   }
 
   deleteItem(id: string) {
