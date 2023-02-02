@@ -19,6 +19,7 @@ export class FooterComponent implements OnInit {
   totalitems: number;
   admin_base_url = environment.admin_base_url;
   showSidebar: boolean = false;
+  selectedValue: string = 'Global';
 
   constructor(
     public compareCatalogService: CompareCatalogService,
@@ -30,12 +31,14 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.compareCatalogService.loadCompareCatalog();
-
     this.compareItems$ = this.compareCatalogService.getCompareCatalog();
-
     this.compareCatalogService.compareItemsChange.subscribe(() => {
       this.toggleSidebar();
     });
+    let countryVal = localStorage.getItem('countryName');
+    if(countryVal){
+      this.selectedValue = countryVal;
+    }
   }
   getQuote(sku, cid) {
     if (!cid) cid = 114;
@@ -107,5 +110,9 @@ export class FooterComponent implements OnInit {
     }
 
     this.showSidebar = !this.showSidebar;
+  }
+  changeValue(value: string) {
+    this.selectedValue = value;
+    localStorage.setItem('countryName',this.selectedValue)
   }
 }

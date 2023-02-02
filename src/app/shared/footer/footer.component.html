@@ -25,15 +25,15 @@
         <div class="dropdown" ngbDropdown>
           <button class="btn btn-light btn-link btn-sm dropdown-toggle fw-normal py-2 pe-0" type="button"
             data-bs-toggle="dropdown" ngbDropdownToggle>
-            <i class="fi-map-pin me-2"></i>Global
+            <i class="fi-map-pin me-2"></i>{{selectedValue}}
           </button>
           <div class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-end" style="min-width: 7.5rem" ngbDropdownMenu>
-            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'jp' }">Japan</a>
-            <a class="dropdown-item" routerLink="/catalog/search/list"
+            <a class="dropdown-item" (click)="changeValue('Japan')" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'jp' }">Japan</a>
+            <a class="dropdown-item" (click)="changeValue('Tanzania')" routerLink="/catalog/search/list"
               [queryParams]="{ CountryCode: 'tz' }">Tanzania</a>
-            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'ke' }">Kenya</a>
-            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'ug' }">Uganda</a>
-            <a class="dropdown-item" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'by' }">Bela
+            <a class="dropdown-item" (click)="changeValue('Kenya')" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'ke' }">Kenya</a>
+            <a class="dropdown-item" (click)="changeValue('Uganda')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'ug' }">Uganda</a>
+            <a class="dropdown-item" (click)="changeValue('Bela Cars')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'by' }">Bela
               Cars</a>
           </div>
         </div>
