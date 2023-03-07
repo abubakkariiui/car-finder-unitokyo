@@ -62,7 +62,7 @@
         <div class="flag-item " *ngFor="let showroom of showRoomsList |async">
           <a class=" mb-4 text-dark text-decoration-none" href="javascript:void(0);" routerLink="/catalog/search/list"
             [queryParams]="{
-            countryCode: showroom.Country.CountryCode.toLowerCase()
+            countryCode: showroom?.Country?.CountryCode?.toLowerCase()
           }">
             <img class="d-block mb-2 mx-auto fg-flag" src="assets/img/flags/{{
               showroom.Country ? showroom.Country.Name : ''

@@ -73,7 +73,7 @@ export class FooterComponent implements OnInit {
   }
   getImageSrc(item) {
     let images = [];
-    if (item.Images) {
+    if (item && item.Images) {
       images = item.Images.split(',').map(
         (i) => `${this.admin_base_url + '/Pictures/VehicleImages/' + i}`
       );

@@ -25,11 +25,10 @@ export class TopoffersComponent implements OnInit {
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
 
   // get ip address for current country code
-  
-  ipaddress:string = '';
-  userCountryCode:any;
-  
-  
+
+  ipaddress: string = '';
+  userCountryCode: any;
+
   topOffersData!: any;
 
   carsData!: List[];
@@ -55,15 +54,15 @@ export class TopoffersComponent implements OnInit {
   ngOnInit(): void {
     this.carsData = carsData;
     this.topOffersData = { Items: [] };
-    
+
     // get current user location
-    
-    this.userLocation.getIpAddress().subscribe(res => {
-      this.userLocation.getGEOLocation(this.ipaddress).subscribe(res => {
+
+    this.userLocation.getIpAddress().subscribe((res) => {
+      this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
         this.userCountryCode = res['country_code2'];
         this._fetchData();
-      })
-    })
+      });
+    });
   }
 
   config = {
@@ -95,24 +94,33 @@ export class TopoffersComponent implements OnInit {
     let getFromLocalStorage = localStorage.getItem('countryCode');
 
     if (getFromLocalStorage !== '' || getFromLocalStorage !== null) {
-      this.http.post(this.rootURL + `/TopOffersList?countryCode=${getFromLocalStorage}`, {}).subscribe((t) => {
-        this.topOffersData = t;
-        if(this.topOffersData.Items.length){
-          this.isTopOfferAvailable = true;
-        }else{
-          this.isTopOfferAvailable = false;
-        }
-      });
-    }else{
-
-      this.http.post(this.rootURL + `/TopOffersList?countryCode=${this.userCountryCode}`, {}).subscribe((t) => {
-        this.topOffersData = t;
-        if(this.topOffersData.Items.length){
-          this.isTopOfferAvailable = true;
-        }else{
-          this.isTopOfferAvailable = false;
-        }
-      });
+      this.http
+        .post(
+          this.rootURL + `/TopOffersList?countryCode=${getFromLocalStorage}`,
+          {}
+        )
+        .subscribe((t) => {
+          this.topOffersData = t;
+          if (this.topOffersData.Items.length) {
+            this.isTopOfferAvailable = true;
+          } else {
+            this.isTopOfferAvailable = false;
+          }
+        });
+    } else {
+      this.http
+        .post(
+          this.rootURL + `/TopOffersList?countryCode=${this.userCountryCode}`,
+          {}
+        )
+        .subscribe((t) => {
+          this.topOffersData = t;
+          if (this.topOffersData.Items.length) {
+            this.isTopOfferAvailable = true;
+          } else {
+            this.isTopOfferAvailable = false;
+          }
+        });
     }
   }
 

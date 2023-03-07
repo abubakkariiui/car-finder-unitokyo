@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit {
     window.addEventListener('storage', () => {
       // When local storage changes, dump the list to
       // the console.
-      console.log(localStorage.getItem('auth-token'));
     });
 
     // if (this.tokenStorage.getToken()) {
