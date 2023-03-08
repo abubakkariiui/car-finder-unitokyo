@@ -43,17 +43,17 @@ export class LatestVehiclesComponent implements OnInit {
   carsData!: List[];
 
   ngOnInit(): void {
-    this.userLocation.getIpAddress().subscribe((res) => {
-      this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
-        this.userCountryCode = res['country_code2'];
-        this._fetchData();
-      });
-    });
+    // this.userLocation.getIpAddress().subscribe((res) => {
+    //   this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
+    //     this.userCountryCode = res['country_code2'];
+    //   });
+    // });
+    this._fetchData();
   }
 
   private _fetchData() {
     let getFromLocalStorage = localStorage.getItem('countryCode');
-    
+
     if (getFromLocalStorage !== '' || getFromLocalStorage !== null) {
       let rootUrl = `https://betaapi.unitokyo.com/list?page=1&pageSize=5&countryCode=${getFromLocalStorage}`;
       this._latestCatalogService.getLatestCatalog(rootUrl).subscribe((data) => {

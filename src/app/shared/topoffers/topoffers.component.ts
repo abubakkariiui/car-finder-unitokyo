@@ -57,12 +57,12 @@ export class TopoffersComponent implements OnInit {
 
     // get current user location
 
-    this.userLocation.getIpAddress().subscribe((res) => {
-      this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
-        this.userCountryCode = res['country_code2'];
-        this._fetchData();
-      });
-    });
+    // this.userLocation.getIpAddress().subscribe((res) => {
+    //   this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
+    //     this.userCountryCode = res['country_code2'];
+    //   });
+    // });
+    this._fetchData();
   }
 
   config = {

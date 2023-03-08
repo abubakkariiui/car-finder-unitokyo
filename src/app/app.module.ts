@@ -24,7 +24,10 @@ import { ToastsContainer } from 'src/app/toast/toast-container.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
 
-import { FacebookLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  FacebookLoginProvider,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import { SocialComponent } from './social-login/social-login.component';
@@ -59,7 +62,6 @@ import { SocialComponent } from './social-login/social-login.component';
   providers: [
     CatalogService,
     BnNgIdleService,
-
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -70,9 +72,10 @@ import { SocialComponent } from './social-login/social-login.component';
             provider: new GoogleLoginProvider(
               '766244996952-rjnuigs104l7mguvdoq62hpf6s0kri75.apps.googleusercontent.com'
             ),
-          },  {
+          },
+          {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('519000160271519')
+            provider: new FacebookLoginProvider('519000160271519'),
           },
           // {provide: LocationStrategy, useClass: HashLocationStrategy}
         ],

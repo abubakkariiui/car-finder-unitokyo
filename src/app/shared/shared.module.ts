@@ -36,6 +36,7 @@ import { SupportComponent } from './support-list/support-list.component';
 import { VehicleInformationComponent } from './vehicle-information/vehicle-information.component';
 import { PreloaderComponent } from './preloader/preloader.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { HtmlToPlaintextPipe } from './htmlToPlainText.pipe';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -66,6 +67,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SupportComponent,
     VehicleInformationComponent,
     PreloaderComponent,
+    HtmlToPlaintextPipe
   ],
   imports: [
     NgbModule,

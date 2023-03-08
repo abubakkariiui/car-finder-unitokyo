@@ -23,7 +23,7 @@
                     <th scope="row">{{ i.Code }}</th>
                     <td>{{ i.Title}}</td>
                     <td>{{ i.Status?'Active':'Inactive' }}</td>
-                    <td>{{ i.Message }}</td>
+                    <td>{{ i.Message | htmlToPlaintext }}</td>
                     <td>{{ i.EndOn |date }}</td>
                 </tr>
             </tbody>

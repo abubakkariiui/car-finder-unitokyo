@@ -4,7 +4,7 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4 pb-sm-2">
     <h2 class="h3 text-dark mb-2 mb-sm-0">Top Offers</h2>
   </div>
-  <div class="row" *ngIf="isTopOfferAvailable;else noTopOffer">
+  <div class="row" *ngIf="isTopOfferAvailable;">
     <div class="col-lg-5">
       <VehicleDetails [showSlider]="true" (whishListChange)="onWhishListChange()"
         [VehicleObject]="topOffersData?.Items[0]" [id]="1" Type="grid">
@@ -20,9 +20,4 @@
       </VehicleDetails>
     </div>
   </div>
-  <ng-template #noTopOffer>
-    <span style="color: red;">
-      No top Offer in your location
-    </span>
-  </ng-template>
 </section>

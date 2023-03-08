@@ -28,13 +28,11 @@
             <i class="fi-map-pin me-2"></i>{{selectedValue}}
           </button>
           <div class="dropdown-menu dropdown-menu-dark dropdown-menu-sm-end" style="min-width: 7.5rem" ngbDropdownMenu>
-            <a class="dropdown-item" (click)="changeValue('Japan')" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'jp' }">Japan</a>
-            <a class="dropdown-item" (click)="changeValue('Tanzania')" routerLink="/catalog/search/list"
-              [queryParams]="{ CountryCode: 'tz' }">Tanzania</a>
-            <a class="dropdown-item" (click)="changeValue('Kenya')" routerLink="/catalog/search/list" [queryParams]="{ CountryCode: 'ke' }">Kenya</a>
+            <a class="dropdown-item" (click)="changeValue('Japan')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'jp' }">Japan</a>
+            <a class="dropdown-item" (click)="changeValue('Tanzania')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'tz' }">Tanzania</a>
+            <a class="dropdown-item" (click)="changeValue('Kenya')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'ke' }">Kenya</a>
             <a class="dropdown-item" (click)="changeValue('Uganda')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'ug' }">Uganda</a>
-            <a class="dropdown-item" (click)="changeValue('Bela Cars')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'by' }">Bela
-              Cars</a>
+            <a class="dropdown-item" (click)="changeValue('Bela Cars')" routerLink="/catalog/search/list" [queryParams]="{ countryCode: 'by' }">Bela Cars</a>
           </div>
         </div>
       </div>

@@ -163,13 +163,13 @@
                 </div>
 
                 <div class="mb-2 fields-elements my-1">
-                  <input class="form-check-input" type="checkbox" id="RecaptchaValid" required checked
-                    formControlName="RecaptchaValid"
-                    [ngClass]="{'is-invalid': submit && form['RecaptchaValid'].errors}" />
-
-                  <label class="form-check-label px-2" for="RecaptchaValid"><span class="opacity-70"> Recaptcha
-                      Valid</span>
-                  </label>
+                    <div style="margin-top: 10px;">
+                      <ngx-recaptcha2
+                          #captchaElem
+                          siteKey="6LfRqmQjAAAAAEi7VxuzQzomnOKSSqySjTPU2tHY" 
+                          formControlName="captcha">
+                      </ngx-recaptcha2>
+                  </div>
                 </div>
               </div>
 

@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { Meta } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CareerService } from 'src/app/services/careers/career.service';
 import { ToastService } from 'src/app/toast/toast-service';
 import { countries } from 'src/app/data';
 
 import { environment } from 'src/environments/environment';
+import { GetSeoContent } from 'src/app/services/getSeoContent.service';
 @Component({
   selector: 'app-careers',
   templateUrl: './careers.component.html',
@@ -28,15 +34,19 @@ export class CareersComponent implements OnInit {
   countryList: any = [];
   preview: string;
   jobID: any;
-
+  test: any;
   constructor(
     private careerService: CareerService,
     private modalService: NgbModal,
     private toastService: ToastService,
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: UntypedFormBuilder,
+    private seoContent: GetSeoContent,
+    private meta: Meta
   ) {}
 
   ngOnInit(): void {
+    this.getSeoContent();
+
     this.countryList = countries;
     this.getJobs();
 
@@ -50,6 +60,15 @@ export class CareersComponent implements OnInit {
       CoverLetter: [''],
       ResumeFile: ['', Validators.required],
       RecaptchaValid: true,
+    });
+  }
+  getSeoContent() {
+    this.seoContent.getSeoContent('careers').subscribe((res) => {
+      if (res['CustomCode'] === null) {
+        this.seoContent.getSeoContent('global').subscribe((res) => {
+          console.log(res);
+        });
+      }
     });
   }
 
