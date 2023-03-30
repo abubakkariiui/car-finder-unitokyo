@@ -167,11 +167,8 @@ export class InquiryComponent implements OnInit {
     loop: true,
   };
 
-  validSubmit(toggleLoginModel) {
-    if (!this.tokenStorage.isAuthenticated()) {
-      this.toggleModal(toggleLoginModel);
-      return;
-    }
+  validSubmit() {
+    
 
     if (this.validationform.status === 'VALID') {
       this.isLoading = true;

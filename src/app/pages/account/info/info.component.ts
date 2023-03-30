@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { UserService } from 'src/app/services/auth/user.service';
 import { ToastService } from 'src/app/toast/toast-service';
 
@@ -43,24 +47,24 @@ export class InfoComponent implements OnInit {
       Phone: ['', []],
       PostalAddress: ['', []],
       PostalCode: ['', []],
-      Password: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}'
-          ),
-        ]),
-      ],
-      ConfirmPassword: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}'
-          ),
-        ]),
-      ],
+      // Password: [
+      //   '',
+      //   Validators.compose([
+      //     Validators.required,
+      //     Validators.pattern(
+      //       '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}'
+      //     ),
+      //   ]),
+      // ],
+      // ConfirmPassword: [
+      //   '',
+      //   Validators.compose([
+      //     Validators.required,
+      //     Validators.pattern(
+      //       '^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}'
+      //     ),
+      //   ]),
+      // ],
     });
 
     this.userService.getUserProfile().subscribe(
