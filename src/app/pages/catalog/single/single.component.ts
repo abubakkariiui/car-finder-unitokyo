@@ -48,7 +48,7 @@ export class SingleComponent implements OnInit {
 
   carsData: any = [];
   isLoggedIn: boolean = false;
-  rootURL = environment.rootURL;
+  rootURL = 'https://unitokyo.com/';
 
   selectedVehicle: any = {};
 
