@@ -44,13 +44,7 @@ export class InquiriesService {
   addInquiry(params: any): Observable<inquiriesModel[]> {
     return this.http.post<inquiriesModel[]>(
       this.rootURL + `/AddUserInquiry`,
-      params,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.tokenStorage.getToken()}`,
-        }),
-      }
+      params
     );
   }
 }

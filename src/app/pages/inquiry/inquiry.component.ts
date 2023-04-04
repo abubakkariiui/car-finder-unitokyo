@@ -98,7 +98,7 @@ export class InquiryComponent implements OnInit {
       YearFrom: [''],
       YearTo: [''],
       PriceType: [''],
-      captcha: ['', [Validators.required]],
+      recapchavalid: ['', [Validators.required]],
     });
 
     // Data Get Function
@@ -168,8 +168,6 @@ export class InquiryComponent implements OnInit {
   };
 
   validSubmit() {
-    
-
     if (this.validationform.status === 'VALID') {
       this.isLoading = true;
 
