@@ -57,7 +57,7 @@ export class LatestVehiclesComponent implements OnInit {
     if (getFromLocalStorage !== '' || getFromLocalStorage !== null) {
       let rootUrl = `https://betaapi.unitokyo.com/list?page=1&pageSize=5&countryCode=${getFromLocalStorage}`;
       this._latestCatalogService.getLatestCatalog(rootUrl).subscribe((data) => {
-        this.latestCatalog = data;
+        this.latestCatalog = data; 
       });
     } else {
       let rootUrl = `https://betaapi.unitokyo.com/list?page=1&pageSize=5&countryCode=${this.userCountryCode}`;
@@ -79,7 +79,7 @@ export class LatestVehiclesComponent implements OnInit {
     spaceBetween: 25,
     pagination: true,
     navigation: false,
-    loop: true,
+    loop: false,
     autoplay: {
       delay: 3000,
       pauseOnMouseEnter: true,

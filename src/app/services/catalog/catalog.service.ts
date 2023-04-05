@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CatalogService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   rootURL = environment.rootURL;
 
   getCatalogList(filters: any): Observable<catalogModel[]> {
     return this.http.post<catalogModel[]>(
       this.rootURL +
-      `/list?page=${filters.page}&pageSize=${filters.pageSize}&countryCode=${filters.countryCode}`,
+        `/list?page=${filters.page}&pageSize=${filters.pageSize}&countryCode=${filters.countryCode}`,
       {}
     );
   }
@@ -36,7 +36,7 @@ export class CatalogService {
   searchCatalog(filters: any): Observable<catalogModel[]> {
     return this.http.post<catalogModel[]>(
       this.rootURL +
-      `/Details?model=${filters.model}&page=${filters.page}&pageSize=${filters.pageSize}&field=${filters.field}&dir=${filters.dir}&As=${filters.as}`,
+        `/Details?model=${filters.model}&page=${filters.page}&pageSize=${filters.pageSize}&field=${filters.field}&dir=${filters.dir}&As=${filters.as}`,
       {}
     );
   }
@@ -48,7 +48,12 @@ export class CatalogService {
   }
 
   search(requestbody: string) {
-
-    return this.http.post(this.rootURL + `/Search`, requestbody);
+    return this.http.post(this.rootURL + `/Search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: requestbody,
+    });
   }
 }

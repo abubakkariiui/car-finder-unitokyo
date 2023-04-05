@@ -1,6 +1,5 @@
 <div class="card card-dark card-hover h-lg-100 mb-4 mb-lg-0" *ngIf="Type == 'grid'">
   <div class=" tns-carousel-wrapper card-img-top card-img-hover">
-    <a class="img-overlay" routerLink="/catalog/search/single"></a>
     <div *ngIf="isLoggedIn" class="content-overlay end-0 top-0 pt-3 pe-3">
       <button (click)="AddToWishList(VehicleObject.VehicleSku)"
         class="d-table btn btn-icon btn-info btn-xs mb-1 text-light rounded-circle" type="button" placement="left"
@@ -122,7 +121,6 @@
 
 <div class="card card-dark card-hover card-horizontal mb-4" *ngIf="Type == 'list'">
   <div class="tns-carousel-wrapper card-img-top card-img-hover">
-    <a class="img-overlay" routerLink="/catalog/search/single"></a>
     <div *ngIf="isLoggedIn" class="content-overlay end-0 top-0 pt-3 pe-3">
       <button (click)="AddToWishList(VehicleObject.VehicleSku)"
         class="d-table btn btn-icon btn-info btn-xs mb-1 text-light rounded-circle" type="button" placement="left"

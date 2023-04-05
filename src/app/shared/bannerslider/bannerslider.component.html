@@ -6,7 +6,7 @@
         <p class="fs-lg text-dark opacity-70">
           {{ s.LinkText }}
         </p>
-        <button routerLink="{{ s.Link }}" class="d-none d-md-block d-lg-block d-xl-block btn btn-primary" type="button">
+        <button (click)="navigateToLink(s.Link)" class="d-none d-md-block d-lg-block d-xl-block btn btn-primary" type="button">
           View Details
         </button>
       </div>

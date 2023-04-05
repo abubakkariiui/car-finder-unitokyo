@@ -89,7 +89,7 @@ export class FilterSearchbarComponent implements OnInit {
     MinYear: 1960,
     MaxYear: 2023,
     MinMileage: 0,
-    MaxMileage: 300000,
+    MaxMileage: 100000000,
 
     Transmission: '',
     FuelType: '',
@@ -131,7 +131,7 @@ export class FilterSearchbarComponent implements OnInit {
 
   MileageOptions = {
     floor: 0,
-    ceil: 100000,
+    ceil: 100000000,
     translate: (value: number): string => {
       return value + ' Km';
     },

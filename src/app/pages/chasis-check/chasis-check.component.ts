@@ -57,7 +57,7 @@ export class ChasisCheckComponent implements OnInit {
 
   validSubmit() {
     if (this.validationform.status === 'VALID') {
-      this.catalogService.search(this.validationform.value).subscribe((res) => {
+      this.catalogService.search(this.validationform.value).subscribe((res) => { 
         this.carsData = res;
         this.isLoading = true;
         if (this.carsData.Items.length > 0) {

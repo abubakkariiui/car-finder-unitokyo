@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-bannerslider',
@@ -6,7 +7,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./bannerslider.component.scss'],
 })
 export class BannersliderComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) { }
 
   admin_base_ur = environment.admin_base_url;
 
@@ -39,4 +40,13 @@ export class BannersliderComponent implements OnInit {
     },
     pagination: true,
   };
+
+  navigateToLink(link: string) {
+    if (link.startsWith('http')) {
+      window.open(link); // open link in a new tab if it is an external link
+    } else {
+      this.router.navigateByUrl(link); // navigate to the link using Angular Router if it is an internal link
+    }
+  }
+  
 }
