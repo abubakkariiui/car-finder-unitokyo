@@ -130,7 +130,7 @@
               <img
                 class="rounded-3 w-100"
                 style="object-fit: cover; object-position: center"
-                src="https://placehold.co/800x600?text=Image+Not%20Available"
+                src="../../../../assets/img/car-placeholder.jpeg"
                 alt="Placeholder image"
               />
             </ng-template>
@@ -179,14 +179,23 @@
           routerLink="/single-blog"
           [queryParams]="{ blog_id: item.Id, title: item.Title }"
         >
-          <img
-            class="d-block rounded-3"
-            style="object-fit: cover; object-position: center"
-            src="{{
-              admin_base_url + '/Content/Images/Blogs/' + item.Img2 || ''
-            }}"
-            alt="Post image"
-        /></a>
+          <ng-container *ngIf="item.Img2; else placeholder">
+            <img
+              class="rounded-3 w-100"
+              style="object-fit: cover; object-position: center"
+              src="{{ admin_base_url + '/Content/Images/Blogs/' + item.Img2 }}"
+              alt="Post image"
+            />
+          </ng-container>
+          <ng-template #placeholder>
+            <img
+              class="rounded-3"
+              style="object-fit: cover; object-position: center"
+              src="../../../../assets/img/car-placeholder.jpeg"
+              alt="Placeholder image"
+            />
+          </ng-template>
+        </a>
 
         <h3 class="fs-base text-dark pt-1">
           <a
