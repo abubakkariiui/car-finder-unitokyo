@@ -77,7 +77,7 @@ import { SocialComponent } from './social-login/social-login.component';
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('519000160271519'),
           },
-          { provide: LocationStrategy, useClass: PathLocationStrategy },
+          // { provide: LocationStrategy, useClass: PathLocationStrategy },
         ],
         onError: (err) => {
           console.error(err);

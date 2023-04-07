@@ -129,7 +129,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG,
     },
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    // { provide: LocationStrategy, useClass: PathLocationStrategy },
   ],
 })
 export class PagesModule {}
