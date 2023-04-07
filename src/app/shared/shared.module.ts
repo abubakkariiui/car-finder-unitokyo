@@ -3,7 +3,11 @@ import {
   NgbAccordionModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule,
+  LocationStrategy,
+  PathLocationStrategy,
+} from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimplebarAngularModule } from 'simplebar-angular';
@@ -67,7 +71,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SupportComponent,
     VehicleInformationComponent,
     PreloaderComponent,
-    HtmlToPlaintextPipe
+    HtmlToPlaintextPipe,
   ],
   imports: [
     NgbModule,
@@ -81,13 +85,14 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SimplebarAngularModule,
     NgxSliderModule,
     NgbAccordionModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
   ],
   providers: [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG,
     },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
   ],
   exports: [
     SearchformComponent,

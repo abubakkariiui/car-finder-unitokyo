@@ -1,6 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule,
+  LocationStrategy,
+  PathLocationStrategy,
+} from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -118,13 +122,14 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       apiKey: 'AIzaSyAbvyBxmMbFhrzP9Z8moyYr6dCr-pzjhBE',
     }),
     NgxYoutubePlayerModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
   ],
   providers: [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG,
     },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
   ],
 })
 export class PagesModule {}

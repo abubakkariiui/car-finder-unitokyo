@@ -21,7 +21,7 @@ import { CatalogService } from './services';
 import { brandReducer } from './store/reducers/brand.reducer';
 import { ShowroomReducer } from './store/reducers/showroom.reducer ';
 import { ToastsContainer } from 'src/app/toast/toast-container.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BnNgIdleService } from 'bn-ng-idle';
 
 import {
@@ -77,7 +77,7 @@ import { SocialComponent } from './social-login/social-login.component';
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('519000160271519'),
           },
-          // {provide: LocationStrategy, useClass: HashLocationStrategy}
+          { provide: LocationStrategy, useClass: PathLocationStrategy },
         ],
         onError: (err) => {
           console.error(err);
