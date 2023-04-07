@@ -25,7 +25,7 @@ export class FilterSearchbarComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<string>();
 
   @Input() filtersProp: any;
-
+  countryTypeCode: string = localStorage.getItem('countryCode') ?? '';
   settingParamsLoading: boolean = false;
 
   manuFacturers!: any;
@@ -47,8 +47,8 @@ export class FilterSearchbarComponent implements OnInit {
     MinYear: 1960,
     MaxYear: 2023,
     MinMileage: 0,
-    MaxMileage: 300000,
-
+    MaxMileage: 100000000,
+    countryCode: this.countryTypeCode,
     Transmission: '',
     FuelType: '',
     Color: '',
@@ -90,7 +90,7 @@ export class FilterSearchbarComponent implements OnInit {
     MaxYear: 2023,
     MinMileage: 0,
     MaxMileage: 100000000,
-
+    countryCode: this.countryTypeCode,
     Transmission: '',
     FuelType: '',
     Color: '',

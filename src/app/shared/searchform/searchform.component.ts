@@ -27,6 +27,7 @@ export class SearchformComponent implements OnInit {
   @Input() manuFacturers: any;
 
   @Input() yearsList: any;
+  countryTypeCode: string = localStorage.getItem('countryCode') ?? '';
 
   modelsList: any;
 
@@ -66,9 +67,9 @@ export class SearchformComponent implements OnInit {
     ModelId: '',
     MinYear: 1960,
     MaxYear: 2023,
-
     minPrice: 0,
-    maxPrice: 100000,
+    maxPrice: 100000000,
+    countryCode: this.countryTypeCode,
   };
 
   defaultSearchform = {
@@ -77,9 +78,9 @@ export class SearchformComponent implements OnInit {
     ModelId: '',
     MinYear: 1960,
     MaxYear: 2023,
-
     minPrice: 0,
-    maxPrice: 100000,
+    maxPrice: 100000000,
+    countryCode: this.countryTypeCode,
   };
 
   onSubmit() {
@@ -110,7 +111,7 @@ export class SearchformComponent implements OnInit {
   highValue: number = 65000;
   options: Options = {
     floor: 0,
-    ceil: 100000,
+    ceil: 100000000,
     translate: (value: number): string => {
       return '$' + value;
     },

@@ -112,7 +112,12 @@ export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.queryParams = { ...params };
-      localStorage.setItem('countryCode',this.queryParams?.CountryCode || this.queryParams?.countryCode)
+      if (Object.keys(this.queryParams).length > 0) {
+        localStorage.setItem(
+          'countryCode',
+          this.queryParams?.CountryCode || this.queryParams?.countryCode
+        );
+      }
     });
 
     this.compareItems$ = this.store.select((store) => store.compare);
