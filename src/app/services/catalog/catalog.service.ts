@@ -47,13 +47,7 @@ export class CatalogService {
     );
   }
 
-  search(requestbody: string) {
-    return this.http.post(this.rootURL + `/Search`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestbody,
-    });
+  chesisCheck(requestbody: any): Observable<any> {
+    return this.http.post<any>(this.rootURL + '/ChesisCheck', requestbody);
   }
 }

@@ -79,7 +79,7 @@
                             <div *ngIf="isLoading" class="pt-5">
                                 <h2>Car Information</h2>
                                 <div class="cars-data" *ngIf="loading">
-                                    <div *ngFor="let item of carsData.Items">
+                                    <div *ngFor="let item of carsData">
                                         <p>Manufacturer: <span>{{item.Manufacturer.Title}}</span> </p>
                                         <p>Model: <span>{{item.Model.Title}}</span> </p>
                                         <p>Chesis Number: <span>{{item.Chesis}}</span> </p>
