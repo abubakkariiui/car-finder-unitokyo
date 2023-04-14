@@ -190,6 +190,15 @@
                             rows="5"></textarea>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="select-input" class="form-label">File Type</label>
+                        <select formControlName="FileExtension" class="form-select" id="select-input">
+                            <option value="" selected disabled>Choose File Type</option>
+                            <option value="pdf">pdf</option>
+                            <option value="doc">Doc</option>
+                        </select>
+                    </div>
+
                     <!-- File input -->
                     <div class="mb-3">
                         <label for="file-input" class="form-label">File</label>
@@ -198,7 +207,9 @@
 
                     <!-- submit form  -->
                     <div class="mb-3">
-                        <button class="btn btn-primary" type="submit">Apply</button>
+                        <button class="btn btn-primary" type="submit">Apply 
+                            <span *ngIf="disableButton" class="spinner-border spinner-border-sm me-2" role="status"
+                            aria-hidden="true"></span></button>
                     </div>
 
                 </form>

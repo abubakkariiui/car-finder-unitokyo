@@ -30,7 +30,7 @@ export class CareersComponent implements OnInit {
   // formBuilder: any;
   isLoading: boolean = false;
   isApply: boolean = false;
-
+  disableButton: boolean = false;
   countryList: any = [];
   preview: string;
   jobID: any;
@@ -58,7 +58,8 @@ export class CareersComponent implements OnInit {
       Citizen: ['', Validators.required],
       CountryId: ['', Validators.required],
       CoverLetter: [''],
-      ResumeFile: ['', Validators.required],
+      FileExtension: ['', Validators.required],
+      FileData: ['', Validators.required],
       RecaptchaValid: true,
     });
   }
@@ -66,46 +67,36 @@ export class CareersComponent implements OnInit {
     this.seoContent.getSeoContent('careers').subscribe((res) => {
       if (res['CustomCode'] === null) {
         this.seoContent.getSeoContent('global').subscribe((res) => {
-          console.log(res);
+          // console.log(res);
         });
       }
     });
   }
 
   onFileChange(event) {
-    // const file = (event.target as HTMLInputElement).files[0];
-    // this.validationform.patchValue({
-    //   ResumeFile: file
-    // });
-    // this.validationform.get('ResumeFile').updateValueAndValidity()
-    // // File Preview
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   this.preview = reader.result as string;
-    // }
-    // reader.readAsDataURL(file)
-    let reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      let file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.validationform.get('ResumeFile').setValue({
-          ContentLength: file.size,
-          ContentType: file.type,
-          FileName: file.name,
-          // value: reader.result.split(',')[1]
-        });
-      };
-    }
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const base64String = reader.result.toString().split(',')[1];
+      this.validationform.patchValue({
+        FileData: base64String,
+        // FileExtension: file.type,
+      });
+    };
   }
 
-  onSubmit() {
+  onSubmit() {    
     this.validationform.value.JobId = this.jobID;
     if (this.validationform.status === 'VALID') {
       this.isLoading = true;
+      this.disableButton = true
       this.careerService.applyJob(this.validationform.value).subscribe(
         (res) => {
           this.isLoading = false;
+          this.disableButton = false;
           this.toastService.show(`Applied successfully`, {
             classname: 'bg-success text-light',
             delay: 5000,
