@@ -10,12 +10,13 @@ import { environment } from 'src/environments/environment';
 })
 export class TypesComponent implements OnInit {
   @Input() small!: boolean;
-
+  countryCode: string;
   manuFacturers!: any;
 
   constructor() {}
 
   ngOnInit(): void {
+    this.countryCode = localStorage.getItem('countryCode');
     this.manuFacturers = manuFacturers;
     this._fetchData();
   }

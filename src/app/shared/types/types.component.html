@@ -11,7 +11,7 @@
           <img class="d-block mx-auto mb-3" src="{{ data.image }}" alt="Sedan" />
         </div>
         <a class="text-dark stretched-link fw-bold" routerLink="/catalog/search/list"
-          [queryParams]="{ Type: data.id }">{{ data.title }}</a>
+          [queryParams]="{ Type: data.id, countryCode: countryCode }">{{ data.title }}</a>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
           <img class="d-block mx-auto mb-3" src="{{ data.image }}" alt="Sedan" />
         </div>
 
-        <a class="text-dark stretched-link fw-bold" [queryParams]="{ Type: data.id }"
+        <a class="text-dark stretched-link fw-bold" [queryParams]="{ Type: data.id, countryCode: countryCode }"
           routerLink="/catalog/search/list">{{ data.title }}</a>
       </div>
     </div>
