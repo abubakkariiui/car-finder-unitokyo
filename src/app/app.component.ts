@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   ngAfterContentChecked() {
     this.ref.detectChanges();
   }
-
+  // run when compoent mounted/loaded
   ngOnInit(): void {
     this.userLocation.getIpAddress().subscribe((res) => {
       this.userLocation.getGEOLocation(this.ipaddress).subscribe((res) => {
