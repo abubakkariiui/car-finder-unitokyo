@@ -79,4 +79,8 @@ export class SupportService {
       }
     );
   }
+
+  GetSupportDepartments() {
+    return this.http.get(this.rootURL + '/GetSupportDepartments');
+  }
 }

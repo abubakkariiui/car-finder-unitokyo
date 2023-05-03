@@ -36,6 +36,8 @@ export class SupportComponent implements OnInit {
 
   loggedInUser: any = {};
 
+  getSupportDepartments: any = {}
+
   constructor(
     private modalService: NgbModal,
     private formBuilder: UntypedFormBuilder,
@@ -46,7 +48,7 @@ export class SupportComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser = this.tokenStorage.getUserProfile();
-
+    
     this.getAllSupports();
     this.validationform = this.formBuilder.group({
       DepartmentId: [''],
@@ -56,6 +58,11 @@ export class SupportComponent implements OnInit {
       TicketId: [''],
       MessageBody: [''],
     });
+    
+    this.supporService.GetSupportDepartments().subscribe(res => {
+      this.getSupportDepartments = res      
+    })
+
   }
   get isTicketSelected() {
     return Object.entries(this.selectedTicket).length > 0 ? true : false;

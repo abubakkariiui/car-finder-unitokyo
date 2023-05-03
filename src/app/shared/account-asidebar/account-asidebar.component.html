@@ -52,8 +52,8 @@
             <a class="card-nav-link " [ngClass]="componentType == 'security' ? 'active':''"
                 routerLink="/account/security"><i class="fi-lock me-2"></i>Password &amp; Security</a>
 
-            <a class="card-nav-link" [ngClass]="componentType == 'signout' ? 'active':''" (click)="loggout()"><i
-                    class="fi-logout me-2"></i>Sign Out</a>
+            <a class="card-nav-link cursor-pointer" [ngClass]="componentType == 'signout' ? 'active':''" (click)="loggout()"><i
+                    class="fi-logout me-2 "></i>Sign Out</a>
 
         </div>
     </div>

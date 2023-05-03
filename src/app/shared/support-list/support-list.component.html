@@ -154,11 +154,10 @@
     </div>
     <form (ngSubmit)="validSubmit()" [formGroup]="validationform">
         <div class="modal-body">
-            <div class="mb-4">
+            <div class="mb-4" >
                 <select class="form-select  form-select-sm form-select-dark mb-1" formControlName="DepartmentId">
                     <option id="departments" value="" disabled selected>Select Department</option>
-                    <option [ngValue]="4">Documentation</option>
-                    <option [ngValue]="5">Sales</option>
+                    <option class="text-uppercase" *ngFor="let departments of getSupportDepartments.Items" [ngValue]="departments.Id">{{departments.Title}}</option>
                 </select>
                 <div
                     *ngIf="validationform.get('DepartmentId').invalid && (validationform.get('DepartmentId').dirty || validationform.get('DepartmentId').touched)">
