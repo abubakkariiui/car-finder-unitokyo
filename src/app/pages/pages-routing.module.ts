@@ -40,6 +40,7 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
 //import { AuthGuard } from '../_helpers/auth.guard';
 //import { TokenStorageService } from '../services/auth/token-storage.service';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { UnsubnewsletterComponent } from './unsubnewsletter/unsubnewsletter.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,7 @@ const routes: Routes = [
   { path: 'un-subscribe', component: UnsubscribeComponent },
   { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: 'confirm', component: ConfirmComponent },
+  { path: 'Newsletters/Unsub', component: UnsubnewsletterComponent }
 ];
 
 @NgModule({

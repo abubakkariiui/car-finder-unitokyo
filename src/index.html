@@ -1,33 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-  <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=xtg6fgkibg6f88zvythrig"
-    async="true"></script>
+  <head>
+    <script
+      type="text/javascript"
+      src="https://www.bugherd.com/sidebarv2.js?apikey=xtg6fgkibg6f88zvythrig"
+      async="true"
+    ></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <meta charset="utf-8">
-  <title>UniTokyo</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-  <style>
-    .zsiq_flt_rel {
-      background-color: #c7000a !important;
-      color: #c7000a !important;
-      background: #c7000a !important;
-    }
-  </style>
-</head>
+    <meta charset="utf-8" />
+    <title>UniTokyo</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="assets/img/fav2.png" />
+    <style>
+      .zsiq_flt_rel {
+        background-color: #c7000a !important;
+        color: #c7000a !important;
+        background: #c7000a !important;
+      }
+    </style>
+  </head>
 
-<body class="bg-light">
-  <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
-  <!-- <script src="//code.tidio.co/ysh5pcvaddhxrysjkaeym6fuwnnczdxo.js" async></script> -->
-  <app-root></app-root>
+  <body class="bg-light">
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=1586531728290446&autoLogAppEvents=1"
+      nonce="qekfpeNs"
+    ></script>
+    <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+    <!-- <script src="//code.tidio.co/ysh5pcvaddhxrysjkaeym6fuwnnczdxo.js" async></script> -->
+    <app-root></app-root>
 
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script type="text/javascript"
-    id="zsiqchat">var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq || { widgetcode: "8c4f8b322a17aea095a9abb6e7b80ce83b8827cda3af6dd3ea85348ef399846b", values: {}, ready: function () { } }; var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true; s.src = "https://salesiq.zoho.com/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t);</script>
-</body>
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" id="zsiqchat">
+      var $zoho = $zoho || {};
+      $zoho.salesiq = $zoho.salesiq || {
+        widgetcode:
+          "8c4f8b322a17aea095a9abb6e7b80ce83b8827cda3af6dd3ea85348ef399846b",
+        values: {},
+        ready: function () {},
+      };
+      var d = document;
+      s = d.createElement("script");
+      s.type = "text/javascript";
+      s.id = "zsiqscript";
+      s.defer = true;
+      s.src = "https://salesiq.zoho.com/widget";
+      t = d.getElementsByTagName("script")[0];
+      t.parentNode.insertBefore(s, t);
+    </script>
+  </body>
 </html>

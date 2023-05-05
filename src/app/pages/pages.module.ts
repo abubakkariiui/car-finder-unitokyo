@@ -65,6 +65,7 @@ import { SubmitQuoteComponent } from './submit-quote/submit-quote.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { UnsubnewsletterComponent } from './unsubnewsletter/unsubnewsletter.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -102,6 +103,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SubmitQuoteComponent,
     PasswordRecoveryComponent,
     ConfirmComponent,
+    UnsubnewsletterComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,34 @@
+<main class="page-wrapper">
+  <app-header id="top"></app-header>
+  <div class="container topGap">
+    <div
+      class="d-flex text-center align-items-center py-5 justify-content-center"
+    >
+      <div class="card card-dark card-body mx-auto" style="max-width: 900px">
+        <div *ngIf="successMessage">
+          <div class="alert alert-success" role="alert">
+            Email Unsubscription Successfully Completed
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage">
+          <div class="alert alert-danger" role="alert">
+            This email address is not in newsletters subscription list.
+          </div>
+        </div>
+
+        <div *ngIf="!successMessage && !errorMessage">
+          <h1>Unsubscribing from Newsletter</h1>
+          <p>
+            Please wait while we process your request to unsubscribe from the
+            newsletter...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Footer-->
+<div class="bg-dark">
+  <app-footer></app-footer>
+</div>
